@@ -1,0 +1,15 @@
+A Robotica Input data for 2-Link Planar Arm
+a 2-DOF arm (page 84-85, RG&C)
+—------------
+DOF = 2
+The Denavit-Hartenberg parameters:
+joint1 	= revolute
+a1 	= r1
+alpha1 	= 0
+d1 	= 0
+theta1 	= q1
+joint2 	= revolute
+a2 	= r2
+alpha2 	= 0
+d2 	= 0
+theta2 	= q2
