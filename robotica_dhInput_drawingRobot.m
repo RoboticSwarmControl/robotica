@@ -259,7 +259,7 @@ $VERSION$ = "3.64";
 to squelch warnings which appear on newer versions of Mathematica. *)
 (* Version 3.62 is the same as 3.61, with SimplifyTrigNotation[] modified to use subscripts. *)
 (* Version 3.63 is the same as 3.62, with simplifications to formatting and a few extra *)
-(*Version 3.64 by adding dhInput[] and drawingRobot[]*)
+(*Version 3.64 by adding dhInput[] and drawRobot[]*)
 $ROBGUY$ = "m-spong@uiuc.edu atbecker@uh.edu";
 
 Print["Robotica version ", $VERSION$, "."];
