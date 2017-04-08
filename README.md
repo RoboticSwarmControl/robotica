@@ -10,5 +10,5 @@ dhInput[ex] Function:
 
 drawRobot[] Function:
   After setting DH parameters using dhInput[ex] functon...
-  ...call drawRobot[] function to draw your own robot!
+  ...call drawRobot[] function to draw your own robot
   
