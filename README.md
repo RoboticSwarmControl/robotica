@@ -6,15 +6,15 @@ New Functions:
 
 dhInput[ex] Function:
 
-  Now accepts DH parameters as a matrix as well as old method using .txt file.
+    Now accepts DH parameters as a matrix as well as old method using .txt file.
   
-  Alternately, user can enter DH parameters using a dialogue box.
+    Alternately, user can enter DH parameters using a dialogue box.
   
-  Both new ways work inside Mathematica
+    Both new ways work inside Mathematica
 
 drawRobot[] Function:
 
-  After setting DH parameters using dhInput[ex] functon...
+    After setting DH parameters using dhInput[ex] functon...
   
-  ...call drawRobot[] function to draw your own robot!
+    ...call drawRobot[] function to draw your own robot!
   
