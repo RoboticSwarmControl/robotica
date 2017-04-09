@@ -1,2 +1,2 @@
-![untitled](https://cloud.githubusercontent.com/assets/25996170/24834331/8490e0c6-1ca7-11e7-942a-b6ec42f238ab.jpg)
+![robotica](https://cloud.githubusercontent.com/assets/25996170/24834351/130acbbe-1ca8-11e7-92a6-8e30479e8925.jpg)
 
