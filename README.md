@@ -18,4 +18,4 @@ drawRobot[] Function:
   
     ...call drawRobot[] function to draw your own robot!
   
-[2017-Texas-Systems-Day-Sultan_BeckerTextEdits.pdf](https://github.com/RoboticSwarmControl/robotica/files/907895/2017-Texas-Systems-Day-Sultan_BeckerTextEdits.pdf)
+
