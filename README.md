@@ -20,9 +20,6 @@ dhInput[ex] Function:
      q5, q6}}; 
      
     dhInput[ex];
-
-     
-![dhinput](https://cloud.githubusercontent.com/assets/25996170/24841516/25c48dd6-1d4c-11e7-94be-e2e69a122337.JPG)    
     
     Method 2:
     
@@ -33,7 +30,10 @@ dhInput[ex] Function:
     dhInput[ex];
     
     showing the following dialogue box to fill:
+![dialogue](https://cloud.githubusercontent.com/assets/25996170/24841733/35e7b270-1d50-11e7-938c-9d52dbf48f57.JPG)    
     
+    The new dhInput[ex] methods all give the same result:
+ ![dhinput](https://cloud.githubusercontent.com/assets/25996170/24841516/25c48dd6-1d4c-11e7-94be-e2e69a122337.JPG)
 
 drawRobot[] Function:
 
