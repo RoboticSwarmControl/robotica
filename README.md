@@ -12,7 +12,9 @@ dhInput[ex] Function:
   
     Both new ways work inside Mathematica.
     
-    Scenario 1:
+    Method 1:
+    
+    
     ex = {{r, R, p, Revolute, revolute, r}, {0, 0, 0, 0, 0, 0}, {-Pi/2, 
     Pi/2, 0, -Pi/2, Pi/2, 0}, {1, 1, q3, 1/2, 0, 1/2}, {q1, q2, 0, q4,
      q5, q6}}; 
@@ -21,6 +23,16 @@ dhInput[ex] Function:
 
      
 ![dhinput](https://cloud.githubusercontent.com/assets/25996170/24841516/25c48dd6-1d4c-11e7-94be-e2e69a122337.JPG)    
+    
+    Method 2:
+    
+    Also using dhInput[ex] with ex = dof;   
+    
+    ex = 6;
+    
+    dhInput[ex];
+    
+    showing the following dialogue box to fill:
     
 
 drawRobot[] Function:
