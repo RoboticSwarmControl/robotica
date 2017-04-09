@@ -46,7 +46,6 @@ drawRobot[] Function:
   
     ...call drawRobot[] function to draw your own robot!
 
-    the result will be with defualt values 
- 
+   ![draw1](https://cloud.githubusercontent.com/assets/25996170/24841896/79f4f604-1d54-11e7-8ddb-e1da27fc5f66.JPG)
      
     
