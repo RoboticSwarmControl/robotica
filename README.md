@@ -37,7 +37,16 @@ dhInput[ex] Function:
 
 drawRobot[] Function:
 
-    After setting DH parameters using dhInput[ex] functon...
+    this function shows your robot initialized with joints set to zero. 
+    You can manipulate each joint using the sliders.
+    
+    Example:
+    
+    After setting DH parameters using dhInput[ex] function as from previous example...
   
     ...call drawRobot[] function to draw your own robot!
 
+    the result will be with defualt values 
+ 
+     
+    
