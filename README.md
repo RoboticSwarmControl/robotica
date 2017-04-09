@@ -17,6 +17,6 @@ drawRobot[] Function:
     After setting DH parameters using dhInput[ex] functon...
   
     ...call drawRobot[] function to draw your own robot!
-  
 
-![capture](https://cloud.githubusercontent.com/assets/25996170/24833540/6964f26c-1c91-11e7-97ca-e79b70b95e91.JPG)
+![new_robotica](https://cloud.githubusercontent.com/assets/25996170/24833567/9df7fe9c-1c92-11e7-8b47-b49186f90aea.JPG)
+
