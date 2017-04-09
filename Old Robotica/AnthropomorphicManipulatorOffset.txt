@@ -1,0 +1,20 @@
+A Robotica Input data for 3-Link Anthropomorphic Arm
+a 3-DOF arm (page 146, RG&C)
+—------------
+DOF = 3
+The Denavit-Hartenberg parameters:
+joint1 	= revolute
+a1 	= 0
+alpha1 	= Pi/2
+d1 	= d1
+theta1 	= q1
+joint2 	= revolute
+a2 	= r2
+alpha2 	= 0
+d2 	= d2
+theta2 	= q2
+joint3 	= revolute
+a3 	= r3
+alpha3 	= 0
+d3 	= d3
+theta3 	= q3

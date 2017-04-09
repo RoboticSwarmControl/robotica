@@ -1,0 +1,14 @@
+A Robotica Input data for 2-Link RP Arm
+—------------
+DOF = 2
+The Denavit-Hartenberg parameters:
+joint1 	= revolute
+a1 	= r1
+alpha1 	= Pi/2
+d1 	= 0
+theta1 	= q1
+joint2 	= prismatic
+a2 	= 0
+alpha2 	= 0
+d2 	= d2
+theta2 	= 0
