@@ -10,7 +10,18 @@ dhInput[ex] Function:
   
     Alternately, user can enter DH parameters using a dialogue box.
   
-    Both new ways work inside Mathematica
+    Both new ways work inside Mathematica.
+    
+    Scenario 1:
+    ex = {{r, R, p, Revolute, revolute, r}, {0, 0, 0, 0, 0, 0}, {-Pi/2, 
+    Pi/2, 0, -Pi/2, Pi/2, 0}, {1, 1, q3, 1/2, 0, 1/2}, {q1, q2, 0, q4,
+     q5, q6}}; 
+     
+    dhInput[ex];
+    
+     
+    
+    
 
 drawRobot[] Function:
 
