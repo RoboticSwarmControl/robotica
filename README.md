@@ -51,4 +51,4 @@ drawRobot[] Function:
 
     The following are different robots with a range of DOF:
     
-    
+   ![draw3](https://cloud.githubusercontent.com/assets/25996170/24842020/945a2e90-1d56-11e7-9c04-669742d608d9.JPG)
