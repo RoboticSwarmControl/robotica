@@ -1,9 +1,10 @@
-Robotica is a collection of useful robotics problem solving functions enscapsulated in a Mathematica package,
+# **Robotica** 
+is a collection of useful robotics problem solving functions enscapsulated in a Mathematica package,
 authored by John Nethery and M.W.Spong
 
-New Functions:
+## **New Functions:**
 
-dhInput[ex] Function:
+### **dhInput[ex] Function:**
 
     Now accepts DH parameters as a matrix as well as old method using .txt file.
   
@@ -11,7 +12,7 @@ dhInput[ex] Function:
   
     Both new ways work inside Mathematica.
     
-    Method 1:
+   #### **Method 1:**
     
     
     ex = {{r, R, p, Revolute, revolute, r}, {0, 0, 0, 0, 0, 0}, {-Pi/2, 
@@ -20,7 +21,7 @@ dhInput[ex] Function:
      
     dhInput[ex];
     
-    Method 2:
+   #### **Method 2:**
     
     Also using dhInput[ex] with ex = dof;   
     
@@ -28,13 +29,13 @@ dhInput[ex] Function:
     
     dhInput[ex];
     
-    showing the following dialogue box to fill:
+#### **showing the following dialogue box to fill:**
 ![dialogue](https://cloud.githubusercontent.com/assets/25996170/24841733/35e7b270-1d50-11e7-938c-9d52dbf48f57.JPG)    
     
-    The new dhInput[ex] methods all give the same result:
+#### **The new dhInput[ex] methods all give the same result:**
  ![dhinput](https://cloud.githubusercontent.com/assets/25996170/24841516/25c48dd6-1d4c-11e7-94be-e2e69a122337.JPG)
 
-drawRobot[] Function:
+### **drawRobot[] Function:**
 
     this function shows your robot initialized with joints set to zero. 
     You can manipulate each joint using the sliders.
@@ -49,7 +50,7 @@ drawRobot[] Function:
      
    ![draw2](https://cloud.githubusercontent.com/assets/25996170/24841927/0773788e-1d55-11e7-947b-91f02e18c004.JPG)
 
-    The following are different robots with a range of DOF:
+### **The following are different robots with a range of DOF:**
     
    ![draw3](https://cloud.githubusercontent.com/assets/25996170/24842020/945a2e90-1d56-11e7-9c04-669742d608d9.JPG)
    
