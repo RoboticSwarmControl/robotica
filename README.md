@@ -1,6 +1,6 @@
 # **Robotica** 
 is a collection of useful robotics problem solving functions enscapsulated in a Mathematica package,
-authored by John Nethery and M.W.Spong
+authored by John Nethery and M.W.Spong and updated by Mohammad Sultan and Aaron T.Becker
 
 ## **New Functions:**
 
