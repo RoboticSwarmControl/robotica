@@ -141,8 +141,14 @@ drawJoint::usage = ""
 drawShaft::usage = ""
 drawGripper::usage = ""
 dhTransform::usage = ""
-drawRobot::usage = ""
-drawRobot3::usage=""
+drawRobot::usage = "drawRobot[] displays a manipulate window and the robot so users can adjust on joint parameters.
+Optional parameters:
+showArrows displays the coordinate axes,
+showH writes the homogenous transform,
+showManipEllipse-> False, 
+showPlanes displays a controller to show the xy plane at each axis (useful for inverse kinematics)
+"
+drawRobot3::usage= "drawRobot[] displays a manipulate window and the robot with the manipulability ellipses"
 myArrowArc::usage=""
 myArrowArc2::usage=""
 makeHand::usage=""
@@ -214,7 +220,7 @@ $RANGES$ = {$XRANGE$, $YRANGE$, $ZRANGE$};
 $FILE$="NOT_SET";
 $SIMVARLIST$ = {};
 $SIMVALUES$ = Null;
-$VERSION$ = "4.00";
+$VERSION$ = "4.01";
 (*todo: make this draw robots again*)
 (*Version 3.62 fixes TrigSimplify so it works with more than 2 arguments (up to 4).  Also formats the output of FKin*)
 (* Version 3.61 is the same as 3.60, with a few small errors fixed
@@ -1900,9 +1906,10 @@ drawZArrow[jr_]:=Line[{{{0,0,0},{0,0,2jr}}, (*mathematica's built-in 3D arrow so
 drawCoordAxes[jr_]:= {Thick,{Red,drawZArrow[jr]},
 {Blue,Rotate[drawZArrow[jr],\[Pi]/2,{0,1,0}]},
 {Green,Rotate[drawZArrow[jr],-\[Pi]/2,{1,0,0}]}}
-drawJoint[ j_,d_,r_,\[Theta]_]:=Module[{jr = 1/5,ar = 1/20,pr=1/7,vr=1/6},{
-(*draw coordinate axis*)
-drawCoordAxes[jr],
+
+
+drawJoint[ j_,d_,r_,\[Theta]_,showArrow_:True]:=Module[{jr = 1/5,ar = 1/20,pr=1/7,vr=1/6},{
+If[showArrow,(*draw coordinate axis*) drawCoordAxes[jr]],
 Opacity[1],
 (*draw z-axis*)
 {Opacity[0.5],Gray,If[j == "prismatic",Cuboid[{-ar,-ar,-1+d-jr-.01},{ar,ar,d+.01}],Cylinder[{{0,0,Min[-ar,d-jr]-.01},{0,0,Max[ar,d]+.01}},ar]]},
@@ -1917,17 +1924,21 @@ Cuboid[{-jr,-jr,+jr},{jr,jr,+jr+.05}]
 Rotate[{Opacity[0.5],Gray,Cuboid[{-ar,-ar,d-ar},{r,ar,d+ar}]},\[Theta],{0,0,1}]
 }];
 
+
 drawShaft[ j_,d_,r_,\[Theta]_]:=Module[{jr = 1/5,ar = 1/20},{
 Opacity[1],
 (*draw z-axis*)
-{Opacity[0.5],Gray,If[j == "prismatic",Cuboid[{-ar,-ar,-1+d-jr-.01},{ar,ar,d+.01}],Cylinder[{{0,0,Min[-ar,d-jr]-.01},{0,0,Max[ar,d]+.01}},ar]]}
+{Opacity[0.5],Gray,
+  If[j == "prismatic",Cuboid[{-ar,-ar,-1+d-jr-.01},{ar,ar,d+.01}],
+                      Cylinder[{{0,0,Min[-ar,d-jr]-.01},{0,0,Max[ar,d]+.01}},ar]]}
 }];
 
-drawGripper[g_,r_]:=Module[{jr = 1/5,ar = 1/20},{
-(*draw z-axis*)
-drawCoordAxes[jr],
+drawGripper[g_,r_,showArrow_:True]:=Module[{jr = 1/5,ar = 1/20},{
+Opacity[1],
+  If[showArrow,(*draw coordinate axis*) drawCoordAxes[jr]],
 If[r!= 0,
-{Gray,Cuboid[{-2ar,-ar,-4ar},{0,ar,4ar}],
+{Gray,
+Cuboid[{-2ar,-ar,-4ar},{0,ar,4ar}],
 Cuboid[{0ar,-ar,g 2ar},{4ar,ar,2(1+g)ar}],
 Cuboid[{0ar,-ar,-g 2ar},{4ar,ar,-2(1+g)ar}]},
 (*looks better if hand points along d*)
@@ -1938,7 +1949,10 @@ Cuboid[{-g 2ar,-ar,0ar},{-2(1+g)ar,ar,4ar}]}]
 }];
 (*math function to create a T matrix*)
 dhTransform[d_,r_,\[Theta]_,\[Alpha]_]:=RotationTransform[\[Theta],{0,0,1}].TranslationTransform[{0,0,d}].TranslationTransform[{r,0,0}].RotationTransform[\[Alpha],{1,0,0}];
-drawRobot[]:=
+
+Options[drawRobot] = {showArrows -> True, showH -> True, showManipEllipse-> False, showPlanes->False};
+
+drawRobot[OptionsPattern[]]:=
 Manipulate[Chop[%,10^-10];
 Module[{jr = 1/10,ar = 1/40,Ad,Td,Ts,j,i,ii,jj,Tv},
 
@@ -1955,24 +1969,35 @@ For[jj=1,jj<=4,jj++,
 Tv[[1,ii,jj]]=Chop[Ts[[1,ii,jj]]];
 ];
 ];
-
 Td[j]=Tv;
-
-
 ];
 
 Graphics3D[{
 (*ground*)
 {LightBrown,Cylinder[{{0,0,-2/5},{0,0,-1/5-1/20}},2.2]},
-If[jointtype[1]== "revolute",drawJoint[jointtype[1],d[1],a[1],params[[1]]],drawJoint[jointtype[1],params[[1]],a[1],theta[1]]],
+If[jointtype[1]== "revolute",drawJoint[jointtype[1],d[1],a[1],params[[1]],OptionValue[showArrows]],drawJoint[jointtype[1],params[[1]],a[1],theta[1]],OptionValue[showArrows]],
 
-If[dof==1,GeometricTransformation[drawGripper[g,0],Chop[Td[dof]]],
+If[dof==1,GeometricTransformation[drawGripper[g,0,OptionValue[showArrows]],Chop[Td[dof]]],
 If[showRobot,
- Table[If[jointtype[i]=="revolute",GeometricTransformation[drawJoint[jointtype[i],d[i],a[i],params[[i]]],Td[i-1]],GeometricTransformation[drawJoint[jointtype[i],params[[i]],a[i],theta[i]],Td[i-1]]],{i,2,dof}]],
-If[jointtype[dof]== "revolute",GeometricTransformation[drawShaft[ jointtype[dof],d[dof], a[dof],params[[dof]]],Td[dof-1]],GeometricTransformation[drawShaft[ jointtype[dof],params[[dof]], a[dof],theta[dof]],Chop[Td[dof-1]]]]],
-GeometricTransformation[drawGripper[g,0],Chop[Td[dof]]],
+ Table[
+  If[jointtype[i]=="revolute",GeometricTransformation[drawJoint[jointtype[i],d[i],a[i],params[[i]],OptionValue[showArrows]],Td[i-1]],
+                              GeometricTransformation[drawJoint[jointtype[i],params[[i]],a[i],theta[i],OptionValue[showArrows]],Td[i-1]]],
+      {i,2,dof}]](*,
+If[jointtype[dof]== "revolute",GeometricTransformation[drawShaft[jointtype[dof],d[dof], a[dof],params[[dof]]],Td[dof-1]],
+                               GeometricTransformation[drawShaft[jointtype[dof],params[[dof]], a[dof],theta[dof]],Chop[Td[dof-1]]]]*)
+],
+GeometricTransformation[drawGripper[g,0,OptionValue[showArrows]],Chop[Td[dof]]],
+
+If[OptionValue[showPlanes], (*show x_i, y_i plane for figuring out inverse kinematics*)
+GeometricTransformation[{  Thick,
+{Blue,Rotate[drawZArrow[1/2],\[Pi]/2,{0,1,0}], Text[Subscript["x",planei],{.9,.2,0}]},
+{Green,Rotate[drawZArrow[1/2],-\[Pi]/2,{1,0,0}], Text[Subscript["y",planei],{.2,.9,0}]},
+  Blue, Opacity[0.2],Polygon[{{-1,-1,0},{-1,1,0},{1,1,0},{1,-1,0}}]}
+  ,If[planei>0,Td[planei],dhTransform[0,0,0,0]]]],
+
+If[OptionValue[showH],
 Text[StringForm["\!\(\*
-StyleBox[\"H\",\nFontSlant->\"Italic\"]\)=``",MatrixForm[N[Chop[Td[dof]],2]]],{0,0,-3.2}]
+StyleBox[\"H\",\nFontSlant->\"Italic\"]\)=``",MatrixForm[N[Chop[Td[dof]],2]]],{0,0,-3.2}]]
 },SphericalRegion->True,ImageSize->425,Boxed->False]],
 {{params,ConstantArray[0,dof]},ControlType->None},
 Dynamic[Grid[Table[With[{i=i},
@@ -1982,10 +2007,11 @@ If[jointtype[i]=="prismatic",
 ]],{i,dof}](*Table*)]],(*Dynamic*)
 Delimiter,
 {{g,1,"grip"},0,1,0.01,ImageSize->Small,Appearance->"Labeled"},
-{{showRobot,True,"show robot"},{True,False}},ControlPlacement->Left,
+{{showRobot,True,"show robot"},{True,False}},
+{{planei,0,"xy Plane"},0,dof,1,ImageSize->Small,Appearance->"Labeled",ControlType->If[OptionValue[showPlanes],Slider,None]},
+ControlPlacement->Left,
 SaveDefinitions->True
 ];
-
 
 drawRobot3[]:=
 
