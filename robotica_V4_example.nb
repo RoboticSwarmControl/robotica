@@ -10,17 +10,29 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    109595,       2427]
-NotebookOptionsPosition[    107691,       2355]
-NotebookOutlinePosition[    108048,       2371]
-CellTagsIndexPosition[    108005,       2368]
+NotebookDataLength[    159829,       3453]
+NotebookOptionsPosition[    155456,       3369]
+NotebookOutlinePosition[    155817,       3385]
+CellTagsIndexPosition[    155774,       3382]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
 
 Cell[CellGroupData[{
-Cell["Robotica Version 4.00", "Subchapter",
+Cell[TextData[{
+ "Robotica Version 4.00.  \nStep zero: put this code in the same directory as \
+",
+ StyleBox["robotica_v_4.m",
+  FontWeight->"Bold"],
+ " \nStep one: load ",
+ StyleBox["robotica",
+  FontSlant->"Italic"],
+ " using the two commands:\n",
+ StyleBox["SetDirectory[NotebookDirectory[]]\n<<robotica_v_4.m\n",
+  FontWeight->"Bold"],
+ "Type Shift+Enter to make the Wolfram Language process your input."
+}], "Subchapter",
  CellChangeTimes->{{3.6635915096062117`*^9, 3.663591511306875*^9}, {
    3.663891292675042*^9, 3.6638913337063437`*^9}, {3.663891383149328*^9, 
    3.663891388316021*^9}, {3.6954369318029833`*^9, 3.6954369662650642`*^9}, {
@@ -28,12 +40,20 @@ Cell["Robotica Version 4.00", "Subchapter",
    3.6960899933523617`*^9}, 3.696090081839136*^9, {3.6969810127136197`*^9, 
    3.6969810776187935`*^9}, 3.6969855376664248`*^9, {3.6992412736555653`*^9, 
    3.6992412896947985`*^9}, {3.7035094509236517`*^9, 3.703509463539189*^9}, 
-   3.716822045024848*^9}],
+   3.716822045024848*^9, {3.7437798384296093`*^9, 3.743779850681388*^9}, {
+   3.743779910447769*^9, 3.743779914551903*^9}, {3.743782921025024*^9, 
+   3.743782950899431*^9}},ExpressionUUID->"04f07dcf-897c-4c42-a0ec-\
+063d784090d1"],
 
 Cell[CellGroupData[{
 
-Cell["PRR robot", "Subsection",
- CellChangeTimes->{{3.716822076630508*^9, 3.71682208053813*^9}}],
+Cell["\<\
+PRR robot example.  We input the DH parameters to make the code function.\
+\>", "Subsection",
+ CellChangeTimes->{{3.716822076630508*^9, 3.71682208053813*^9}, {
+  3.743779858425129*^9, 3.743779859461691*^9}, {3.743779935664681*^9, 
+  3.743779945611093*^9}},ExpressionUUID->"3f771075-3959-49d2-bd7c-\
+3e06ba762671"],
 
 Cell[CellGroupData[{
 
@@ -45,9 +65,11 @@ Cell[BoxData[{
    3.6970546239830494`*^9, 3.697054624527726*^9}, 3.6992410726290536`*^9, {
    3.700325595304529*^9, 3.7003256167179265`*^9}, {3.703509161641718*^9, 
    3.7035091629491396`*^9}, {3.7035145784443846`*^9, 
-   3.7035145804999237`*^9}, {3.7035476759034925`*^9, 3.703547680292719*^9}}],
+   3.7035145804999237`*^9}, {3.7035476759034925`*^9, 
+   3.703547680292719*^9}},ExpressionUUID->"e88d8823-0382-4897-b985-\
+3061bd477621"],
 
-Cell[BoxData["$Aborted"], "Output",
+Cell[BoxData["\<\"/Users/atbecker/Desktop/git/robotica\"\>"], "Output",
  CellChangeTimes->{
   3.6969796299307413`*^9, {3.6969803130063334`*^9, 3.696980343119069*^9}, 
    3.696981102490391*^9, {3.6969843301180058`*^9, 3.696984353010298*^9}, 
@@ -99,7 +121,10 @@ Cell[BoxData["$Aborted"], "Output",
    3.703552699833106*^9}, {3.7035527693203206`*^9, 3.703552774076953*^9}, {
    3.703553022373843*^9, 3.7035530247339525`*^9}, 3.7035531731118865`*^9, 
    3.7035547573897133`*^9, 3.70355665442334*^9, 3.7168220242928143`*^9, 
-   3.716822381800259*^9, 3.716822436487317*^9, 3.716822536197318*^9}],
+   3.716822381800259*^9, 3.716822436487317*^9, 3.716822536197318*^9, {
+   3.743779860906715*^9, 3.7437798653458433`*^9}, {3.743779921662395*^9, 
+   3.7437799476642923`*^9}},ExpressionUUID->"211c3bc4-51c7-44ff-baa9-\
+bc1f3dafbd43"],
 
 Cell[BoxData[
  InterpretationBox[
@@ -107,9 +132,12 @@ Cell[BoxData[
    "\[InvisibleSpace]", "\<\".\"\>"}],
   SequenceForm["Robotica version ", "4.01", "."],
   Editable->False]], "Print",
- CellChangeTimes->{3.7035547575752716`*^9, 3.7035566547554426`*^9, 
-  3.716822024308387*^9, 3.716822381811458*^9, 3.716822436498667*^9, 
-  3.716822536209989*^9}]
+ CellChangeTimes->{
+  3.7035547575752716`*^9, 3.7035566547554426`*^9, 3.716822024308387*^9, 
+   3.716822381811458*^9, 3.716822436498667*^9, 3.716822536209989*^9, {
+   3.743779861048848*^9, 3.7437798653566113`*^9}, {3.743779921672523*^9, 
+   3.74377994767525*^9}},ExpressionUUID->"63a577a2-7949-4859-93f5-\
+15313bd023bd"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -156,7 +184,9 @@ Cell[BoxData[{
    3.7019771738085356`*^9}, {3.703509362636983*^9, 3.7035093645205865`*^9}, {
    3.7035094344828897`*^9, 3.7035094359958725`*^9}, {3.703528605824536*^9, 
    3.7035286478155212`*^9}, {3.703528683196057*^9, 3.7035286836261954`*^9}, {
-   3.7035290136070867`*^9, 3.703529013899866*^9}}],
+   3.7035290136070867`*^9, 
+   3.703529013899866*^9}},ExpressionUUID->"6fcc280c-f499-404a-8fe1-\
+26511151ec1f"],
 
 Cell[BoxData[
  TagBox[GridBox[{
@@ -193,24 +223,17 @@ Cell[BoxData[
    3.7035093689493732`*^9, 3.703509758074125*^9, {3.7035286217728453`*^9, 
    3.703528649888938*^9}, 3.7035286847940702`*^9, 3.703528899547545*^9, 
    3.7035290145814533`*^9, 3.716822026015964*^9, 3.716822325776026*^9, 
-   3.716822384702127*^9, 3.716822437906283*^9, 3.7168225505662518`*^9}]
+   3.716822384702127*^9, 3.716822437906283*^9, 3.7168225505662518`*^9, {
+   3.7437799235970707`*^9, 
+   3.7437799269067907`*^9}},ExpressionUUID->"cb3fea07-a393-4426-b393-\
+8432ccc6f75f"]
 }, Open  ]],
-
-Cell[CellGroupData[{
 
 Cell[BoxData[
  RowBox[{
   RowBox[{"FKin", "[", "]"}], ";", 
-  RowBox[{"SimplifyTrigNotation", "[", "]"}], ";"}]], "Input"],
-
-Cell[BoxData["\<\"\"\>"], "Print",
- CellChangeTimes->{3.6969803552930737`*^9, 3.6969805706954036`*^9, 
-  3.696980690256277*^9, 3.696980912539835*^9, 3.6970548875404663`*^9, 
-  3.697298724531295*^9, 3.6972995328096457`*^9, 3.699241088020439*^9, 
-  3.700481347513005*^9, 3.700481521208042*^9, 3.701979293926265*^9, 
-  3.7035091817946706`*^9, 3.7035289073817425`*^9, 3.716822387436655*^9, 
-  3.716822439320945*^9, 3.716822552553486*^9}]
-}, Open  ]],
+  RowBox[{"SimplifyTrigNotation", "[", "]"}], ";"}]], "Input",ExpressionUUID->\
+"e56dd4f7-df96-495a-ab31-fe998fb2cf72"],
 
 Cell[CellGroupData[{
 
@@ -222,7 +245,9 @@ Cell[BoxData[
    RowBox[{"{", 
     RowBox[{"i", ",", "1", ",", "3"}], "}"}]}], "]"}]], "Input",
  CellChangeTimes->{{3.7004813822859755`*^9, 3.7004813829341855`*^9}, {
-  3.7019792988667774`*^9, 3.7019792995159316`*^9}}],
+  3.7019792988667774`*^9, 
+  3.7019792995159316`*^9}},ExpressionUUID->"f3c316af-ac7f-4c4d-904f-\
+bab057dc1bb6"],
 
 Cell[BoxData[
  RowBox[{"{", 
@@ -304,7 +329,9 @@ Cell[BoxData[
   3.697298728476705*^9, 3.697299542885449*^9, 3.699241091955061*^9, 
   3.7004813841203427`*^9, 3.7004815259602647`*^9, 3.7019793004700985`*^9, 
   3.703509187039851*^9, 3.703528953205962*^9, 3.716822389208197*^9, 
-  3.716822440784383*^9, 3.716822555216177*^9}]
+  3.716822440784383*^9, 3.716822555216177*^9, 
+  3.743779956669414*^9},ExpressionUUID->"97f1eb95-4301-4d46-8cbf-\
+fc1dcc4041b1"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -315,7 +342,9 @@ Cell[BoxData[
    RowBox[{"T", "[", 
     RowBox[{"0", ",", "3"}], "]"}], "]"}], "//", "MatrixForm"}]], "Input",
  CellChangeTimes->{{3.7004814140264597`*^9, 3.7004814146599245`*^9}, {
-  3.701979307892233*^9, 3.7019793086567755`*^9}}],
+  3.701979307892233*^9, 
+  3.7019793086567755`*^9}},ExpressionUUID->"c4a1014f-b4fb-45c2-8997-\
+96b7e34c92f7"],
 
 Cell[BoxData[
  TagBox[
@@ -376,7 +405,9 @@ Cell[BoxData[
    3.6972995560316334`*^9, 3.6992411085552998`*^9, {3.7004813927389956`*^9, 
    3.7004814157602334`*^9}, 3.7004815331096916`*^9, 3.7019793095285378`*^9, 
    3.7035091902703843`*^9, 3.716822341009972*^9, 3.716822443453248*^9, 
-   3.71682255725985*^9}]
+   3.71682255725985*^9, 
+   3.74377995897304*^9},ExpressionUUID->"a24ce99d-2140-4f5b-b306-\
+8b0a4f1adde7"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -386,19 +417,21 @@ Cell[BoxData[
  CellChangeTimes->{{3.699241112452556*^9, 3.6992411334120665`*^9}, {
    3.6992415496464596`*^9, 3.6992416154939113`*^9}, 3.6992419010877104`*^9, {
    3.699242026065736*^9, 3.699242053921315*^9}, 3.6992732462005663`*^9, {
-   3.699273332309617*^9, 3.699273338129672*^9}, 3.7168224473353252`*^9}],
+   3.699273332309617*^9, 3.699273338129672*^9}, 
+   3.7168224473353252`*^9},ExpressionUUID->"8aa2a49a-170b-4ec3-9e91-\
+204dbe4b876a"],
 
 Cell[BoxData[
  TagBox[
   StyleBox[
-   DynamicModuleBox[{robotica`Private`g$$113$$ = 1, 
-    robotica`Private`params$$113$$ = {
-    0, Rational[9, 16] Pi, Rational[-1, 4] Pi, 0, 0, 0}, 
-    robotica`Private`showRobot$$113$$ = True, Typeset`show$$ = True, 
+   DynamicModuleBox[{robotica`Private`g$$ = 0.5700000000000001, 
+    robotica`Private`params$$ = {
+     Rational[17, 20], Rational[1, 8] Pi, 0}, robotica`Private`planei$$ = 0, 
+    robotica`Private`showRobot$$ = True, Typeset`show$$ = True, 
     Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
     Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
     "\"untitled\"", Typeset`specs$$ = {{{
-       Hold[FE`robotica`Private`params$$113], {0, 0, 0}}}, {
+       Hold[robotica`Private`params$$], {0, 0, 0}}}, {
       Hold[
        Dynamic[
         Grid[
@@ -408,36 +441,38 @@ Cell[BoxData[
              Subscript["d", robotica`Private`i$], 
              Slider[
               Dynamic[
-               Part[FE`robotica`Private`params$$113, robotica`Private`i$]], {
+               Part[robotica`Private`params$$, robotica`Private`i$]], {
               0, 1, 1/20}, ImageSize -> Small], 
              Dynamic[
-              Part[FE`robotica`Private`params$$113, robotica`Private`i$]]}, {
+              Part[robotica`Private`params$$, robotica`Private`i$]]}, {
              Subscript["\[Theta]", robotica`Private`i$], 
              Slider[
               Dynamic[
-               Part[FE`robotica`Private`params$$113, robotica`Private`i$]], {-
-               Pi, Pi, Pi/32}, ImageSize -> Small], 
+               Part[robotica`Private`params$$, robotica`Private`i$]], {-Pi, 
+               Pi, Pi/32}, ImageSize -> Small], 
              Dynamic[
-              Part[
-              FE`robotica`Private`params$$113, robotica`Private`i$]]}]], {
+              Part[robotica`Private`params$$, robotica`Private`i$]]}]], {
           robotica`Private`i, robotica`dof}]]]], 
       Manipulate`Dump`ThisIsNotAControl}, {{
-       Hold[FE`robotica`Private`g$$113], 1, "grip"}, 0, 1, 0.01}, {{
-       Hold[FE`robotica`Private`showRobot$$113], True, "show robot"}, {
-      True, False}}}, Typeset`size$$ = {425., {210., 215.}}, 
-    Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = False, 
-    robotica`Private`g$$113$79601$$ = 0, 
-    robotica`Private`showRobot$$113$79602$$ = False}, 
+       Hold[robotica`Private`g$$], 1, "grip"}, 0, 1, 0.01}, {{
+       Hold[robotica`Private`showRobot$$], True, "show robot"}, {
+      True, False}}, {{
+       Hold[robotica`Private`planei$$], 0, "xy Plane"}, 0, 3, 1}}, 
+    Typeset`size$$ = {425., {210., 215.}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = False, 
+    robotica`Private`g$6440$$ = 0, robotica`Private`showRobot$6441$$ = False, 
+    robotica`Private`planei$6442$$ = 0}, 
     DynamicBox[Manipulate`ManipulateBoxes[
      1, StandardForm, 
       "Variables" :> {
-       robotica`Private`g$$113$$ = 1, 
-        robotica`Private`params$$113$$ = {0, 0, 0}, 
-        robotica`Private`showRobot$$113$$ = True}, "ControllerVariables" :> {
-        Hold[robotica`Private`g$$113$$, robotica`Private`g$$113$79601$$, 0], 
+       robotica`Private`g$$ = 1, robotica`Private`params$$ = {0, 0, 0}, 
+        robotica`Private`planei$$ = 0, robotica`Private`showRobot$$ = True}, 
+      "ControllerVariables" :> {
+        Hold[robotica`Private`g$$, robotica`Private`g$6440$$, 0], 
         Hold[
-        robotica`Private`showRobot$$113$$, 
-         robotica`Private`showRobot$$113$79602$$, False]}, 
+        robotica`Private`showRobot$$, robotica`Private`showRobot$6441$$, 
+         False], 
+        Hold[robotica`Private`planei$$, robotica`Private`planei$6442$$, 0]}, 
       "OtherVariables" :> {
        Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
         Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
@@ -461,14 +496,14 @@ Cell[BoxData[
          robotica`Private`Ad$ = Table[
             If[robotica`jointtype[robotica`Private`i$] == "prismatic", 
              robotica`dhTransform[
-              Part[robotica`Private`params$$113$$, robotica`Private`i$], 
+              Part[robotica`Private`params$$, robotica`Private`i$], 
               robotica`a[robotica`Private`i$], 
               robotica`theta[robotica`Private`i$], 
               robotica`alpha[robotica`Private`i$]], 
              robotica`dhTransform[
               robotica`d[robotica`Private`i$], 
               robotica`a[robotica`Private`i$], 
-              Part[robotica`Private`params$$113$$, robotica`Private`i$], 
+              Part[robotica`Private`params$$, robotica`Private`i$], 
               robotica`alpha[robotica`Private`i$]]], {
             robotica`Private`i$, 1, robotica`dof}]; 
          For[robotica`Private`j$ = 1, robotica`Private`j$ <= robotica`dof, 
@@ -497,18 +532,24 @@ Cell[BoxData[
               robotica`jointtype[1], 
               robotica`d[1], 
               robotica`a[1], 
-              Part[robotica`Private`params$$113$$, 1]], 
+              Part[robotica`Private`params$$, 1], 
+              OptionValue[
+              robotica`drawRobot, {}, robotica`Private`showArrows]], 
              robotica`drawJoint[
               robotica`jointtype[1], 
-              Part[robotica`Private`params$$113$$, 1], 
+              Part[robotica`Private`params$$, 1], 
               robotica`a[1], 
-              robotica`theta[1]]], 
+              robotica`theta[1]], 
+             OptionValue[
+             robotica`drawRobot, {}, robotica`Private`showArrows]], 
             If[robotica`dof == 1, 
              GeometricTransformation[
-              robotica`drawGripper[robotica`Private`g$$113$$, 0], 
+              robotica`drawGripper[robotica`Private`g$$, 0, 
+               OptionValue[
+               robotica`drawRobot, {}, robotica`Private`showArrows]], 
               Chop[
                robotica`Td$[robotica`dof]]], 
-             If[robotica`Private`showRobot$$113$$, 
+             If[robotica`Private`showRobot$$, 
               Table[
                If[robotica`jointtype[robotica`Private`i$] == "revolute", 
                 GeometricTransformation[
@@ -516,45 +557,55 @@ Cell[BoxData[
                   robotica`jointtype[robotica`Private`i$], 
                   robotica`d[robotica`Private`i$], 
                   robotica`a[robotica`Private`i$], 
-                  Part[robotica`Private`params$$113$$, robotica`Private`i$]], 
+                  Part[robotica`Private`params$$, robotica`Private`i$], 
+                  OptionValue[
+                  robotica`drawRobot, {}, robotica`Private`showArrows]], 
                  robotica`Td$[robotica`Private`i$ - 1]], 
                 GeometricTransformation[
                  robotica`drawJoint[
                   robotica`jointtype[robotica`Private`i$], 
-                  Part[robotica`Private`params$$113$$, robotica`Private`i$], 
+                  Part[robotica`Private`params$$, robotica`Private`i$], 
                   robotica`a[robotica`Private`i$], 
-                  robotica`theta[robotica`Private`i$]], 
+                  robotica`theta[robotica`Private`i$], 
+                  OptionValue[
+                  robotica`drawRobot, {}, robotica`Private`showArrows]], 
                  robotica`Td$[robotica`Private`i$ - 1]]], {
-               robotica`Private`i$, 2, robotica`dof}]], 
-             If[robotica`jointtype[robotica`dof] == "revolute", 
-              GeometricTransformation[
-               robotica`drawShaft[
-                robotica`jointtype[robotica`dof], 
-                robotica`d[robotica`dof], 
-                robotica`a[robotica`dof], 
-                Part[robotica`Private`params$$113$$, robotica`dof]], 
-               robotica`Td$[robotica`dof - 1]], 
-              GeometricTransformation[
-               robotica`drawShaft[
-                robotica`jointtype[robotica`dof], 
-                Part[robotica`Private`params$$113$$, robotica`dof], 
-                robotica`a[robotica`dof], 
-                robotica`theta[robotica`dof]], 
-               Chop[
-                robotica`Td$[robotica`dof - 1]]]]], 
+               robotica`Private`i$, 2, robotica`dof}]]], 
             GeometricTransformation[
-             robotica`drawGripper[robotica`Private`g$$113$$, 0], 
+             robotica`drawGripper[robotica`Private`g$$, 0, 
+              OptionValue[
+              robotica`drawRobot, {}, robotica`Private`showArrows]], 
              Chop[
               robotica`Td$[robotica`dof]]], 
-            Text[
-             StringForm[
-             "\!\(\*\nStyleBox[\"H\",\nFontSlant->\"Italic\"]\)=``", 
-              MatrixForm[
-               N[
-                Chop[
-                 robotica`Td$[robotica`dof]], 2]]], {0, 0, -3.2}]}, 
+            If[
+             OptionValue[robotica`drawRobot, {}, robotica`Private`showPlanes], 
+             GeometricTransformation[{Thick, {Blue, 
+                Rotate[
+                 robotica`drawZArrow[1/2], Pi/2, {0, 1, 0}], 
+                Text[
+                 Subscript["x", robotica`Private`planei$$], {0.9, 0.2, 0}]}, {
+               Green, 
+                Rotate[
+                 robotica`drawZArrow[1/2], -Pi/2, {1, 0, 0}], 
+                Text[
+                 Subscript["y", robotica`Private`planei$$], {0.2, 0.9, 0}]}, 
+               Blue, 
+               Opacity[0.2], 
+               Polygon[{{-1, -1, 0}, {-1, 1, 0}, {1, 1, 0}, {1, -1, 0}}]}, 
+              If[robotica`Private`planei$$ > 0, 
+               robotica`Td$[robotica`Private`planei$$], 
+               robotica`dhTransform[0, 0, 0, 0]]]], 
+            If[
+             OptionValue[robotica`drawRobot, {}, robotica`Private`showH], 
+             Text[
+              StringForm[
+              "\!\(\*\nStyleBox[\"H\",\nFontSlant->\"Italic\"]\)=``", 
+               MatrixForm[
+                N[
+                 Chop[
+                  robotica`Td$[robotica`dof]], 2]]], {0, 0, -3.2}]]}, 
            SphericalRegion -> True, ImageSize -> 425, Boxed -> False]]), 
-      "Specifications" :> {{{robotica`Private`params$$113$$, {0, 0, 0}}, 
+      "Specifications" :> {{{robotica`Private`params$$, {0, 0, 0}}, 
          ControlType -> None}, 
         Dynamic[
          Grid[
@@ -564,25 +615,25 @@ Cell[BoxData[
               Subscript["d", robotica`Private`i$], 
               Slider[
                Dynamic[
-                Part[robotica`Private`params$$113$$, robotica`Private`i$]], {
+                Part[robotica`Private`params$$, robotica`Private`i$]], {
                0, 1, 1/20}, ImageSize -> Small], 
               Dynamic[
-               Part[robotica`Private`params$$113$$, robotica`Private`i$]]}, {
+               Part[robotica`Private`params$$, robotica`Private`i$]]}, {
               Subscript["\[Theta]", robotica`Private`i$], 
               Slider[
                Dynamic[
-                Part[robotica`Private`params$$113$$, robotica`Private`i$]], {-
-                Pi, Pi, Pi/32}, ImageSize -> Small], 
+                Part[robotica`Private`params$$, robotica`Private`i$]], {-Pi, 
+                Pi, Pi/32}, ImageSize -> Small], 
               Dynamic[
-               Part[
-               robotica`Private`params$$113$$, robotica`Private`i$]]}]], {
+               Part[robotica`Private`params$$, robotica`Private`i$]]}]], {
            robotica`Private`i, robotica`dof}]]], 
-        Delimiter, {{robotica`Private`g$$113$$, 1, "grip"}, 0, 1, 0.01, 
-         ImageSize -> Small, Appearance -> "Labeled"}, {{
-         robotica`Private`showRobot$$113$$, True, "show robot"}, {
-         True, False}}}, "Options" :> {ControlPlacement -> Left}, 
-      "DefaultOptions" :> {}],
-     ImageSizeCache->{675., {238., 244.}},
+        Delimiter, {{robotica`Private`g$$, 1, "grip"}, 0, 1, 0.01, ImageSize -> 
+         Small, Appearance -> "Labeled"}, {{
+         robotica`Private`showRobot$$, True, "show robot"}, {True, False}}, {{
+         robotica`Private`planei$$, 0, "xy Plane"}, 0, 3, 1, ImageSize -> 
+         Small, Appearance -> "Labeled", ControlType -> None}}, 
+      "Options" :> {ControlPlacement -> Left}, "DefaultOptions" :> {}],
+     ImageSizeCache->{675., {240., 245.}},
      SingleEvaluation->True],
     Deinitialization:>None,
     DynamicModuleValues:>{},
@@ -590,19 +641,13 @@ Cell[BoxData[
       Attributes[Subsuperscript] = {NHoldRest, ReadProtected}, 
        Attributes[robotica`Private`jr$] = {Temporary}, 
        Attributes[robotica`Private`ar$] = {Temporary}, 
-       Attributes[robotica`Private`Ad$] = {Temporary}, 
-       Attributes[robotica`Td$] = {Temporary}, 
-       Attributes[robotica`Private`Ts$] = {Temporary}, 
        Attributes[robotica`Private`j$] = {Temporary}, 
        Attributes[robotica`Private`i$] = {Temporary}, 
-       Attributes[robotica`Private`ii$] = {Temporary}, 
-       Attributes[robotica`Private`jj$] = {Temporary}, 
-       Attributes[robotica`Private`Tv$] = {Temporary}, robotica`jointtype[1] = 
+       Attributes[robotica`Private`ii$] = {Temporary}, robotica`jointtype[1] = 
        "prismatic", robotica`jointtype[2] = "revolute", robotica`jointtype[3] = 
-       "revolute", robotica`jointtype[4] = "revolute", robotica`jointtype[5] = 
-       "revolute", robotica`jointtype[6] = "revolute", robotica`jointtype[7] = 
-       "revolute", robotica`jointtype[8] = "revolute", robotica`jointtype[9] = 
-       "revolute", 
+       "revolute", robotica`jointtype[4] = "0", robotica`jointtype[5] = "0", 
+       robotica`jointtype[6] = "0", robotica`jointtype[7] = "revolute", 
+       robotica`jointtype[8] = "revolute", robotica`jointtype[9] = "revolute", 
        TagSet[robotica`jointtype, 
         MessageName[robotica`jointtype, "usage"], ""], robotica`dhTransform[
          Pattern[robotica`d, 
@@ -620,7 +665,7 @@ Cell[BoxData[
        TagSet[robotica`dhTransform, 
         MessageName[robotica`dhTransform, "usage"], ""], robotica`d[1] = 
        Subsuperscript["d", 1, "*"], robotica`d[2] = 0, robotica`d[3] = 0, 
-       robotica`d[4] = 0, robotica`d[5] = 0, robotica`d[6] = 1, robotica`d[7] = 
+       robotica`d[4] = 0, robotica`d[5] = 0, robotica`d[6] = 0, robotica`d[7] = 
        1/2, robotica`d[8] = 1/2, robotica`d[9] = 1/2, 
        TagSet[robotica`d, 
         MessageName[robotica`d, "usage"], ""], 
@@ -633,27 +678,23 @@ Cell[BoxData[
        TagSet[robotica`\[Theta], 
         MessageName[robotica`\[Theta], "usage"], ""], 
        TagSet[robotica`\[Alpha], 
-        MessageName[robotica`\[Alpha], "usage"], ""], 
-       robotica`Private`params$$113$$ = {0, 0, 0, 0, 0, 0}, robotica`a[1] = 1,
-        robotica`a[2] = 0, robotica`a[3] = 1, robotica`a[4] = 0, 
-       robotica`a[5] = 0, robotica`a[6] = 0, robotica`a[7] = 0, robotica`a[8] = 
-       0, robotica`a[9] = 0, 
+        MessageName[robotica`\[Alpha], "usage"], ""], robotica`a[1] = 1, 
+       robotica`a[2] = 0, robotica`a[3] = 1, robotica`a[4] = 0, robotica`a[5] = 
+       0, robotica`a[6] = 0, robotica`a[7] = 0, robotica`a[8] = 0, 
+       robotica`a[9] = 0, 
        TagSet[robotica`a, 
         MessageName[robotica`a, "usage"], ""], robotica`theta[1] = 0, 
        robotica`theta[2] = $CellContext`q2, 
-       robotica`theta[3] = $CellContext`q3, 
-       robotica`theta[4] = $CellContext`q4, 
-       robotica`theta[5] = $CellContext`q5, 
-       robotica`theta[6] = $CellContext`q6, 
+       robotica`theta[3] = $CellContext`q3, robotica`theta[4] = 0, 
+       robotica`theta[5] = 0, robotica`theta[6] = 0, 
        robotica`theta[7] = $CellContext`q7, 
        robotica`theta[8] = $CellContext`q8, 
        robotica`theta[9] = $CellContext`q9, 
        TagSet[robotica`theta, 
         MessageName[robotica`theta, "usage"], ""], robotica`alpha[1] = Pi/2, 
-       robotica`alpha[2] = Pi/2, robotica`alpha[3] = 0, 
-       robotica`alpha[4] = -Pi/2, robotica`alpha[5] = Pi/2, robotica`alpha[6] = 
-       0, robotica`alpha[7] = 0, robotica`alpha[8] = Pi/2, robotica`alpha[9] = 
-       0, 
+       robotica`alpha[2] = Pi/2, robotica`alpha[3] = 0, robotica`alpha[4] = 0,
+        robotica`alpha[5] = 0, robotica`alpha[6] = 0, robotica`alpha[7] = 0, 
+       robotica`alpha[8] = Pi/2, robotica`alpha[9] = 0, 
        TagSet[robotica`alpha, 
         MessageName[robotica`alpha, "usage"], ""], robotica`dof = 3, 
        TagSet[robotica`dof, 
@@ -676,6 +717,7 @@ Cell[BoxData[
             Cuboid[{-robotica`Private`ar, -robotica`Private`ar, -1 + 
               robotica`d - robotica`Private`jr - 0.01}, {
              robotica`Private`ar, robotica`Private`ar, robotica`d + 0.01}], 
+            
             Cylinder[{{
               0, 0, Min[-robotica`Private`ar, robotica`d - 
                  robotica`Private`jr] - 0.01}, {
@@ -774,7 +816,168 @@ Cell[BoxData[
            0, 0, 2 robotica`Private`jr}, {
            0, (-1)/32, (3 robotica`Private`jr)/2}}}], 
        TagSet[robotica`drawZArrow, 
-        MessageName[robotica`drawZArrow, "usage"], ""], robotica`drawGripper[
+        MessageName[robotica`drawZArrow, "usage"], ""], robotica`drawRobot[
+         OptionsPattern[]] := Manipulate[Chop[
+           Out[], 10^(-10)]; 
+         Module[{robotica`Private`jr$ = 1/10, robotica`Private`ar$ = 1/40, 
+            robotica`Private`Ad$, robotica`Td$, robotica`Private`Ts$, 
+            robotica`Private`j$, robotica`Private`i$, robotica`Private`ii$, 
+            robotica`Private`jj$, robotica`Private`Tv$}, 
+           robotica`Private`Ad$ = Table[
+              If[robotica`jointtype[robotica`Private`i$] == "prismatic", 
+               robotica`dhTransform[
+                Part[robotica`Private`params$$, robotica`Private`i$], 
+                robotica`a[robotica`Private`i$], 
+                robotica`theta[robotica`Private`i$], 
+                robotica`alpha[robotica`Private`i$]], 
+               robotica`dhTransform[
+                robotica`d[robotica`Private`i$], 
+                robotica`a[robotica`Private`i$], 
+                Part[robotica`Private`params$$, robotica`Private`i$], 
+                robotica`alpha[robotica`Private`i$]]], {
+              robotica`Private`i$, 1, robotica`dof}]; 
+           For[robotica`Private`j$ = 1, robotica`Private`j$ <= robotica`dof, 
+             Increment[robotica`Private`j$], 
+             robotica`Private`Tv$ = robotica`dhTransform[0, 0, 0, 0]; 
+             robotica`Private`Ts$ = robotica`dhTransform[0, 0, 0, 0]; 
+             For[
+              robotica`Private`i$ = 1, robotica`Private`i$ <= 
+               robotica`Private`j$, 
+               Increment[robotica`Private`i$], robotica`Private`Ts$ = 
+               Dot[robotica`Private`Ts$, 
+                 Part[robotica`Private`Ad$, robotica`Private`i$]]]; 
+             For[robotica`Private`ii$ = 1, robotica`Private`ii$ <= 4, 
+               Increment[robotica`Private`ii$], 
+               For[robotica`Private`jj$ = 1, robotica`Private`jj$ <= 4, 
+                 Increment[robotica`Private`jj$], 
+                 Part[robotica`Private`Tv$, 1, robotica`Private`ii$, 
+                    robotica`Private`jj$] = Chop[
+                    Part[
+                    robotica`Private`Ts$, 1, robotica`Private`ii$, 
+                    robotica`Private`jj$]]; Null]; Null]; 
+             robotica`Td$[robotica`Private`j$] = robotica`Private`Tv$; Null]; 
+           Graphics3D[{{LightBrown, 
+               Cylinder[{{0, 0, (-2)/5}, {0, 0, (-1)/5 - 1/20}}, 2.2]}, 
+              If[robotica`jointtype[1] == "revolute", 
+               robotica`drawJoint[
+                robotica`jointtype[1], 
+                robotica`d[1], 
+                robotica`a[1], 
+                Part[robotica`Private`params$$, 1], 
+                OptionValue[robotica`Private`showArrows]], 
+               robotica`drawJoint[
+                robotica`jointtype[1], 
+                Part[robotica`Private`params$$, 1], 
+                robotica`a[1], 
+                robotica`theta[1]], 
+               OptionValue[robotica`Private`showArrows]], 
+              If[robotica`dof == 1, 
+               GeometricTransformation[
+                robotica`drawGripper[robotica`Private`g$$, 0, 
+                 OptionValue[robotica`Private`showArrows]], 
+                Chop[
+                 robotica`Td$[robotica`dof]]], 
+               If[robotica`Private`showRobot$$, 
+                Table[
+                 If[robotica`jointtype[robotica`Private`i$] == "revolute", 
+                  GeometricTransformation[
+                   robotica`drawJoint[
+                    robotica`jointtype[robotica`Private`i$], 
+                    robotica`d[robotica`Private`i$], 
+                    robotica`a[robotica`Private`i$], 
+                    Part[robotica`Private`params$$, robotica`Private`i$], 
+                    OptionValue[robotica`Private`showArrows]], 
+                   robotica`Td$[robotica`Private`i$ - 1]], 
+                  GeometricTransformation[
+                   robotica`drawJoint[
+                    robotica`jointtype[robotica`Private`i$], 
+                    Part[robotica`Private`params$$, robotica`Private`i$], 
+                    robotica`a[robotica`Private`i$], 
+                    robotica`theta[robotica`Private`i$], 
+                    OptionValue[robotica`Private`showArrows]], 
+                   robotica`Td$[robotica`Private`i$ - 1]]], {
+                 robotica`Private`i$, 2, robotica`dof}]]], 
+              GeometricTransformation[
+               robotica`drawGripper[robotica`Private`g$$, 0, 
+                OptionValue[robotica`Private`showArrows]], 
+               Chop[
+                robotica`Td$[robotica`dof]]], 
+              If[
+               OptionValue[robotica`Private`showPlanes], 
+               GeometricTransformation[{Thick, {Blue, 
+                  Rotate[
+                   robotica`drawZArrow[1/2], Pi/2, {0, 1, 0}], 
+                  Text[
+                   Subscript["x", robotica`Private`planei$$], {
+                   0.9, 0.2, 0}]}, {Green, 
+                  Rotate[
+                   robotica`drawZArrow[1/2], -(Pi/2), {1, 0, 0}], 
+                  Text[
+                   Subscript["y", robotica`Private`planei$$], {0.2, 0.9, 0}]},
+                  Blue, 
+                 Opacity[0.2], 
+                 Polygon[{{-1, -1, 0}, {-1, 1, 0}, {1, 1, 0}, {1, -1, 0}}]}, 
+                If[robotica`Private`planei$$ > 0, 
+                 robotica`Td$[robotica`Private`planei$$], 
+                 robotica`dhTransform[0, 0, 0, 0]]]], 
+              If[
+               OptionValue[robotica`Private`showH], 
+               Text[
+                StringForm[
+                "\!\(\*\nStyleBox[\"H\",\nFontSlant->\"Italic\"]\)=``", 
+                 MatrixForm[
+                  N[
+                   Chop[
+                    robotica`Td$[robotica`dof]], 2]]], {0, 0, -3.2}]]}, 
+             SphericalRegion -> True, ImageSize -> 425, Boxed -> False]], {{
+          robotica`Private`params$$, 
+           ConstantArray[0, robotica`dof]}, ControlType -> None}, 
+         Dynamic[
+          Grid[
+           Table[
+            With[{robotica`Private`i$ = robotica`Private`i}, 
+             If[robotica`jointtype[robotica`Private`i$] == "prismatic", {
+               Subscript["d", robotica`Private`i$], 
+               Slider[
+                Dynamic[
+                 Part[robotica`Private`params$$, robotica`Private`i$]], {
+                0, 1, 1/20}, ImageSize -> Small], 
+               Dynamic[
+                Part[robotica`Private`params$$, robotica`Private`i$]]}, {
+               Subscript["\[Theta]", robotica`Private`i$], 
+               Slider[
+                Dynamic[
+                 Part[robotica`Private`params$$, robotica`Private`i$]], {-Pi, 
+                 Pi, Pi/32}, ImageSize -> Small], 
+               Dynamic[
+                Part[robotica`Private`params$$, robotica`Private`i$]]}]], {
+            robotica`Private`i, robotica`dof}]]], 
+         Delimiter, {{robotica`Private`g$$, 1, "grip"}, 0, 1, 0.01, ImageSize -> 
+          Small, Appearance -> "Labeled"}, {{
+          robotica`Private`showRobot$$, True, "show robot"}, {
+          True, False}}, {{robotica`Private`planei$$, 0, "xy Plane"}, 0, 
+          robotica`dof, 1, ImageSize -> Small, Appearance -> "Labeled", 
+          ControlType -> If[
+            OptionValue[robotica`Private`showPlanes], Slider, None]}, 
+         ControlPlacement -> Left, SaveDefinitions -> True], 
+       Options[robotica`drawRobot] = {
+        robotica`Private`showArrows -> True, robotica`Private`showH -> True, 
+         robotica`Private`showManipEllipse -> False, 
+         robotica`Private`showPlanes -> False}, 
+       TagSet[robotica`drawRobot, 
+        MessageName[robotica`drawRobot, "shdw"], 
+        "Symbol `1` appears in multiple contexts `2`; definitions in context \
+`3` may shadow or be shadowed by other definitions."], 
+       TagSet[robotica`drawRobot, 
+        MessageName[robotica`drawRobot, "usage"], 
+        "drawRobot[] displays a manipulate window and the robot so users can \
+adjust on joint parameters.\nOptional parameters:\nshowArrows displays the \
+coordinate axes,\nshowH writes the homogenous transform,\nshowManipEllipse-> \
+False, \nshowPlanes displays a controller to show the xy plane at each axis \
+(useful for inverse kinematics)\n"], 
+       TagSet[robotica`Td, 
+        MessageName[robotica`Td, "usage"], ""], robotica`Private`i = 4, 
+       robotica`drawGripper[
          Pattern[robotica`Private`g, 
           Blank[]], 
          Pattern[robotica`r, 
@@ -787,30 +990,33 @@ Cell[BoxData[
               robotica`Private`ar}, {
              0, robotica`Private`ar, 4 robotica`Private`ar}], 
             
-            Cuboid[{0 robotica`Private`ar, -robotica`Private`ar, 
-              robotica`Private`g 2 robotica`Private`ar}, {
-             4 robotica`Private`ar, robotica`Private`ar, 
-              2 (1 + robotica`Private`g) robotica`Private`ar}], 
+            Cuboid[{0 robotica`Private`ar, -
+              robotica`Private`ar, (robotica`Private`g 2) 
+              robotica`Private`ar}, {
+             4 robotica`Private`ar, 
+              robotica`Private`ar, (2 (1 + robotica`Private`g)) 
+              robotica`Private`ar}], 
             
             Cuboid[{0 robotica`Private`ar, -
-              robotica`Private`ar, -(robotica`Private`g 2 
+              robotica`Private`ar, -((robotica`Private`g 2) 
                robotica`Private`ar)}, {
              4 robotica`Private`ar, 
-              robotica`Private`ar, (-2) (1 + robotica`Private`g) 
+              robotica`Private`ar, ((-2) (1 + robotica`Private`g)) 
               robotica`Private`ar}]}, {Gray, 
             
             Cuboid[{(-4) robotica`Private`ar, -robotica`Private`ar, (-2) 
               robotica`Private`ar}, {
              4 robotica`Private`ar, robotica`Private`ar, 0}], 
             
-            Cuboid[{robotica`Private`g 2 robotica`Private`ar, -
-              robotica`Private`ar, 0 robotica`Private`ar}, {
-             2 (1 + robotica`Private`g) robotica`Private`ar, 
-              robotica`Private`ar, 4 robotica`Private`ar}], 
-            
-            Cuboid[{-(robotica`Private`g 2 robotica`Private`ar), -
+            Cuboid[{(robotica`Private`g 2) robotica`Private`ar, -
               robotica`Private`ar, 0 
-              robotica`Private`ar}, {(-2) (1 + robotica`Private`g) 
+              robotica`Private`ar}, {(2 (1 + robotica`Private`g)) 
+              robotica`Private`ar, robotica`Private`ar, 4 
+              robotica`Private`ar}], 
+            
+            Cuboid[{-((robotica`Private`g 2) robotica`Private`ar), -
+              robotica`Private`ar, 0 
+              robotica`Private`ar}, {((-2) (1 + robotica`Private`g)) 
               robotica`Private`ar, robotica`Private`ar, 4 
               robotica`Private`ar}]}]}], robotica`drawGripper[
          Pattern[robotica`Private`g, 
@@ -850,7 +1056,6 @@ Cell[BoxData[
               robotica`Private`ar, 0 robotica`Private`ar}, {
              2 (1 + robotica`Private`g) robotica`Private`ar, 
               robotica`Private`ar, 4 robotica`Private`ar}], 
-            
             Cuboid[{-(robotica`Private`g 2 robotica`Private`ar), -
               robotica`Private`ar, 0 
               robotica`Private`ar}, {(-2) (1 + robotica`Private`g) 
@@ -858,32 +1063,7 @@ Cell[BoxData[
               robotica`Private`ar}]}]}], 
        TagSet[robotica`drawGripper, 
         MessageName[robotica`drawGripper, "usage"], ""], 
-       robotica`Private`g$$113$$ = 1, robotica`Private`showRobot$$113$$ = 
-       True, robotica`drawShaft[
-         Pattern[robotica`Private`j, 
-          Blank[]], 
-         Pattern[robotica`d, 
-          Blank[]], 
-         Pattern[robotica`r, 
-          Blank[]], 
-         Pattern[robotica`\[Theta], 
-          Blank[]]] := 
-       Module[{robotica`Private`jr = 1/5, robotica`Private`ar = 1/20}, {
-          Opacity[1], {
-           Opacity[0.5], Gray, 
-           If[robotica`Private`j == "prismatic", 
-            Cuboid[{-robotica`Private`ar, -robotica`Private`ar, -1 + 
-              robotica`d - robotica`Private`jr - 0.01}, {
-             robotica`Private`ar, robotica`Private`ar, robotica`d + 0.01}], 
-            
-            Cylinder[{{
-              0, 0, Min[-robotica`Private`ar, robotica`d - 
-                 robotica`Private`jr] - 0.01}, {
-              0, 0, Max[robotica`Private`ar, robotica`d] + 0.01}}, 
-             robotica`Private`ar]]}}], 
-       TagSet[robotica`drawShaft, 
-        MessageName[robotica`drawShaft, "usage"], ""], robotica`Private`i = 4,
-        Attributes[Subscript] = {NHoldRest}}; Typeset`initDone$$ = True),
+       Attributes[Subscript] = {NHoldRest}}; Typeset`initDone$$ = True),
     SynchronousInitialization->True,
     UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
     UnsavedVariables:>{Typeset`initDone$$},
@@ -893,7 +1073,9 @@ Cell[BoxData[
   Manipulate`InterpretManipulate[1]]], "Output",
  CellChangeTimes->{3.70350927733841*^9, 3.703509373488826*^9, 
   3.703556679739443*^9, 3.7168220291001663`*^9, 3.716822449488749*^9, 
-  3.71682255945792*^9}]
+  3.71682255945792*^9, 
+  3.743779962095625*^9},ExpressionUUID->"f5842945-3918-4992-815f-\
+5a1646c86c5e"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -901,18 +1083,18 @@ Cell[CellGroupData[{
 Cell[BoxData[
  RowBox[{"drawRobot3", "[", "]"}]], "Input",
  CellChangeTimes->{{3.703509320169181*^9, 3.7035093367634897`*^9}, 
-   3.71682245357292*^9}],
+   3.71682245357292*^9},ExpressionUUID->"e1fbf071-c48a-4021-b8a3-\
+7cb3d408ba95"],
 
 Cell[BoxData[
  TagBox[
   StyleBox[
-   DynamicModuleBox[{robotica`Private`g$$ = 1, robotica`Private`params$$ = {
-    0, Rational[1, 2] Pi, Rational[-7, 32] Pi}, 
-    robotica`Private`showJacobian$$ = True, robotica`Private`showJacobianw$$ =
-     True, robotica`Private`showRobot$$ = True, Typeset`show$$ = True, 
-    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
-    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
-    "\"untitled\"", Typeset`specs$$ = {{{
+   DynamicModuleBox[{robotica`Private`g$$ = 1., robotica`Private`params$$ = {
+    1, Rational[17, 32] Pi, 0}, robotica`Private`showJacobian$$ = True, 
+    robotica`Private`showJacobianw$$ = False, robotica`Private`showRobot$$ = 
+    True, Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
        Hold[robotica`Private`params$$], {0, 0, 0}}}, {
       Hold[
        Dynamic[
@@ -946,11 +1128,11 @@ Cell[BoxData[
       True, False}}, {{
        Hold[robotica`Private`showJacobianw$$], True, "\[Sum]w"}, {
       True, False}}}, Typeset`size$$ = {
-    425., {263.634033203125, 269.365966796875}}, Typeset`update$$ = 0, 
+    425., {267.134033203125, 272.865966796875}}, Typeset`update$$ = 0, 
     Typeset`initDone$$, Typeset`skipInitDone$$ = False, 
-    robotica`Private`g$71970$$ = 0, robotica`Private`showRobot$71971$$ = 
-    False, robotica`Private`showJacobian$71972$$ = False, 
-    robotica`Private`showJacobianw$71973$$ = False}, 
+    robotica`Private`g$11179$$ = 0, robotica`Private`showRobot$11180$$ = 
+    False, robotica`Private`showJacobian$11181$$ = False, 
+    robotica`Private`showJacobianw$11182$$ = False}, 
     DynamicBox[Manipulate`ManipulateBoxes[
      1, StandardForm, 
       "Variables" :> {
@@ -958,16 +1140,16 @@ Cell[BoxData[
         robotica`Private`showJacobian$$ = True, 
         robotica`Private`showJacobianw$$ = True, robotica`Private`showRobot$$ = 
         True}, "ControllerVariables" :> {
-        Hold[robotica`Private`g$$, robotica`Private`g$71970$$, 0], 
+        Hold[robotica`Private`g$$, robotica`Private`g$11179$$, 0], 
         Hold[
-        robotica`Private`showRobot$$, robotica`Private`showRobot$71971$$, 
+        robotica`Private`showRobot$$, robotica`Private`showRobot$11180$$, 
          False], 
         Hold[
         robotica`Private`showJacobian$$, 
-         robotica`Private`showJacobian$71972$$, False], 
+         robotica`Private`showJacobian$11181$$, False], 
         Hold[
         robotica`Private`showJacobianw$$, 
-         robotica`Private`showJacobianw$71973$$, False]}, 
+         robotica`Private`showJacobianw$11182$$, False]}, 
       "OtherVariables" :> {
        Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
         Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
@@ -1292,7 +1474,7 @@ FontSlant->\"Italic\"]\)=``",
          robotica`Private`showJacobian$$, True, "\[Sum]v"}, {True, False}}, {{
          robotica`Private`showJacobianw$$, True, "\[Sum]w"}, {True, False}}}, 
       "Options" :> {ControlPlacement -> Left}, "DefaultOptions" :> {}],
-     ImageSizeCache->{675., {293., 298.}},
+     ImageSizeCache->{675., {298., 303.}},
      SingleEvaluation->True],
     Deinitialization:>None,
     DynamicModuleValues:>{},
@@ -1355,7 +1537,8 @@ FontSlant->\"Italic\"]\)=``",
        TagSet[robotica`alpha, 
         MessageName[robotica`alpha, "usage"], ""], robotica`dof = 3, 
        TagSet[robotica`dof, 
-        MessageName[robotica`dof, "usage"], ""], robotica`\[Mu]v = 0., 
+        MessageName[robotica`dof, "usage"], ""], robotica`\[Mu]v = 
+       0.3570602194441534, 
        TagSet[robotica`\[Mu]v, 
         MessageName[robotica`\[Mu]v, "usage"], ""], robotica`splineCircle[
          Pattern[robotica`Private`m, 
@@ -1566,30 +1749,33 @@ FontSlant->\"Italic\"]\)=``",
               robotica`Private`ar}, {
              0, robotica`Private`ar, 4 robotica`Private`ar}], 
             
-            Cuboid[{0 robotica`Private`ar, -robotica`Private`ar, 
-              robotica`Private`g 2 robotica`Private`ar}, {
-             4 robotica`Private`ar, robotica`Private`ar, 
-              2 (1 + robotica`Private`g) robotica`Private`ar}], 
+            Cuboid[{0 robotica`Private`ar, -
+              robotica`Private`ar, (robotica`Private`g 2) 
+              robotica`Private`ar}, {
+             4 robotica`Private`ar, 
+              robotica`Private`ar, (2 (1 + robotica`Private`g)) 
+              robotica`Private`ar}], 
             
             Cuboid[{0 robotica`Private`ar, -
-              robotica`Private`ar, -(robotica`Private`g 2 
+              robotica`Private`ar, -((robotica`Private`g 2) 
                robotica`Private`ar)}, {
              4 robotica`Private`ar, 
-              robotica`Private`ar, (-2) (1 + robotica`Private`g) 
+              robotica`Private`ar, ((-2) (1 + robotica`Private`g)) 
               robotica`Private`ar}]}, {Gray, 
             
             Cuboid[{(-4) robotica`Private`ar, -robotica`Private`ar, (-2) 
               robotica`Private`ar}, {
              4 robotica`Private`ar, robotica`Private`ar, 0}], 
             
-            Cuboid[{robotica`Private`g 2 robotica`Private`ar, -
-              robotica`Private`ar, 0 robotica`Private`ar}, {
-             2 (1 + robotica`Private`g) robotica`Private`ar, 
-              robotica`Private`ar, 4 robotica`Private`ar}], 
-            
-            Cuboid[{-(robotica`Private`g 2 robotica`Private`ar), -
+            Cuboid[{(robotica`Private`g 2) robotica`Private`ar, -
               robotica`Private`ar, 0 
-              robotica`Private`ar}, {(-2) (1 + robotica`Private`g) 
+              robotica`Private`ar}, {(2 (1 + robotica`Private`g)) 
+              robotica`Private`ar, robotica`Private`ar, 4 
+              robotica`Private`ar}], 
+            
+            Cuboid[{-((robotica`Private`g 2) robotica`Private`ar), -
+              robotica`Private`ar, 0 
+              robotica`Private`ar}, {((-2) (1 + robotica`Private`g)) 
               robotica`Private`ar, robotica`Private`ar, 4 
               robotica`Private`ar}]}]}], robotica`drawGripper[
          Pattern[robotica`Private`g, 
@@ -1656,14 +1842,65 @@ FontSlant->\"Italic\"]\)=``",
    3.7035452216759653`*^9, 3.7035456320739536`*^9, 3.7035459223482904`*^9, 
    3.703547373988015*^9, 3.703547516093246*^9, 3.703547686052986*^9, 
    3.703547731621284*^9, 3.7035477718062134`*^9, 3.7035479408821716`*^9, 
-   3.7035566601338673`*^9, 3.716822454956142*^9}]
+   3.7035566601338673`*^9, 3.716822454956142*^9, 
+   3.743779978061873*^9},ExpressionUUID->"b271c767-8502-4bb3-af84-\
+444ec94966b6"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Part","partw",
+   "\"Part \\!\\(\\*RowBox[{\\\"4\\\"}]\\) of \\!\\(\\*RowBox[{\\\"{\\\", \
+RowBox[{\\\"1\\\", \\\",\\\", FractionBox[RowBox[{\\\"17\\\", \\\" \\\", \\\"\
+\[Pi]\\\"}], \\\"32\\\"], \\\",\\\", \\\"0\\\"}], \\\"}\\\"}]\\) does not \
+exist.\"",2,127,11,32838323051314472259,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{
+  3.743780039919964*^9},ExpressionUUID->"14b4e01f-3ea7-483b-8a63-\
+67d09a7db21d"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Part","partw",
+   "\"Part \\!\\(\\*RowBox[{\\\"5\\\"}]\\) of \\!\\(\\*RowBox[{\\\"{\\\", \
+RowBox[{\\\"1\\\", \\\",\\\", FractionBox[RowBox[{\\\"17\\\", \\\" \\\", \\\"\
+\[Pi]\\\"}], \\\"32\\\"], \\\",\\\", \\\"0\\\"}], \\\"}\\\"}]\\) does not \
+exist.\"",2,127,12,32838323051314472259,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{
+  3.743780039944809*^9},ExpressionUUID->"d6fc3cf3-f0ab-44eb-a39f-\
+ab7aa2eb8d30"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Part","partw",
+   "\"Part \\!\\(\\*RowBox[{\\\"6\\\"}]\\) of \\!\\(\\*RowBox[{\\\"{\\\", \
+RowBox[{\\\"1\\\", \\\",\\\", FractionBox[RowBox[{\\\"17\\\", \\\" \\\", \\\"\
+\[Pi]\\\"}], \\\"32\\\"], \\\",\\\", \\\"0\\\"}], \\\"}\\\"}]\\) does not \
+exist.\"",2,127,13,32838323051314472259,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{
+  3.743780039966683*^9},ExpressionUUID->"0693e504-6334-4640-98ec-\
+08a484ca133f"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "General","stop",
+   "\"Further output of \\!\\(\\*StyleBox[RowBox[{\\\"Part\\\", \\\"::\\\", \
+\\\"partw\\\"}], \\\"MessageName\\\"]\\) will be suppressed during this \
+calculation.\"",2,127,14,32838323051314472259,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{
+  3.743780039987871*^9},ExpressionUUID->"fd01fe66-d289-4fc5-8037-\
+251bbf41aed5"]
 }, Open  ]]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
 Cell[" Stanford Manipulator & Spherical Wrist", "Subsection",
- CellChangeTimes->{{3.716822076630508*^9, 3.716822118690419*^9}}],
+ CellChangeTimes->{{3.716822076630508*^9, 
+  3.716822118690419*^9}},ExpressionUUID->"201cd7e8-2139-4618-9adf-\
+b2caca5745e3"],
 
 Cell[CellGroupData[{
 
@@ -1675,9 +1912,11 @@ Cell[BoxData[{
    3.6970546239830494`*^9, 3.697054624527726*^9}, 3.6992410726290536`*^9, {
    3.700325595304529*^9, 3.7003256167179265`*^9}, {3.703509161641718*^9, 
    3.7035091629491396`*^9}, {3.7035145784443846`*^9, 
-   3.7035145804999237`*^9}, {3.7035476759034925`*^9, 3.703547680292719*^9}}],
+   3.7035145804999237`*^9}, {3.7035476759034925`*^9, 
+   3.703547680292719*^9}},ExpressionUUID->"95d329ad-30ac-4b96-aba0-\
+d5705639d4e1"],
 
-Cell[BoxData["\<\"/Users/ab55/Desktop/git/robotica\"\>"], "Output",
+Cell[BoxData["\<\"/Users/atbecker/Desktop/git/robotica\"\>"], "Output",
  CellChangeTimes->{
   3.6969796299307413`*^9, {3.6969803130063334`*^9, 3.696980343119069*^9}, 
    3.696981102490391*^9, {3.6969843301180058`*^9, 3.696984353010298*^9}, 
@@ -1731,7 +1970,11 @@ Cell[BoxData["\<\"/Users/ab55/Desktop/git/robotica\"\>"], "Output",
    3.7035547573897133`*^9, 3.70355665442334*^9, 3.7143061416805067`*^9, 
    3.714306728125272*^9, 3.7143067926208143`*^9, 3.714748872912628*^9, 
    3.716679774919331*^9, 3.7168211845744658`*^9, 3.7168221542450943`*^9, 
-   3.7168224593142633`*^9}],
+   3.7168224593142633`*^9, 3.7437800108792143`*^9, 3.743780794893627*^9, 
+   3.743781238400502*^9, {3.743782005648642*^9, 3.743782007291255*^9}, {
+   3.7437820481582537`*^9, 3.743782071556979*^9}, 
+   3.743782177730897*^9},ExpressionUUID->"a43c0586-b0be-4a80-b7fb-\
+b5153503f7de"],
 
 Cell[BoxData[
  InterpretationBox[
@@ -1739,10 +1982,15 @@ Cell[BoxData[
    "\[InvisibleSpace]", "\<\".\"\>"}],
   SequenceForm["Robotica version ", "4.01", "."],
   Editable->False]], "Print",
- CellChangeTimes->{3.7035547575752716`*^9, 3.7035566547554426`*^9, 
-  3.714306141692371*^9, 3.7143067281367083`*^9, 3.7143067926331797`*^9, 
-  3.714748873012425*^9, 3.716679774957679*^9, 3.716821184584175*^9, 
-  3.7168221542566423`*^9, 3.716822459325521*^9}]
+ CellChangeTimes->{
+  3.7035547575752716`*^9, 3.7035566547554426`*^9, 3.714306141692371*^9, 
+   3.7143067281367083`*^9, 3.7143067926331797`*^9, 3.714748873012425*^9, 
+   3.716679774957679*^9, 3.716821184584175*^9, 3.7168221542566423`*^9, 
+   3.716822459325521*^9, 3.743780010890596*^9, 3.7437807949068193`*^9, 
+   3.743781238414365*^9, {3.743782005660589*^9, 3.743782007304694*^9}, {
+   3.7437820481710377`*^9, 3.7437820715701036`*^9}, 
+   3.743782177742157*^9},ExpressionUUID->"bf3ce5ce-b6fc-462e-996b-\
+3f1e2a852b96"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -1805,7 +2053,9 @@ Cell[BoxData[{
    3.714867613326519*^9}, {3.714867671480617*^9, 3.714867681968398*^9}, {
    3.7148678207648706`*^9, 3.714867879341683*^9}, {3.714868085152104*^9, 
    3.714868119207192*^9}, 3.714907804521167*^9, {3.7166798233118267`*^9, 
-   3.716679823631466*^9}, 3.716822148404359*^9}],
+   3.716679823631466*^9}, 
+   3.716822148404359*^9},ExpressionUUID->"8ff05ca3-ed0e-46a6-90ff-\
+b4485d1e33c2"],
 
 Cell[CellGroupData[{
 
@@ -1861,7 +2111,12 @@ Cell[BoxData[
    3.714867682429261*^9, 3.7148677495274067`*^9, {3.714867875441931*^9, 
    3.714867880209997*^9}, 3.714868124431324*^9, 3.714907806264186*^9, 
    3.716679776804462*^9, 3.716679824146578*^9, {3.71682116859595*^9, 
-   3.716821185887703*^9}, {3.716822462138072*^9, 3.7168224852983007`*^9}}],
+   3.716821185887703*^9}, {3.716822462138072*^9, 3.7168224852983007`*^9}, 
+   3.7437800129707947`*^9, 3.743780315514204*^9, 3.743780796544435*^9, 
+   3.743781239882653*^9, 3.743782008862823*^9, {3.7437820643164787`*^9, 
+   3.743782069185132*^9}, 
+   3.743782179330042*^9},ExpressionUUID->"489ff881-168b-41b1-b178-\
+f6d5b11f7753"],
 
 Cell[BoxData["\<\"\"\>"], "Print",
  CellChangeTimes->{
@@ -1884,7 +2139,12 @@ Cell[BoxData["\<\"\"\>"], "Print",
    3.714867682429261*^9, 3.7148677495274067`*^9, {3.714867875441931*^9, 
    3.714867880209997*^9}, 3.714868124431324*^9, 3.714907806264186*^9, 
    3.716679776804462*^9, 3.716679824146578*^9, {3.71682116859595*^9, 
-   3.716821185887703*^9}, {3.716822462138072*^9, 3.716822485309258*^9}}]
+   3.716821185887703*^9}, {3.716822462138072*^9, 3.7168224852983007`*^9}, 
+   3.7437800129707947`*^9, 3.743780315514204*^9, 3.743780796544435*^9, 
+   3.743781239882653*^9, 3.743782008862823*^9, {3.7437820643164787`*^9, 
+   3.743782069185132*^9}, 
+   3.7437821793422337`*^9},ExpressionUUID->"8edd3366-5485-422e-9f35-\
+335e2cd84a5b"]
 }, Open  ]]
 }, Open  ]],
 
@@ -1898,7 +2158,9 @@ Cell[BoxData[
    RowBox[{"{", 
     RowBox[{"i", ",", "1", ",", "6"}], "}"}]}], "]"}]], "Input",
  CellChangeTimes->{{3.7004813822859755`*^9, 3.7004813829341855`*^9}, {
-   3.7019792988667774`*^9, 3.7019792995159316`*^9}, 3.7148678899028587`*^9}],
+   3.7019792988667774`*^9, 3.7019792995159316`*^9}, 
+   3.7148678899028587`*^9},ExpressionUUID->"d9e07d14-c39b-441a-a29f-\
+ba0f19b49d11"],
 
 Cell[BoxData[
  RowBox[{"{", 
@@ -2054,7 +2316,9 @@ Cell[BoxData[
    3.703528953205962*^9, 3.714306148918087*^9, 3.714867621179105*^9, {
    3.714867886367319*^9, 3.7148678902324142`*^9}, 3.714868130963979*^9, 
    3.714907816666666*^9, 3.7166797792943373`*^9, 3.716679826744397*^9, 
-   3.716822487643715*^9}]
+   3.716822487643715*^9, 
+   3.743780015538096*^9},ExpressionUUID->"aec696a9-44dc-4fa6-8512-\
+d4960b3a6765"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -2064,7 +2328,8 @@ Cell[BoxData[
   RowBox[{"FullSimplify", "[", "J", "]"}], "//", "MatrixForm"}]], "Input",
  CellChangeTimes->{{3.7166797899514914`*^9, 3.71667979635314*^9}, {
   3.7166798420401*^9, 3.716679844991021*^9}, {3.716680217258395*^9, 
-  3.716680218129809*^9}}],
+  3.716680218129809*^9}},ExpressionUUID->"29a63ef3-5ee0-4ebc-89d9-\
+5eefa56bd1d4"],
 
 Cell[BoxData[
  TagBox[
@@ -2329,8 +2594,12 @@ Cell[BoxData[
    MatrixForm[BoxForm`e$]]]], "Output",
  CellChangeTimes->{{3.716679791368114*^9, 3.716679796856529*^9}, {
    3.7166798369976673`*^9, 3.716679845874371*^9}, 3.716680222134634*^9, 
-   3.716822492115396*^9}]
+   3.716822492115396*^9, 
+   3.743780019402245*^9},ExpressionUUID->"da1eb0dc-d927-43a1-b238-\
+a105df7796b9"]
 }, Open  ]],
+
+Cell[CellGroupData[{
 
 Cell[BoxData[
  RowBox[{
@@ -2349,14 +2618,759 @@ Cell[BoxData[
    3.699273332309617*^9, 3.699273338129672*^9}, {3.714867690121698*^9, 
    3.714867724028584*^9}, {3.7148677683553658`*^9, 3.71486778588383*^9}, {
    3.7168211730501747`*^9, 3.716821176102517*^9}, {3.716822168587047*^9, 
-   3.716822176352893*^9}}]
-}, Closed]]
+   3.716822176352893*^9}, {3.743780322091511*^9, 
+   3.743780327668501*^9}},ExpressionUUID->"ba5cbeff-44d2-4dfb-b33d-\
+b0a123afa7bb"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{robotica`Private`g$$ = 1, robotica`Private`params$$ = {0,
+     0, 0, 0, 0, 0}, robotica`Private`planei$$ = 0, 
+    robotica`Private`showRobot$$ = True, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[robotica`Private`params$$], {0, 0, 0, 0, 0, 0}}}, {
+      Hold[
+       Dynamic[
+        Grid[
+         Table[
+          With[{robotica`Private`i$ = robotica`Private`i}, 
+           If[robotica`jointtype[robotica`Private`i$] == "prismatic", {
+             Subscript["d", robotica`Private`i$], 
+             Slider[
+              Dynamic[
+               Part[robotica`Private`params$$, robotica`Private`i$]], {
+              0, 1, 1/20}, ImageSize -> Small], 
+             Dynamic[
+              Part[robotica`Private`params$$, robotica`Private`i$]]}, {
+             Subscript["\[Theta]", robotica`Private`i$], 
+             Slider[
+              Dynamic[
+               Part[robotica`Private`params$$, robotica`Private`i$]], {-Pi, 
+               Pi, Pi/32}, ImageSize -> Small], 
+             Dynamic[
+              Part[robotica`Private`params$$, robotica`Private`i$]]}]], {
+          robotica`Private`i, robotica`dof}]]]], 
+      Manipulate`Dump`ThisIsNotAControl}, {{
+       Hold[robotica`Private`g$$], 1, "grip"}, 0, 1, 0.01}, {{
+       Hold[robotica`Private`showRobot$$], True, "show robot"}, {
+      True, False}}, {{
+       Hold[robotica`Private`planei$$], 0, "xy Plane"}, 0, 6, 1}}, 
+    Typeset`size$$ = {425., {210., 215.}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = False, 
+    robotica`Private`g$33260$$ = 0, robotica`Private`showRobot$33261$$ = 
+    False, robotica`Private`planei$33262$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {
+       robotica`Private`g$$ = 1, 
+        robotica`Private`params$$ = {0, 0, 0, 0, 0, 0}, 
+        robotica`Private`planei$$ = 0, robotica`Private`showRobot$$ = True}, 
+      "ControllerVariables" :> {
+        Hold[robotica`Private`g$$, robotica`Private`g$33260$$, 0], 
+        Hold[
+        robotica`Private`showRobot$$, robotica`Private`showRobot$33261$$, 
+         False], 
+        Hold[robotica`Private`planei$$, robotica`Private`planei$33262$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, 
+      "Body" :> (Chop["YES", 10^(-10)]; 
+       Module[{robotica`Private`jr$ = 1/10, robotica`Private`ar$ = 1/40, 
+          robotica`Private`Ad$, robotica`Td$, robotica`Private`Ts$, 
+          robotica`Private`j$, robotica`Private`i$, robotica`Private`ii$, 
+          robotica`Private`jj$, robotica`Private`Tv$}, 
+         robotica`Private`Ad$ = Table[
+            If[robotica`jointtype[robotica`Private`i$] == "prismatic", 
+             robotica`dhTransform[
+              Part[robotica`Private`params$$, robotica`Private`i$], 
+              robotica`a[robotica`Private`i$], 
+              robotica`theta[robotica`Private`i$], 
+              robotica`alpha[robotica`Private`i$]], 
+             robotica`dhTransform[
+              robotica`d[robotica`Private`i$], 
+              robotica`a[robotica`Private`i$], 
+              Part[robotica`Private`params$$, robotica`Private`i$], 
+              robotica`alpha[robotica`Private`i$]]], {
+            robotica`Private`i$, 1, robotica`dof}]; 
+         For[robotica`Private`j$ = 1, robotica`Private`j$ <= robotica`dof, 
+           Increment[robotica`Private`j$], 
+           robotica`Private`Tv$ = robotica`dhTransform[0, 0, 0, 0]; 
+           robotica`Private`Ts$ = robotica`dhTransform[0, 0, 0, 0]; 
+           For[robotica`Private`i$ = 1, robotica`Private`i$ <= 
+             robotica`Private`j$, 
+             Increment[robotica`Private`i$], robotica`Private`Ts$ = 
+             Dot[robotica`Private`Ts$, 
+               Part[robotica`Private`Ad$, robotica`Private`i$]]]; 
+           For[robotica`Private`ii$ = 1, robotica`Private`ii$ <= 4, 
+             Increment[robotica`Private`ii$], 
+             For[robotica`Private`jj$ = 1, robotica`Private`jj$ <= 4, 
+               Increment[robotica`Private`jj$], 
+               Part[robotica`Private`Tv$, 1, robotica`Private`ii$, 
+                  robotica`Private`jj$] = Chop[
+                  Part[
+                  robotica`Private`Ts$, 1, robotica`Private`ii$, 
+                   robotica`Private`jj$]]; Null]; Null]; 
+           robotica`Td$[robotica`Private`j$] = robotica`Private`Tv$; Null]; 
+         Graphics3D[{{LightBrown, 
+             Cylinder[{{0, 0, (-2)/5}, {0, 0, (-1)/5 - 1/20}}, 2.2]}, 
+            If[robotica`jointtype[1] == "revolute", 
+             robotica`drawJoint[
+              robotica`jointtype[1], 
+              robotica`d[1], 
+              robotica`a[1], 
+              Part[robotica`Private`params$$, 1], 
+              OptionValue[
+              robotica`drawRobot, {$CellContext`showH -> 
+                False, $CellContext`showArrows -> 
+                True, $CellContext`showPlanes -> True}, 
+               robotica`Private`showArrows]], 
+             robotica`drawJoint[
+              robotica`jointtype[1], 
+              Part[robotica`Private`params$$, 1], 
+              robotica`a[1], 
+              robotica`theta[1]], 
+             OptionValue[
+             robotica`drawRobot, {$CellContext`showH -> 
+               False, $CellContext`showArrows -> 
+               True, $CellContext`showPlanes -> True}, 
+              robotica`Private`showArrows]], 
+            If[robotica`dof == 1, 
+             GeometricTransformation[
+              robotica`drawGripper[robotica`Private`g$$, 0, 
+               OptionValue[
+               robotica`drawRobot, {$CellContext`showH -> 
+                 False, $CellContext`showArrows -> 
+                 True, $CellContext`showPlanes -> True}, 
+                robotica`Private`showArrows]], 
+              Chop[
+               robotica`Td$[robotica`dof]]], 
+             If[robotica`Private`showRobot$$, 
+              Table[
+               If[robotica`jointtype[robotica`Private`i$] == "revolute", 
+                GeometricTransformation[
+                 robotica`drawJoint[
+                  robotica`jointtype[robotica`Private`i$], 
+                  robotica`d[robotica`Private`i$], 
+                  robotica`a[robotica`Private`i$], 
+                  Part[robotica`Private`params$$, robotica`Private`i$], 
+                  OptionValue[
+                  robotica`drawRobot, {$CellContext`showH -> 
+                    False, $CellContext`showArrows -> 
+                    True, $CellContext`showPlanes -> True}, 
+                   robotica`Private`showArrows]], 
+                 robotica`Td$[robotica`Private`i$ - 1]], 
+                GeometricTransformation[
+                 robotica`drawJoint[
+                  robotica`jointtype[robotica`Private`i$], 
+                  Part[robotica`Private`params$$, robotica`Private`i$], 
+                  robotica`a[robotica`Private`i$], 
+                  robotica`theta[robotica`Private`i$], 
+                  OptionValue[
+                  robotica`drawRobot, {$CellContext`showH -> 
+                    False, $CellContext`showArrows -> 
+                    True, $CellContext`showPlanes -> True}, 
+                   robotica`Private`showArrows]], 
+                 robotica`Td$[robotica`Private`i$ - 1]]], {
+               robotica`Private`i$, 2, robotica`dof}]]], 
+            GeometricTransformation[
+             robotica`drawGripper[robotica`Private`g$$, 0, 
+              OptionValue[
+              robotica`drawRobot, {$CellContext`showH -> 
+                False, $CellContext`showArrows -> 
+                True, $CellContext`showPlanes -> True}, 
+               robotica`Private`showArrows]], 
+             Chop[
+              robotica`Td$[robotica`dof]]], 
+            If[
+             OptionValue[
+             robotica`drawRobot, {$CellContext`showH -> 
+               False, $CellContext`showArrows -> 
+               True, $CellContext`showPlanes -> True}, 
+              robotica`Private`showPlanes], 
+             GeometricTransformation[{Thick, {Blue, 
+                Rotate[
+                 robotica`drawZArrow[1/2], Pi/2, {0, 1, 0}], 
+                Text[
+                 Subscript["x", robotica`Private`planei$$], {0.9, 0.2, 0}]}, {
+               Green, 
+                Rotate[
+                 robotica`drawZArrow[1/2], -Pi/2, {1, 0, 0}], 
+                Text[
+                 Subscript["y", robotica`Private`planei$$], {0.2, 0.9, 0}]}, 
+               Blue, 
+               Opacity[0.2], 
+               Polygon[{{-1, -1, 0}, {-1, 1, 0}, {1, 1, 0}, {1, -1, 0}}]}, 
+              If[robotica`Private`planei$$ > 0, 
+               robotica`Td$[robotica`Private`planei$$], 
+               robotica`dhTransform[0, 0, 0, 0]]]], 
+            If[
+             OptionValue[
+             robotica`drawRobot, {$CellContext`showH -> 
+               False, $CellContext`showArrows -> 
+               True, $CellContext`showPlanes -> True}, 
+              robotica`Private`showH], 
+             Text[
+              StringForm[
+              "\!\(\*\nStyleBox[\"H\",\nFontSlant->\"Italic\"]\)=``", 
+               MatrixForm[
+                N[
+                 Chop[
+                  robotica`Td$[robotica`dof]], 2]]], {0, 0, -3.2}]]}, 
+           SphericalRegion -> True, ImageSize -> 425, Boxed -> False]]), 
+      "Specifications" :> {{{robotica`Private`params$$, {0, 0, 0, 0, 0, 0}}, 
+         ControlType -> None}, 
+        Dynamic[
+         Grid[
+          Table[
+           With[{robotica`Private`i$ = robotica`Private`i}, 
+            If[robotica`jointtype[robotica`Private`i$] == "prismatic", {
+              Subscript["d", robotica`Private`i$], 
+              Slider[
+               Dynamic[
+                Part[robotica`Private`params$$, robotica`Private`i$]], {
+               0, 1, 1/20}, ImageSize -> Small], 
+              Dynamic[
+               Part[robotica`Private`params$$, robotica`Private`i$]]}, {
+              Subscript["\[Theta]", robotica`Private`i$], 
+              Slider[
+               Dynamic[
+                Part[robotica`Private`params$$, robotica`Private`i$]], {-Pi, 
+                Pi, Pi/32}, ImageSize -> Small], 
+              Dynamic[
+               Part[robotica`Private`params$$, robotica`Private`i$]]}]], {
+           robotica`Private`i, robotica`dof}]]], 
+        Delimiter, {{robotica`Private`g$$, 1, "grip"}, 0, 1, 0.01, ImageSize -> 
+         Small, Appearance -> "Labeled"}, {{
+         robotica`Private`showRobot$$, True, "show robot"}, {True, False}}, {{
+         robotica`Private`planei$$, 0, "xy Plane"}, 0, 6, 1, ImageSize -> 
+         Small, Appearance -> "Labeled", ControlType -> Slider}}, 
+      "Options" :> {ControlPlacement -> Left}, "DefaultOptions" :> {}],
+     ImageSizeCache->{732., {240., 245.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    Initialization:>({
+      Attributes[robotica`Private`jr$] = {Temporary}, 
+       Attributes[robotica`Private`ar$] = {Temporary}, 
+       Attributes[robotica`Private`j$] = {Temporary}, 
+       Attributes[robotica`Private`i$] = {Temporary}, 
+       Attributes[robotica`Private`ii$] = {Temporary}, robotica`jointtype[1] = 
+       "revolute", robotica`jointtype[2] = "revolute", robotica`jointtype[3] = 
+       "prismatic", robotica`jointtype[4] = "revolute", robotica`jointtype[5] = 
+       "revolute", robotica`jointtype[6] = "revolute", robotica`jointtype[7] = 
+       "revolute", robotica`jointtype[8] = "revolute", robotica`jointtype[9] = 
+       "revolute", 
+       TagSet[robotica`jointtype, 
+        MessageName[robotica`jointtype, "usage"], ""], robotica`dhTransform[
+         Pattern[robotica`d, 
+          Blank[]], 
+         Pattern[robotica`r, 
+          Blank[]], 
+         Pattern[robotica`\[Theta], 
+          Blank[]], 
+         Pattern[robotica`\[Alpha], 
+          Blank[]]] := Dot[
+         RotationTransform[robotica`\[Theta], {0, 0, 1}], 
+         TranslationTransform[{0, 0, robotica`d}], 
+         TranslationTransform[{robotica`r, 0, 0}], 
+         RotationTransform[robotica`\[Alpha], {1, 0, 0}]], 
+       TagSet[robotica`dhTransform, 
+        MessageName[robotica`dhTransform, "usage"], ""], robotica`d[1] = 0, 
+       robotica`d[2] = 1, robotica`d[3] = Subsuperscript["d", 3, "*"], 
+       robotica`d[4] = 0, robotica`d[5] = 0, robotica`d[6] = 1, robotica`d[7] = 
+       1/2, robotica`d[8] = 1/2, robotica`d[9] = 1/2, 
+       TagSet[robotica`d, 
+        MessageName[robotica`d, "usage"], ""], 
+       Attributes[Subsuperscript] = {NHoldRest, ReadProtected}, 
+       TagSet[robotica`r, 
+        MessageName[robotica`r, "shdw"], 
+        "Symbol `1` appears in multiple contexts `2`; definitions in context \
+`3` may shadow or be shadowed by other definitions."], 
+       TagSet[robotica`r, 
+        MessageName[robotica`r, "usage"], ""], 
+       TagSet[robotica`\[Theta], 
+        MessageName[robotica`\[Theta], "usage"], ""], 
+       TagSet[robotica`\[Alpha], 
+        MessageName[robotica`\[Alpha], "usage"], ""], robotica`a[1] = 0, 
+       robotica`a[2] = 0, robotica`a[3] = 0, robotica`a[4] = 0, robotica`a[5] = 
+       0, robotica`a[6] = 0, robotica`a[7] = 0, robotica`a[8] = 0, 
+       robotica`a[9] = 0, 
+       TagSet[robotica`a, 
+        MessageName[robotica`a, "usage"], ""], 
+       robotica`theta[1] = $CellContext`q1, 
+       robotica`theta[2] = $CellContext`q2, robotica`theta[3] = 0, 
+       robotica`theta[4] = $CellContext`q4, 
+       robotica`theta[5] = $CellContext`q5, 
+       robotica`theta[6] = $CellContext`q6, 
+       robotica`theta[7] = $CellContext`q7, 
+       robotica`theta[8] = $CellContext`q8, 
+       robotica`theta[9] = $CellContext`q9, 
+       TagSet[robotica`theta, 
+        MessageName[robotica`theta, "usage"], ""], robotica`alpha[1] = -Pi/2, 
+       robotica`alpha[2] = Pi/2, robotica`alpha[3] = 0, 
+       robotica`alpha[4] = -Pi/2, robotica`alpha[5] = Pi/2, robotica`alpha[6] = 
+       0, robotica`alpha[7] = 0, robotica`alpha[8] = Pi/2, robotica`alpha[9] = 
+       0, 
+       TagSet[robotica`alpha, 
+        MessageName[robotica`alpha, "usage"], ""], robotica`dof = 6, 
+       TagSet[robotica`dof, 
+        MessageName[robotica`dof, "usage"], ""], robotica`drawJoint[
+         Pattern[robotica`Private`j, 
+          Blank[]], 
+         Pattern[robotica`d, 
+          Blank[]], 
+         Pattern[robotica`r, 
+          Blank[]], 
+         Pattern[robotica`\[Theta], 
+          Blank[]]] := 
+       Module[{robotica`Private`jr = 1/5, robotica`Private`ar = 1/20, 
+          robotica`Private`pr = 1/7, robotica`Private`vr = 1/6}, {
+          robotica`drawCoordAxes[robotica`Private`jr], 
+          Opacity[1], {
+           Opacity[0.5], Gray, 
+           If[robotica`Private`j == "prismatic", 
+            
+            Cuboid[{-robotica`Private`ar, -robotica`Private`ar, -1 + 
+              robotica`d - robotica`Private`jr - 0.01}, {
+             robotica`Private`ar, robotica`Private`ar, robotica`d + 0.01}], 
+            
+            Cylinder[{{
+              0, 0, Min[-robotica`Private`ar, robotica`d - 
+                 robotica`Private`jr] - 0.01}, {
+              0, 0, Max[robotica`Private`ar, robotica`d] + 0.01}}, 
+             robotica`Private`ar]]}, {LightBlue, 
+           If[robotica`Private`j == "prismatic", {
+             
+             Cuboid[{-robotica`Private`jr, -robotica`Private`jr, -
+               robotica`Private`jr}, {
+              robotica`Private`jr, robotica`Private`jr, robotica`Private`jr - 
+               0.1}], 
+             Cuboid[{-robotica`Private`jr, -robotica`Private`jr, 
+               Plus[robotica`Private`jr]}, {
+              robotica`Private`jr, robotica`Private`jr, robotica`Private`jr + 
+               0.05}]}, {
+             
+             Cylinder[{{0, 0, -robotica`Private`jr - 0.1}, {
+               0, 0, robotica`Private`jr + 0.1}}, 0.9 robotica`Private`jr]}]}, 
+          Rotate[{
+            Opacity[0.5], Gray, 
+            
+            Cuboid[{-robotica`Private`ar, -robotica`Private`ar, robotica`d - 
+              robotica`Private`ar}, {
+             robotica`r, robotica`Private`ar, robotica`d + 
+              robotica`Private`ar}]}, robotica`\[Theta], {0, 0, 1}]}], 
+       robotica`drawJoint[
+         Pattern[robotica`Private`j, 
+          Blank[]], 
+         Pattern[robotica`d, 
+          Blank[]], 
+         Pattern[robotica`r, 
+          Blank[]], 
+         Pattern[robotica`\[Theta], 
+          Blank[]], 
+         Optional[
+          Pattern[robotica`Private`showArrow, 
+           Blank[]], True]] := 
+       Module[{robotica`Private`jr = 1/5, robotica`Private`ar = 1/20, 
+          robotica`Private`pr = 1/7, robotica`Private`vr = 1/6}, {
+          If[robotica`Private`showArrow, 
+           robotica`drawCoordAxes[robotica`Private`jr]], 
+          Opacity[1], {
+           Opacity[0.5], Gray, 
+           If[robotica`Private`j == "prismatic", 
+            
+            Cuboid[{-robotica`Private`ar, -robotica`Private`ar, -1 + 
+              robotica`d - robotica`Private`jr - 0.01}, {
+             robotica`Private`ar, robotica`Private`ar, robotica`d + 0.01}], 
+            
+            Cylinder[{{
+              0, 0, Min[-robotica`Private`ar, robotica`d - 
+                 robotica`Private`jr] - 0.01}, {
+              0, 0, Max[robotica`Private`ar, robotica`d] + 0.01}}, 
+             robotica`Private`ar]]}, {LightBlue, 
+           If[robotica`Private`j == "prismatic", {
+             
+             Cuboid[{-robotica`Private`jr, -robotica`Private`jr, -
+               robotica`Private`jr}, {
+              robotica`Private`jr, robotica`Private`jr, robotica`Private`jr - 
+               0.1}], 
+             Cuboid[{-robotica`Private`jr, -robotica`Private`jr, 
+               Plus[robotica`Private`jr]}, {
+              robotica`Private`jr, robotica`Private`jr, robotica`Private`jr + 
+               0.05}]}, {
+             
+             Cylinder[{{0, 0, -robotica`Private`jr - 0.1}, {
+               0, 0, robotica`Private`jr + 0.1}}, 0.9 robotica`Private`jr]}]}, 
+          Rotate[{
+            Opacity[0.5], Gray, 
+            
+            Cuboid[{-robotica`Private`ar, -robotica`Private`ar, robotica`d - 
+              robotica`Private`ar}, {
+             robotica`r, robotica`Private`ar, robotica`d + 
+              robotica`Private`ar}]}, robotica`\[Theta], {0, 0, 1}]}], 
+       TagSet[robotica`drawJoint, 
+        MessageName[robotica`drawJoint, "usage"], ""], robotica`Private`j = 7,
+        robotica`drawCoordAxes[
+         Pattern[robotica`Private`jr, 
+          Blank[]]] := {Thick, {Red, 
+          robotica`drawZArrow[robotica`Private`jr]}, {Blue, 
+          Rotate[
+           robotica`drawZArrow[robotica`Private`jr], Pi/2, {0, 1, 0}]}, {
+         Green, 
+          Rotate[
+           robotica`drawZArrow[robotica`Private`jr], -(Pi/2), {1, 0, 0}]}}, 
+       TagSet[robotica`drawCoordAxes, 
+        MessageName[robotica`drawCoordAxes, "usage"], ""], robotica`drawZArrow[
+         Pattern[robotica`Private`jr, 
+          Blank[]]] := 
+       Line[{{{0, 0, 0}, {0, 0, 2 robotica`Private`jr}}, {{
+           0, 0, 2 robotica`Private`jr}, {
+           1/32, 0, (3 robotica`Private`jr)/2}}, {{
+           0, 0, 2 robotica`Private`jr}, {(-1)/32, 0, (3 robotica`Private`jr)/
+            2}}, {{0, 0, 2 robotica`Private`jr}, {
+           0, 1/32, (3 robotica`Private`jr)/2}}, {{
+           0, 0, 2 robotica`Private`jr}, {
+           0, (-1)/32, (3 robotica`Private`jr)/2}}}], 
+       TagSet[robotica`drawZArrow, 
+        MessageName[robotica`drawZArrow, "usage"], ""], robotica`drawRobot[
+         OptionsPattern[]] := Manipulate[Chop[
+           Out[], 10^(-10)]; 
+         Module[{robotica`Private`jr$ = 1/10, robotica`Private`ar$ = 1/40, 
+            robotica`Private`Ad$, robotica`Td$, robotica`Private`Ts$, 
+            robotica`Private`j$, robotica`Private`i$, robotica`Private`ii$, 
+            robotica`Private`jj$, robotica`Private`Tv$}, 
+           robotica`Private`Ad$ = Table[
+              If[robotica`jointtype[robotica`Private`i$] == "prismatic", 
+               robotica`dhTransform[
+                Part[robotica`Private`params$$, robotica`Private`i$], 
+                robotica`a[robotica`Private`i$], 
+                robotica`theta[robotica`Private`i$], 
+                robotica`alpha[robotica`Private`i$]], 
+               robotica`dhTransform[
+                robotica`d[robotica`Private`i$], 
+                robotica`a[robotica`Private`i$], 
+                Part[robotica`Private`params$$, robotica`Private`i$], 
+                robotica`alpha[robotica`Private`i$]]], {
+              robotica`Private`i$, 1, robotica`dof}]; 
+           For[robotica`Private`j$ = 1, robotica`Private`j$ <= robotica`dof, 
+             Increment[robotica`Private`j$], 
+             robotica`Private`Tv$ = robotica`dhTransform[0, 0, 0, 0]; 
+             robotica`Private`Ts$ = robotica`dhTransform[0, 0, 0, 0]; 
+             For[robotica`Private`i$ = 1, robotica`Private`i$ <= 
+               robotica`Private`j$, 
+               Increment[robotica`Private`i$], robotica`Private`Ts$ = 
+               Dot[robotica`Private`Ts$, 
+                 Part[robotica`Private`Ad$, robotica`Private`i$]]]; 
+             For[robotica`Private`ii$ = 1, robotica`Private`ii$ <= 4, 
+               Increment[robotica`Private`ii$], 
+               For[robotica`Private`jj$ = 1, robotica`Private`jj$ <= 4, 
+                 Increment[robotica`Private`jj$], 
+                 Part[robotica`Private`Tv$, 1, robotica`Private`ii$, 
+                    robotica`Private`jj$] = Chop[
+                    Part[
+                    robotica`Private`Ts$, 1, robotica`Private`ii$, 
+                    robotica`Private`jj$]]; Null]; Null]; 
+             robotica`Td$[robotica`Private`j$] = robotica`Private`Tv$; Null]; 
+           Graphics3D[{{LightBrown, 
+               Cylinder[{{0, 0, (-2)/5}, {0, 0, (-1)/5 - 1/20}}, 2.2]}, 
+              If[robotica`jointtype[1] == "revolute", 
+               robotica`drawJoint[
+                robotica`jointtype[1], 
+                robotica`d[1], 
+                robotica`a[1], 
+                Part[robotica`Private`params$$, 1], 
+                OptionValue[robotica`Private`showArrows]], 
+               robotica`drawJoint[
+                robotica`jointtype[1], 
+                Part[robotica`Private`params$$, 1], 
+                robotica`a[1], 
+                robotica`theta[1]], 
+               OptionValue[robotica`Private`showArrows]], 
+              If[robotica`dof == 1, 
+               GeometricTransformation[
+                robotica`drawGripper[robotica`Private`g$$, 0, 
+                 OptionValue[robotica`Private`showArrows]], 
+                Chop[
+                 robotica`Td$[robotica`dof]]], 
+               If[robotica`Private`showRobot$$, 
+                Table[
+                 If[robotica`jointtype[robotica`Private`i$] == "revolute", 
+                  GeometricTransformation[
+                   robotica`drawJoint[
+                    robotica`jointtype[robotica`Private`i$], 
+                    robotica`d[robotica`Private`i$], 
+                    robotica`a[robotica`Private`i$], 
+                    Part[robotica`Private`params$$, robotica`Private`i$], 
+                    OptionValue[robotica`Private`showArrows]], 
+                   robotica`Td$[robotica`Private`i$ - 1]], 
+                  GeometricTransformation[
+                   robotica`drawJoint[
+                    robotica`jointtype[robotica`Private`i$], 
+                    Part[robotica`Private`params$$, robotica`Private`i$], 
+                    robotica`a[robotica`Private`i$], 
+                    robotica`theta[robotica`Private`i$], 
+                    OptionValue[robotica`Private`showArrows]], 
+                   robotica`Td$[robotica`Private`i$ - 1]]], {
+                 robotica`Private`i$, 2, robotica`dof}]]], 
+              GeometricTransformation[
+               robotica`drawGripper[robotica`Private`g$$, 0, 
+                OptionValue[robotica`Private`showArrows]], 
+               Chop[
+                robotica`Td$[robotica`dof]]], 
+              If[
+               OptionValue[robotica`Private`showPlanes], 
+               GeometricTransformation[{Thick, {Blue, 
+                  Rotate[
+                   robotica`drawZArrow[1/2], Pi/2, {0, 1, 0}], 
+                  Text[
+                   Subscript["x", robotica`Private`planei$$], {
+                   0.9, 0.2, 0}]}, {Green, 
+                  Rotate[
+                   robotica`drawZArrow[1/2], -(Pi/2), {1, 0, 0}], 
+                  Text[
+                   Subscript["y", robotica`Private`planei$$], {0.2, 0.9, 0}]},
+                  Blue, 
+                 Opacity[0.2], 
+                 Polygon[{{-1, -1, 0}, {-1, 1, 0}, {1, 1, 0}, {1, -1, 0}}]}, 
+                If[robotica`Private`planei$$ > 0, 
+                 robotica`Td$[robotica`Private`planei$$], 
+                 robotica`dhTransform[0, 0, 0, 0]]]], 
+              If[
+               OptionValue[robotica`Private`showH], 
+               Text[
+                StringForm[
+                "\!\(\*\nStyleBox[\"H\",\nFontSlant->\"Italic\"]\)=``", 
+                 MatrixForm[
+                  N[
+                   Chop[
+                    robotica`Td$[robotica`dof]], 2]]], {0, 0, -3.2}]]}, 
+             SphericalRegion -> True, ImageSize -> 425, Boxed -> False]], {{
+          robotica`Private`params$$, 
+           ConstantArray[0, robotica`dof]}, ControlType -> None}, 
+         Dynamic[
+          Grid[
+           Table[
+            With[{robotica`Private`i$ = robotica`Private`i}, 
+             If[robotica`jointtype[robotica`Private`i$] == "prismatic", {
+               Subscript["d", robotica`Private`i$], 
+               Slider[
+                Dynamic[
+                 Part[robotica`Private`params$$, robotica`Private`i$]], {
+                0, 1, 1/20}, ImageSize -> Small], 
+               Dynamic[
+                Part[robotica`Private`params$$, robotica`Private`i$]]}, {
+               Subscript["\[Theta]", robotica`Private`i$], 
+               Slider[
+                Dynamic[
+                 Part[robotica`Private`params$$, robotica`Private`i$]], {-Pi, 
+                 Pi, Pi/32}, ImageSize -> Small], 
+               Dynamic[
+                Part[robotica`Private`params$$, robotica`Private`i$]]}]], {
+            robotica`Private`i, robotica`dof}]]], 
+         Delimiter, {{robotica`Private`g$$, 1, "grip"}, 0, 1, 0.01, ImageSize -> 
+          Small, Appearance -> "Labeled"}, {{
+          robotica`Private`showRobot$$, True, "show robot"}, {
+          True, False}}, {{robotica`Private`planei$$, 0, "xy Plane"}, 0, 
+          robotica`dof, 1, ImageSize -> Small, Appearance -> "Labeled", 
+          ControlType -> If[
+            OptionValue[robotica`Private`showPlanes], Slider, None]}, 
+         ControlPlacement -> Left, SaveDefinitions -> True], 
+       Options[robotica`drawRobot] = {
+        robotica`Private`showArrows -> True, robotica`Private`showH -> True, 
+         robotica`Private`showManipEllipse -> False, 
+         robotica`Private`showPlanes -> False}, 
+       TagSet[robotica`drawRobot, 
+        MessageName[robotica`drawRobot, "shdw"], 
+        "Symbol `1` appears in multiple contexts `2`; definitions in context \
+`3` may shadow or be shadowed by other definitions."], 
+       TagSet[robotica`drawRobot, 
+        MessageName[robotica`drawRobot, "usage"], 
+        "drawRobot[] displays a manipulate window and the robot so users can \
+adjust on joint parameters.\nOptional parameters:\nshowArrows displays the \
+coordinate axes,\nshowH writes the homogenous transform,\nshowManipEllipse-> \
+False, \nshowPlanes displays a controller to show the xy plane at each axis \
+(useful for inverse kinematics)\n"], 
+       TagSet[robotica`Td, 
+        MessageName[robotica`Td, "usage"], ""], robotica`Private`i = 7, 
+       robotica`drawGripper[
+         Pattern[robotica`Private`g, 
+          Blank[]], 
+         Pattern[robotica`r, 
+          Blank[]]] := 
+       Module[{robotica`Private`jr = 1/5, robotica`Private`ar = 1/20}, {
+          robotica`drawCoordAxes[robotica`Private`jr], 
+          If[robotica`r != 0, {Gray, 
+            
+            Cuboid[{(-2) robotica`Private`ar, -robotica`Private`ar, (-4) 
+              robotica`Private`ar}, {
+             0, robotica`Private`ar, 4 robotica`Private`ar}], 
+            
+            Cuboid[{0 robotica`Private`ar, -
+              robotica`Private`ar, (robotica`Private`g 2) 
+              robotica`Private`ar}, {
+             4 robotica`Private`ar, 
+              robotica`Private`ar, (2 (1 + robotica`Private`g)) 
+              robotica`Private`ar}], 
+            
+            Cuboid[{0 robotica`Private`ar, -
+              robotica`Private`ar, -((robotica`Private`g 2) 
+               robotica`Private`ar)}, {
+             4 robotica`Private`ar, 
+              robotica`Private`ar, ((-2) (1 + robotica`Private`g)) 
+              robotica`Private`ar}]}, {Gray, 
+            
+            Cuboid[{(-4) robotica`Private`ar, -robotica`Private`ar, (-2) 
+              robotica`Private`ar}, {
+             4 robotica`Private`ar, robotica`Private`ar, 0}], 
+            
+            Cuboid[{(robotica`Private`g 2) robotica`Private`ar, -
+              robotica`Private`ar, 0 
+              robotica`Private`ar}, {(2 (1 + robotica`Private`g)) 
+              robotica`Private`ar, robotica`Private`ar, 4 
+              robotica`Private`ar}], 
+            
+            Cuboid[{-((robotica`Private`g 2) robotica`Private`ar), -
+              robotica`Private`ar, 0 
+              robotica`Private`ar}, {((-2) (1 + robotica`Private`g)) 
+              robotica`Private`ar, robotica`Private`ar, 4 
+              robotica`Private`ar}]}]}], robotica`drawGripper[
+         Pattern[robotica`Private`g, 
+          Blank[]], 
+         Pattern[robotica`r, 
+          Blank[]], 
+         Optional[
+          Pattern[robotica`Private`showArrow, 
+           Blank[]], True]] := 
+       Module[{robotica`Private`jr = 1/5, robotica`Private`ar = 1/20}, {
+          Opacity[1], 
+          If[robotica`Private`showArrow, 
+           robotica`drawCoordAxes[robotica`Private`jr]], 
+          If[robotica`r != 0, {Gray, 
+            
+            Cuboid[{(-2) robotica`Private`ar, -robotica`Private`ar, (-4) 
+              robotica`Private`ar}, {
+             0, robotica`Private`ar, 4 robotica`Private`ar}], 
+            
+            Cuboid[{0 robotica`Private`ar, -robotica`Private`ar, 
+              robotica`Private`g 2 robotica`Private`ar}, {
+             4 robotica`Private`ar, robotica`Private`ar, 
+              2 (1 + robotica`Private`g) robotica`Private`ar}], 
+            
+            Cuboid[{0 robotica`Private`ar, -
+              robotica`Private`ar, -(robotica`Private`g 2 
+               robotica`Private`ar)}, {
+             4 robotica`Private`ar, 
+              robotica`Private`ar, (-2) (1 + robotica`Private`g) 
+              robotica`Private`ar}]}, {Gray, 
+            
+            Cuboid[{(-4) robotica`Private`ar, -robotica`Private`ar, (-2) 
+              robotica`Private`ar}, {
+             4 robotica`Private`ar, robotica`Private`ar, 0}], 
+            
+            Cuboid[{robotica`Private`g 2 robotica`Private`ar, -
+              robotica`Private`ar, 0 robotica`Private`ar}, {
+             2 (1 + robotica`Private`g) robotica`Private`ar, 
+              robotica`Private`ar, 4 robotica`Private`ar}], 
+            
+            Cuboid[{-(robotica`Private`g 2 robotica`Private`ar), -
+              robotica`Private`ar, 0 
+              robotica`Private`ar}, {(-2) (1 + robotica`Private`g) 
+              robotica`Private`ar, robotica`Private`ar, 4 
+              robotica`Private`ar}]}]}], 
+       TagSet[robotica`drawGripper, 
+        MessageName[robotica`drawGripper, "usage"], ""], 
+       Attributes[Subscript] = {NHoldRest}}; Typeset`initDone$$ = True),
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{
+  3.743780021573681*^9, {3.743780318116499*^9, 3.743780328176107*^9}, 
+   3.7437812427880583`*^9},ExpressionUUID->"07aa656c-2a51-4966-b0db-\
+03da63853e3a"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{"test", " ", "some", " ", "broken", " ", "input"}], "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"dhInput", "[", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"r", ",", "r", ",", "r", ",", "r", ",", "r"}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0"}], "}"}], 
+     ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"-", "Pi"}], "/", "2"}], ",", 
+       RowBox[{"Pi", "/", "2"}], ",", "0", ",", 
+       RowBox[{
+        RowBox[{"-", "Pi"}], "/", "2"}], ",", 
+       RowBox[{"Pi", "/", "2"}], ",", "0"}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "1", ",", "q3", ",", "0", ",", "0", ",", "1"}], "}"}],
+      ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{"q1", ",", "q2", ",", "0", ",", "q4", ",", "q5", ",", "q6"}], 
+      "}"}]}], "}"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.743780784559607*^9, 3.743780806182279*^9}, {
+  3.743780864875833*^9, 3.743780870434585*^9}, {3.7437820204811487`*^9, 
+  3.7437820214137907`*^9}, {3.743782889255769*^9, 
+  3.743782904543911*^9}},ExpressionUUID->"3364765c-f284-4dd2-ae21-\
+83a4c4ef4cb9"],
+
+Cell[BoxData["\<\" Type column, should include only:\\n Revolute, revolute , \
+R, r, Prismatic, prismatic, P or p\"\>"], "Print",
+ CellChangeTimes->{{3.7437808188639107`*^9, 3.743780834310031*^9}, {
+   3.743780866611805*^9, 3.743780875941742*^9}, 3.743781260185408*^9, {
+   3.7437820344596167`*^9, 3.7437820844226513`*^9}, 
+   3.7437821924869843`*^9},ExpressionUUID->"bef97e42-231c-4312-a100-\
+cfe6536cd1e4"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ConstantArray", "[", 
+  RowBox[{"\"\<r\>\"", ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "dof"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.743781008382544*^9, 
+  3.743781011262895*^9}},ExpressionUUID->"d16b83bd-f902-4bcf-b3db-\
+ff242c2f96a5"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{"\<\"r\"\>", ",", "\<\"r\"\>", ",", "\<\"r\"\>", ",", "\<\"r\"\>", 
+    ",", "\<\"r\"\>"}], "}"}], "}"}]], "Output",
+ CellChangeTimes->{{3.743781005604775*^9, 
+  3.7437810116745777`*^9}},ExpressionUUID->"344290a5-10cf-43c8-bd2b-\
+7c7681c043cf"]
+}, Open  ]]
+}, Open  ]]
 }, Open  ]]
 },
 WindowSize->{1280, 941},
-WindowMargins->{{Automatic, 4}, {Automatic, 0}},
-FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (September 9, \
-2014)",
+WindowMargins->{{Automatic, 191}, {Automatic, 30}},
+FrontEndVersion->"11.2 for Mac OS X x86 (32-bit, 64-bit Kernel) (September \
+10, 2017)",
 StyleDefinitions->"Default.nb"
 ]
 (* End of Notebook Content *)
@@ -2371,63 +3385,75 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[CellGroupData[{
-Cell[580, 22, 597, 8, 62, "Subchapter"],
+Cell[580, 22, 1185, 23, 249, "Subchapter",ExpressionUUID->"04f07dcf-897c-4c42-a0ec-063d784090d1"],
 Cell[CellGroupData[{
-Cell[1202, 34, 96, 1, 44, "Subsection"],
+Cell[1790, 49, 323, 6, 54, "Subsection",ExpressionUUID->"3f771075-3959-49d2-bd7c-3e06ba762671"],
 Cell[CellGroupData[{
-Cell[1323, 39, 513, 8, 46, "Input"],
-Cell[1839, 49, 3819, 52, 28, "Output"],
-Cell[5661, 103, 391, 8, 21, "Print"]
+Cell[2138, 59, 574, 10, 52, "Input",ExpressionUUID->"e88d8823-0382-4897-b985-3061bd477621"],
+Cell[2715, 71, 4016, 55, 34, "Output",ExpressionUUID->"211c3bc4-51c7-44ff-baa9-bc1f3dafbd43"],
+Cell[6734, 128, 550, 11, 24, "Print",ExpressionUUID->"63a577a2-7949-4859-93f5-15313bd023bd"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[6089, 116, 2275, 42, 46, "Input"],
-Cell[8367, 160, 1891, 35, 96, "Print"]
+Cell[7321, 144, 2336, 44, 52, "Input",ExpressionUUID->"6fcc280c-f499-404a-8fe1-26511151ec1f"],
+Cell[9660, 190, 2006, 38, 98, "Print",ExpressionUUID->"cb3fea07-a393-4426-b393-8432ccc6f75f"]
+}, Open  ]],
+Cell[11681, 231, 179, 4, 30, "Input",ExpressionUUID->"e56dd4f7-df96-495a-ab31-fe998fb2cf72"],
+Cell[CellGroupData[{
+Cell[11885, 239, 387, 10, 30, "Input",ExpressionUUID->"f3c316af-ac7f-4c4d-904f-bab057dc1bb6"],
+Cell[12275, 251, 3148, 82, 85, "Output",ExpressionUUID->"97f1eb95-4301-4d46-8cbf-fc1dcc4041b1"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[10295, 200, 122, 3, 28, "Input"],
-Cell[10420, 205, 433, 6, 21, "Print"]
+Cell[15460, 338, 329, 8, 30, "Input",ExpressionUUID->"c4a1014f-b4fb-45c2-8997-96b7e34c92f7"],
+Cell[15792, 348, 2358, 61, 98, "Output",ExpressionUUID->"a24ce99d-2140-4f5b-b306-8b0a4f1adde7"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[10890, 216, 327, 8, 28, "Input"],
-Cell[11220, 226, 3066, 80, 83, "Output"]
+Cell[18187, 414, 412, 7, 30, "Input",ExpressionUUID->"8aa2a49a-170b-4ec3-9e91-204dbe4b876a"],
+Cell[18602, 423, 31865, 654, 504, "Output",ExpressionUUID->"f5842945-3918-4992-815f-5a1646c86c5e"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[14323, 311, 269, 6, 28, "Input"],
-Cell[14595, 319, 2276, 59, 94, "Output"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[16908, 383, 351, 5, 28, "Input"],
-Cell[17262, 390, 24011, 505, 499, "Output"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[41310, 900, 151, 3, 28, "Input"],
-Cell[41464, 905, 36180, 753, 608, "Output"]
+Cell[50504, 1082, 208, 4, 30, "Input",ExpressionUUID->"e1fbf071-c48a-4021-b8a3-7cb3d408ba95"],
+Cell[50715, 1088, 36330, 758, 620, "Output",ExpressionUUID->"b271c767-8502-4bb3-af84-444ec94966b6"],
+Cell[87048, 1848, 470, 10, 41, "Message",ExpressionUUID->"14b4e01f-3ea7-483b-8a63-67d09a7db21d"],
+Cell[87521, 1860, 470, 10, 41, "Message",ExpressionUUID->"d6fc3cf3-f0ab-44eb-a39f-ab7aa2eb8d30"],
+Cell[87994, 1872, 470, 10, 41, "Message",ExpressionUUID->"0693e504-6334-4640-98ec-08a484ca133f"],
+Cell[88467, 1884, 399, 9, 24, "Message",ExpressionUUID->"fd01fe66-d289-4fc5-8037-251bbf41aed5"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[77693, 1664, 127, 1, 44, "Subsection"],
+Cell[88915, 1899, 187, 3, 54, "Subsection",ExpressionUUID->"201cd7e8-2139-4618-9adf-b2caca5745e3"],
 Cell[CellGroupData[{
-Cell[77845, 1669, 513, 8, 46, "Input"],
-Cell[78361, 1679, 3955, 54, 28, "Output"],
-Cell[82319, 1735, 488, 9, 21, "Print"]
+Cell[89127, 1906, 574, 10, 52, "Input",ExpressionUUID->"95d329ad-30ac-4b96-aba0-d5705639d4e1"],
+Cell[89704, 1918, 4212, 58, 34, "Output",ExpressionUUID->"a43c0586-b0be-4a80-b7fb-b5153503f7de"],
+Cell[93919, 1978, 749, 14, 24, "Print",ExpressionUUID->"bf3ce5ce-b6fc-462e-996b-3f1e2a852b96"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[82844, 1749, 3118, 58, 148, "Input"],
+Cell[94705, 1997, 3179, 60, 178, "Input",ExpressionUUID->"8ff05ca3-ed0e-46a6-90ff-b4485d1e33c2"],
 Cell[CellGroupData[{
-Cell[85987, 1811, 2641, 52, 162, "Print"],
-Cell[88631, 1865, 1535, 21, 21, "Print"]
+Cell[97909, 2061, 2896, 57, 166, "Print",ExpressionUUID->"489ff881-168b-41b1-b178-f6d5b11f7753"],
+Cell[100808, 2120, 1794, 26, 24, "Print",ExpressionUUID->"8edd3366-5485-422e-9f35-335e2cd84a5b"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[90215, 1892, 352, 8, 28, "Input"],
-Cell[90570, 1902, 5796, 154, 83, "Output"]
+Cell[102651, 2152, 413, 10, 30, "Input",ExpressionUUID->"d9e07d14-c39b-441a-a29f-ba0f19b49d11"],
+Cell[103067, 2164, 5879, 156, 85, "Output",ExpressionUUID->"aec696a9-44dc-4fa6-8512-d4960b3a6765"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[96403, 2061, 261, 5, 28, "Input"],
-Cell[96667, 2068, 10136, 263, 132, "Output"]
+Cell[108983, 2325, 318, 6, 30, "Input",ExpressionUUID->"29a63ef3-5ee0-4ebc-89d9-5eefa56bd1d4"],
+Cell[109304, 2333, 10219, 265, 148, "Output",ExpressionUUID->"da1eb0dc-d927-43a1-b238-a105df7796b9"]
 }, Open  ]],
-Cell[106818, 2334, 845, 17, 28, "Input"]
-}, Closed]]
+Cell[CellGroupData[{
+Cell[119560, 2603, 952, 19, 30, "Input",ExpressionUUID->"ba5cbeff-44d2-4dfb-b33d-b0a123afa7bb"],
+Cell[120515, 2624, 32550, 673, 504, "Output",ExpressionUUID->"07aa656c-2a51-4966-b0db-03da63853e3a"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[153102, 3302, 1289, 33, 136, "Input",ExpressionUUID->"3364765c-f284-4dd2-ae21-83a4c4ef4cb9"],
+Cell[154394, 3337, 408, 6, 44, "Print",ExpressionUUID->"bef97e42-231c-4312-a100-cfe6536cd1e4"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[154839, 3348, 274, 7, 30, "Input",ExpressionUUID->"d16b83bd-f902-4bcf-b3db-ff242c2f96a5"],
+Cell[155116, 3357, 300, 7, 34, "Output",ExpressionUUID->"344290a5-10cf-43c8-bd2b-7c7681c043cf"]
+}, Open  ]]
+}, Open  ]]
 }, Open  ]]
 }
 ]

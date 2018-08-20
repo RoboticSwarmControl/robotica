@@ -4,12 +4,11 @@
          Robotica
 
 A Mathematica package for the analysis and design of robots.
-Author: John Nethery, nethery@robot1.ge.uiuc.edu
-
-Updated by Aaron T. Becker & Mohammad Sultan in 2017
-
+Author: John Nethery, nethery@robot1.ge.uiuc.edu  (email no longer works)
 Copyright 1993 Board of Trustees, University of Illinois
 All rights reserved.
+
+Updated by Aaron T. Becker (atbecker@uh.edu) & Mohammad Sultan in 2017
 
 *)
 
@@ -117,7 +116,7 @@ file 'name' if specified."
 DataFile::usage = "DataFile[name_String:''] reads in a DH input file
 from 'name' if given.  Otherwise prompt for a file and read it."
 
-dhInput::usage = "dhInput[] lets the user enter the DH parameters."
+dhInput::usage = "dhInput[] lets the user enter the DH parameters, in a list of {joint_type,r,alpha,d,theta}."
 
 createdh::usage = "create DH parameter by Given DOF"
 createdh2::usage " Create DH Parameter Table by given DH Matrix"
@@ -148,7 +147,7 @@ showH writes the homogenous transform,
 showManipEllipse-> False, 
 showPlanes displays a controller to show the xy plane at each axis (useful for inverse kinematics)
 "
-drawRobot3::usage= "drawRobot[] displays a manipulate window and the robot with the manipulability ellipses"
+drawRobot3::usage= "drawRobot3[] displays a manipulate window and the robot with the manipulability ellipses"
 myArrowArc::usage=""
 myArrowArc2::usage=""
 makeHand::usage=""
@@ -871,14 +870,14 @@ $dhInput$ = "YES";
 ];
 
 (*
-Create DH function 
+Create DH function: parses input and generates the DH table 
 *)
 createdh[]:=Do[
 
 If[IntegerQ[dof] && dof>0,
 DH=Input["Fill out the DH parameters:
 Note: \[Alpha] and \[Theta] should be in radians.",
-ze=ConstantArray[0,{dof,5}];
+ze=ConstantArray[{"r",0,0,0,0},{dof}];
 
 k={Type,r, \[Alpha],d,\[Theta]};
 b=Join[{k},ze];
@@ -894,27 +893,22 @@ If[Dimensions[DH]!= {6} || DH == k,Print["Cancelled"];Return[]];
 
 For[i=1,i<=dof,i++,
 zz=ToString[DH[[1,i+1,2]] ];
-If[zz!= "Prismatic" && zz !=  "prismatic" && zz != "P" && zz != "p" && zz != "Revolute" && zz !=  "revolute" && zz !=  "R" && zz !=
- "r", Print[" Type column, should include only:
+If[ !MemberQ[{"Prismatic","prismatic","P","p","Revolute","revolute","R","r"},zz], 
+Print[" Type column, should include only:
  Revolute, revolute , R, r, Prismatic, prismatic, P or p"]; Return[]] ];
 For[i=1,i<=dof,i++,
 thetac[i]=DH[[1,i+1,6]];
 zz=ToString[DH[[1,i+1,2]] ];
-If[zz== "Prismatic" || zz == "prismatic" || zz== "P" || zz == "p",DH[[1,i+1,5]] = Subsuperscript["d",i,"*"];DH[[1,i+1,2]]="prismatic",
-If[NumberQ[DH[[1,i+1,5]]] ||  NumericQ[DH[[1,i+1,5]]],DH[[1,i+1,5]],DH[[1,i+1,5]]=Subscript["d",i]]];
-
-If[zz== "Revolute" || zz == "revolute" || zz == "R" || zz == "r",DH[[1,i+1,6]] = Subsuperscript["\[Theta]",i,"*"];DH[[1,i+1,2]]="revolute",DH[[1,i+1,6]]];
-
+If[MemberQ[{"Prismatic","prismatic","P","p"},zz], DH[[1,i+1,5]] = Subsuperscript["d",i,"*"];DH[[1,i+1,2]]="prismatic",
+If[NumberQ[DH[[1,i+1,5]]] || NumericQ[DH[[1,i+1,5]]],DH[[1,i+1,5]],DH[[1,i+1,5]]=Subscript["d",i]]];
+If[MemberQ[{"Revolute","revolute","R","r"},zz], DH[[1,i+1,6]] = Subsuperscript["\[Theta]",i,"*"];DH[[1,i+1,2]]="revolute",DH[[1,i+1,6]]];
 If[NumberQ[DH[[1,i+1,3]]] || NumericQ[DH[[1,i+1,3]]],DH[[1,i+1,3]],DH[[1,i+1,3]]=Subscript["r",i]];
-
-
 
 a[i]=DH[[1,i+1,3]];
 alpha[i]=DH[[1,i+1,4]];
 d[i] =DH[[1,i+1,5]];
 theta[i]=DH[[1,i+1,6]];
- jointtype[i] = ToString[DH[[1,1+i,2]]];
-
+jointtype[i] = ToString[DH[[1,1+i,2]]];
 ];
 $DATAFILE$="NO";
 $dhInput$ = "YES";
@@ -932,38 +926,31 @@ theta[i]=thetac[i];
 ]
 ];
 
-(*Create DH 2
-*)
+(*Create DH 2*)
 
 createdh2[]:=
 Do[
 For[i=1,i<=dof,i++,
 zz=ToString[DH[[1,i]] ];
-If[zz!= "Prismatic" && zz !=  "prismatic" && zz != "P" && zz != "p" && zz != "Revolute" && zz !=  "revolute" && zz !=  "R" && zz !=
- "r", Print[" Type column, should include only:
- Revolute, revolute , R, r, Prismatic, prismatic, P or p"]; Return[]] 
-];
+ If[ !MemberQ[{"Prismatic","prismatic","P","p","Revolute","revolute","R","r"},zz], 
+Print[" Type column, should include only:
+ Revolute, revolute, R, r, Prismatic, prismatic, P, or p"]; Return[]] ];
 For[i=1,i<=dof,i++,
 alphac[i]=DH[[3,i]];
 thetac[i]=DH[[5,i]];
 zz=ToString[DH[[1,i]] ];
 
 
-If[zz== "Prismatic" || zz == "prismatic" || zz== "P" || zz == "p",DH[[4,i]] = Subsuperscript["d",i,"*"];DH[[1,i]]="prismatic",
+If[MemberQ[{"Prismatic","prismatic","P","p"},zz],DH[[4,i]] = Subsuperscript["d",i,"*"];DH[[1,i]]="prismatic",
 If[NumberQ[DH[[4,i]]] ||  NumericQ[DH[[4,i]]],DH[[4,i]],DH[[4,i]]=Subscript["d",i]]];
-
-If[zz== "Revolute" || zz == "revolute" || zz == "R" || zz == "r",DH[[5,i]] = Subsuperscript["\[Theta]",i,"*"];DH[[1,i]]="revolute"];
-
+If[MemberQ[{"Revolute","revolute","R","r"},zz],DH[[5,i]] = Subsuperscript["\[Theta]",i,"*"];DH[[1,i]]="revolute"];
 If[NumberQ[DH[[2,i]]] || NumericQ[DH[[2,i]]],DH[[2,i]],DH[[2,i]]=Subscript["r",i]];
-
-
 
 a[i]=DH[[2,i]];
 alpha[i]=DH[[3,i]];
 d[i] =DH[[4,i]];
 theta[i]=DH[[5,i]];
  jointtype[i] = ToString[DH[[1,i]]];
-
 ];
 $DATAFILE$="NO";
 $dhInput$ = "YES";
@@ -975,7 +962,6 @@ b3=Transpose[b2];
 k3=Join[{Joint},Array[#&,dof]];
 l2 = Join[{k3},b3];
 L2=Transpose[l2];
-
 
 Print[Grid[L2,Frame->All]]
 
