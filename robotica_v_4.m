@@ -349,7 +349,7 @@ SimplifyDerivativeNotation[]:=
                StringJoin["D",ToString[theta[i]]];
         ];
 
-	Protect[D]
+	Protect[D];
      ]
 *)
 (*
@@ -404,6 +404,7 @@ TrigCanonical[e_] := e //. TrigCanonicalRel
 (*
    TPrint prints all the T Matrices to a file or to the screen.
    If the filename is $, the default file name is used
+   TODO: display all the T matrices, not print them
 *)
 TPrint[name_String:""] :=
    Block[{i,j,temp,file},
@@ -423,8 +424,8 @@ TPrint[name_String:""] :=
        PutAppend[OutputForm[temp], file];
        PutAppend[OutputForm[""], file],
 
-       Print[OutputForm[temp]];
-       Print[""]]
+       Print[temp];
+       ]
        ]
       ]
      ]
@@ -433,6 +434,7 @@ TPrint[name_String:""] :=
 (*
    APrint prints all the A matrices to the screen or to a file.
   If the filename is $, the default file name is used
+  TODO: display all the A matrices, not print them
 *)
 APrint[name_String:""] :=
    Block[{j,temp, file},
@@ -445,11 +447,11 @@ APrint[name_String:""] :=
       For[j=1, j<=dof, j++,
        temp=MPrint[A[j], StringJoin["A[", ToString[j], "]= "]];
        If [file != "",
-       PutAppend[OutputForm[temp], file];
-       PutAppend[OutputForm[""], file],
+         PutAppend[OutputForm[temp], file];
+         PutAppend[OutputForm[""], file],
 
-       Print[OutputForm[temp]];
-       Print[""]]
+         Print[temp];
+         ]
       ]
      ]
 
@@ -457,8 +459,12 @@ APrint[name_String:""] :=
    MPrint prints any matrix with a label to the screen or to a file.
    If the filename is $, the default file name is used
 *)
+MPrint[M_List, text_String, name_String:""] :=(
+  StringForm["````",text, MatrixForm[M]]
+  );
+	(*
 MPrint[M_List, text_String, name_String:""] :=
-	Block[{i, ro, co, c1, c2, c3, file},
+    Block[{i, ro, co, c1, c2, c3, file},
          c1=c2=c3={};
 
 (* find out how many rows and columns *)
@@ -490,7 +496,7 @@ MPrint[M_List, text_String, name_String:""] :=
 
           SequenceForm[c1,c2,c3,c2]
           ]
-	]
+	]*)
 
 (* EPrint prints all the elements of a matrix one per line *)
 EPrint[M_List, text_String, name_String:""] :=
@@ -1087,9 +1093,7 @@ PrintInputData[]:=
 *)
 FKin[]:=
 	Do[If[$dhInput$ == "YES", (*DH Parameter entered from dhInput[]*)Print[""], If[$DATAFILE$ == "YES",(*DH Parameter entered from DataFile[]*)Print[""],   
-	If[ $DATAFILE$ == "NO" && $dhInput$ == "NO", dhInput[]]]]
-	
-     
+	If[ $DATAFILE$ == "NO" && $dhInput$ == "NO", dhInput[]]]];
 
 	FormAllAs[];
 	FormAllTs[];
@@ -1098,22 +1102,21 @@ FKin[]:=
         ]
 
 (*
-  The A matrices are just a fill in the blank procedure
+  The A matrices are just a fill-in-the-blank procedure
 *)
 FormAllAs[]:=
 	Block[{i},
 	st = "A Matrices Formed:";
 	Do[st = StringJoin[st,If[i>1,", "," "],ToString[StringForm["A[``]",i]]];
 	   A[i]=FormA[a[i],alpha[i],d[i],theta[i]],{i,1,dof}]
-
 	]
 
 FormA[a_,alpha_,d_,theta_] :=
 
-{ {Cos[theta], -Sin[theta] Cos[alpha], Sin[theta] Sin[alpha], a Cos[theta]},
+Chop[{ {Cos[theta], -Sin[theta] Cos[alpha], Sin[theta] Sin[alpha], a Cos[theta]},
   {Sin[theta], Cos[theta] Cos[alpha], -Cos[theta] Sin[alpha], a Sin[theta]},
   {0,          Sin[alpha],            Cos[alpha],             d},
-  {0,          0,                     0,                      1} }
+  {0,          0,                     0,                      1} }]
 
 
 FormAllTs[]:=
@@ -1123,7 +1126,7 @@ FormAllTs[]:=
 	For[i=0,i < dof, i++,
 	   For[j=1,j<=dof , j++ ,
               If[j>i,st = StringJoin[st, ToString[StringForm[", T[``,``]",i,j]]];
-		             T[i,j]=TrigFactor[FormTij[i,j]]
+		             T[i,j]=Chop[TrigFactor[FormTij[i,j]]]
 			]
 		]
 	]
