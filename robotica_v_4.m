@@ -410,7 +410,8 @@ TPrint[name_String:""] :=
    Block[{i,j,temp,file},
      file=name;
      If[file =!= "",
-       If[file == "$", file = ToString[$FILE$], $FILE$=file]];
+       If[file == "$", file = ToString[$FILE$], $FILE$=file]
+       ];
      If[file == "NOT_SET",
       Print["No default filename yet..."];
       Return[]];
@@ -1105,10 +1106,13 @@ FKin[]:=
   The A matrices are just a fill-in-the-blank procedure
 *)
 FormAllAs[]:=
-	Block[{i},
-	st = "A Matrices Formed:";
-	Do[st = StringJoin[st,If[i>1,", "," "],ToString[StringForm["A[``]",i]]];
-	   A[i]=FormA[a[i],alpha[i],d[i],theta[i]],{i,1,dof}]
+	Block[
+    {i},
+    st = "A Matrices Formed:";
+    Do[
+      st = StringJoin[st,If[i>1,", "," "],ToString[StringForm["A[``]",i]]];A[i]=FormA[a[i],alpha[i],d[i],theta[i]],
+      {i,1,dof}
+     ]
 	]
 
 FormA[a_,alpha_,d_,theta_] :=
