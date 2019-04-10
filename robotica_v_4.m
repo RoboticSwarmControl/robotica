@@ -868,70 +868,112 @@ DH1=Transpose[l];
 (* DH Input Functon *)
 
 dhInput[x2_]:=
-Do[x3 = Dimensions[x2];
-
-If[NumberQ[x2] && x2>0, dof = x2; createdh[],If[ Length[x2]==5 && Length[x3]==2 , dof= x3[[2]]; DH = x2; createdh2[],dof= Input["You entered an incorrect Matrix.
-How many joints (DOF) does your robot have?"]; 
-createdh[]]];
-$dhInput$ = "YES";
-];
+  Do[
+    x3 = Dimensions[x2];
+    If[ NumberQ[x2] && x2>0,
+      dof = x2;
+      createdh[],
+     
+      If[ Length[x2]==5 && Length[x3]==2 ,
+        dof= x3[[2]];
+        DH = x2;
+        createdh2[],
+     
+        dof= Input["You entered an incorrect Matrix. How many joints (DOF) does your robot have?"]; 
+        createdh[]
+      ]
+    ];
+  $dhInput$ = "YES";
+  ];
 
 (*
 Create DH function: parses input and generates the DH table 
 *)
-createdh[]:=Do[
+createdh[]:=
+  Do[
+    If[ IntegerQ[dof] && dof>0,
+      
+      DH= Input[ "Fill out the DH parameters:
+        Note: \[Alpha] and \[Theta] should be in radians.",
+        ze=ConstantArray[{"r",0,0,0,0},{dof}];
+        k={Type,r, \[Alpha],d,\[Theta]};
+        b=Join[{k},ze];
+        cc=Transpose[b];
+        k=Join[{Joint},Array[#&,dof]];
+        l = Join[{k},cc];
+        Q=Transpose[l];
+        Grid[ Q ,Frame->All, Alignment->Center,Background->{{Gray},{Gray},Automatic},ItemStyle->{{Directive[White,Bold,12]},{Directive [ White,Bold,12] }} ] 
+      ],
+      
+      Print["DOF should be a positive Integer"];
+      Return[]
 
-If[IntegerQ[dof] && dof>0,
-DH=Input["Fill out the DH parameters:
-Note: \[Alpha] and \[Theta] should be in radians.",
-ze=ConstantArray[{"r",0,0,0,0},{dof}];
-
-k={Type,r, \[Alpha],d,\[Theta]};
-b=Join[{k},ze];
-cc=Transpose[b];
-k=Join[{Joint},Array[#&,dof]];
-l = Join[{k},cc];
-Q=Transpose[l];
-Grid[Q,Frame->All, Alignment->Center,Background->{{Gray},{Gray},Automatic},ItemStyle->{{Directive[White,Bold,12]},{Directive[White,Bold,12]}}]],Print["DOF should be a positive Integer"];
-Return[]];
+    ];
 
 
-If[Dimensions[DH]!= {6} || DH == k,Print["Cancelled"];Return[]];
+    If[ Dimensions[DH]!= {6} || DH == k , 
+      Print["Cancelled"];
+      Return[]
+    ];
 
-For[i=1,i<=dof,i++,
-zz=ToString[DH[[1,i+1,2]] ];
-If[ !MemberQ[{"Prismatic","prismatic","P","p","Revolute","revolute","R","r"},zz], 
-Print[" Type column, should include only:
- Revolute, revolute , R, r, Prismatic, prismatic, P or p"]; Return[]] ];
-For[i=1,i<=dof,i++,
-thetac[i]=DH[[1,i+1,6]];
-zz=ToString[DH[[1,i+1,2]] ];
-If[MemberQ[{"Prismatic","prismatic","P","p"},zz], DH[[1,i+1,5]] = Subsuperscript["d",i,"*"];DH[[1,i+1,2]]="prismatic",
-If[NumberQ[DH[[1,i+1,5]]] || NumericQ[DH[[1,i+1,5]]],DH[[1,i+1,5]],DH[[1,i+1,5]]=Subscript["d",i]]];
-If[MemberQ[{"Revolute","revolute","R","r"},zz], DH[[1,i+1,6]] = Subsuperscript["\[Theta]",i,"*"];DH[[1,i+1,2]]="revolute",DH[[1,i+1,6]]];
-If[NumberQ[DH[[1,i+1,3]]] || NumericQ[DH[[1,i+1,3]]],DH[[1,i+1,3]],DH[[1,i+1,3]]=Subscript["r",i]];
+    For[ i=1,i<=dof,i++,
+      zz=ToString[DH[[1,i+1,2]] ];
+      If[ !MemberQ[{"Prismatic","prismatic","P","p","Revolute","revolute","R","r"},zz], 
+        Print[" Type column, should include only:
+          Revolute, revolute , R, r, Prismatic, prismatic, P or p"];
+        Return[]
+      ]
+    ];
+    For[ i=1,i<=dof,i++,
+      thetac[i]=DH[[1,i+1,6]];
+      zz=ToString[DH[[1,i+1,2]] ];
+      If[MemberQ[{"Prismatic","prismatic","P","p"},zz], 
+        DH[[1,i+1,5]] = Subsuperscript["d",i,"*"];
+        DH[[1,i+1,2]]="prismatic",
 
-a[i]=DH[[1,i+1,3]];
-alpha[i]=DH[[1,i+1,4]];
-d[i] =DH[[1,i+1,5]];
-theta[i]=DH[[1,i+1,6]];
-jointtype[i] = ToString[DH[[1,1+i,2]]];
-];
-$DATAFILE$="NO";
-$dhInput$ = "YES";
-DH1=ConstantArray[0,{dof+1,6}];
-For[i=1,i<=dof+1,i++,
-For[j=1,j<=6,j++,
+        If[ NumberQ[DH[[1,i+1,5]]] || NumericQ[DH[[1,i+1,5]]],
+          DH[[1,i+1,5]],
+          
+          DH[[1,i+1,5]]=Subscript["d",i]
+        ]
+      ];
 
-DH1[[i,j]]=DH[[1,i,j]];
-]];
 
-Print[Grid[DH1,Frame->All]]
+      If[ MemberQ[{"Revolute","revolute","R","r"},zz], 
+        DH[[1,i+1,6]] = Subsuperscript["\[Theta]",i,"*"];
+        DH[[1,i+1,2]]="revolute",
+        
+        DH[[1,i+1,6]]
+      ];
+      
+      If[ NumberQ[DH[[1,i+1,3]]] || NumericQ[DH[[1,i+1,3]]],
+        DH[[1,i+1,3]],
+        
+        DH[[1,i+1,3]]=Subscript["r",i]
+      ];
 
-For[i=1,i<=dof,i++,
-theta[i]=thetac[i];
-]
-];
+      a[i]=DH[[1,i+1,3]];
+      alpha[i]=DH[[1,i+1,4]];
+      d[i] =DH[[1,i+1,5]];
+      theta[i]=DH[[1,i+1,6]];
+      jointtype[i] = ToString[DH[[1,1+i,2]]];
+    ];
+
+    $DATAFILE$="NO";
+    $dhInput$ = "YES";
+    DH1=ConstantArray[0,{dof+1,6}];
+    For[ i=1,i<=dof+1,i++,
+      For[j=1,j<=6,j++,
+        DH1[[i,j]]=DH[[1,i,j]];
+      ]
+    ];
+
+    Print[Grid[DH1,Frame->All]]
+
+    For[ i=1,i<=dof,i++,
+      theta[i]=thetac[i];
+    ]
+  ];
 
 (*Create DH 2*)
 
@@ -1093,14 +1135,22 @@ PrintInputData[]:=
   Run the functions that generate the forward kinematics
 *)
 FKin[]:=
-	Do[If[$dhInput$ == "YES", (*DH Parameter entered from dhInput[]*)Print[""], If[$DATAFILE$ == "YES",(*DH Parameter entered from DataFile[]*)Print[""],   
-	If[ $DATAFILE$ == "NO" && $dhInput$ == "NO", dhInput[]]]];
-
-	FormAllAs[];
-	FormAllTs[];
-	FormTheJacobianJ[];
-        $FKINRUN$ = "YES";
+	Do[
+    If[$dhInput$ == "YES", (*DH Parameter entered from dhInput[]*)
+      Print[""],
+      If[$DATAFILE$ == "YES",(*DH Parameter entered from DataFile[]*)
+        Print[""],   
+	      If[ $DATAFILE$ == "NO" && $dhInput$ == "NO", 
+          dhInput[]
         ]
+      ]
+    ];
+
+	  FormAllAs[];
+	  FormAllTs[];
+	  FormTheJacobianJ[];
+      $FKINRUN$ = "YES";
+  ]
 
 (*
   The A matrices are just a fill-in-the-blank procedure
@@ -1110,7 +1160,18 @@ FormAllAs[]:=
     {i},
     st = "A Matrices Formed:";
     Do[
-      st = StringJoin[st,If[i>1,", "," "],ToString[StringForm["A[``]",i]]];A[i]=FormA[a[i],alpha[i],d[i],theta[i]],
+      st = StringJoin[
+        st,
+        If[i>1,", "," "],
+        ToString[StringForm["A[``]",i]]
+      ];
+        
+        A[i]=FormA[
+          a[i],
+          alpha[i],
+          d[i],
+          theta[i]
+        ],
       {i,1,dof}
      ]
 	]
@@ -1125,12 +1186,16 @@ Chop[{ {Cos[theta], -Sin[theta] Cos[alpha], Sin[theta] Sin[alpha], a Cos[theta]}
 
 FormAllTs[]:=
 	Block[{i,j},
-	T[0,0]=IdentityMatrix[4];
-    st = "T Matrices Formed: T[0,0]";
-	For[i=0,i < dof, i++,
-	   For[j=1,j<=dof , j++ ,
-              If[j>i,st = StringJoin[st, ToString[StringForm[", T[``,``]",i,j]]];
-		             T[i,j]=Chop[TrigFactor[FormTij[i,j]]]
+	
+  T[0,0]=IdentityMatrix[4];
+  st = "T Matrices Formed: T[0,0]";
+	For[ i=0,i < dof, i++,
+	  For[j=1,j<=dof , j++ ,
+      If[ j>i ,
+        st = StringJoin[st, ToString[
+          StringForm[", T[``,``]",i,j]]
+        ];
+		    T[i,j]=Chop[TrigFactor[FormTij[i,j]]]
 			]
 		]
 	]
@@ -1139,7 +1204,12 @@ FormAllTs[]:=
 (*
   Recursively form the T matrix T[i,j]
 *)
-FormTij[k_,l_]:= If[(l-k)==1, A[l], A[k+1] . FormTij[k+1, l] ];
+FormTij[k_,l_]:= 
+  If[ (l-k)==1,
+    A[l], 
+    
+    A[k+1].FormTij[k+1, l]
+  ];
 
 FormTheJacobianJ[]:= Block[{i,j,v,w,Jvw},
 
