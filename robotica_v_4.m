@@ -32,7 +32,7 @@ d::usage = ""
 \[Theta]::usage = ""
 Type::usage = ""
 Joint::usage = ""
-jointtype::usage = "" 
+jointtype::usage = ""
 alpha::usage = ""
 theta::usage = ""
 thetac::usage = ""
@@ -144,7 +144,7 @@ drawRobot::usage = "drawRobot[] displays a manipulate window and the robot so us
 Optional parameters:
 showArrows displays the coordinate axes,
 showH writes the homogenous transform,
-showManipEllipse-> False, 
+showManipEllipse-> False,
 showPlanes displays a controller to show the xy plane at each axis (useful for inverse kinematics)
 "
 drawRobot3::usage= "drawRobot3[] displays a manipulate window and the robot with the manipulability ellipses"
@@ -339,26 +339,6 @@ SimplifyTrigNotation[]:=
 	]
 
 
-(*
-SimplifyDerivativeNotation[]:=
-	Block[{i},
-	Unprotect[D];
-        For[i=1, i<=dof, i++,
-
-        Format[D[theta[i],t,NonConstants->joints]]:=
-               StringJoin["D",ToString[theta[i]]];
-        ];
-
-	Protect[D];
-     ]
-*)
-(*
-`TrigCanonicalRel = Integrator`TrigCanonicalRel ~Join~
-*)
-
-(*
-  Define the set of trig simplification rules to use for Trig reduction
-*)
 `TrigCanonicalRel =
 {
     Sin[x_]^n_. Cos[x_]^m_.	:> Tan[x]^n	/; n+m == 0,
@@ -398,8 +378,6 @@ TrigCanonical[e_] := e //. TrigCanonicalRel
     a_. Sin[x_]^2 + a_. Cos[x_]^2	      :> a
 
 }
-(* Protect[TrigFactorRel] XYZZY *)
-(* TrigFactor[e_] := FixedPoint[(# /. TrigCanonicalRel /. TrigFactorRel)&, e] *)
 
 (*
    TPrint prints all the T Matrices to a file or to the screen.
@@ -762,8 +740,8 @@ cc=Transpose[b];
 k=Join[{Joint},Array[#&,dof]];
 l = Join[{k},cc];
 DH1=Transpose[l];
-     
-     
+
+
      For[j=1,j<=dof,j++,DH1[[j+1,1]]= j;];
      For[j=1,j<=dof,j++,DH1[[j+1,2]]= jointtype[j];];
      For[j=1,j<=dof,j++,DH1[[j+1,3]]= a[j];];
@@ -861,8 +839,8 @@ DH1=Transpose[l];
 
       OKDynamics = True;
       $DATAFILE$ = "YES";
- 
-  PrintInputData[];   
+
+  PrintInputData[];
 ];
 
 (* DH Input Functon *)
@@ -873,13 +851,13 @@ dhInput[x2_]:=
     If[ NumberQ[x2] && x2>0,
       dof = x2;
       createdh[],
-     
+
       If[ Length[x2]==5 && Length[x3]==2 ,
         dof= x3[[2]];
         DH = x2;
         createdh2[],
-     
-        dof= Input["You entered an incorrect Matrix. How many joints (DOF) does your robot have?"]; 
+
+        dof= Input["You entered an incorrect Matrix. How many joints (DOF) does your robot have?"];
         createdh[]
       ]
     ];
@@ -887,12 +865,13 @@ dhInput[x2_]:=
   ];
 
 (*
-Create DH function: parses input and generates the DH table 
+Create DH function: parses input and generates the DH table
 *)
+(*'*)
 createdh[]:=
   Do[
     If[ IntegerQ[dof] && dof>0,
-      
+
       DH= Input[ "Fill out the DH parameters:
         Note: \[Alpha] and \[Theta] should be in radians.",
         ze=ConstantArray[{"r",0,0,0,0},{dof}];
@@ -902,23 +881,23 @@ createdh[]:=
         k=Join[{Joint},Array[#&,dof]];
         l = Join[{k},cc];
         Q=Transpose[l];
-        Grid[ Q ,Frame->All, Alignment->Center,Background->{{Gray},{Gray},Automatic},ItemStyle->{{Directive[White,Bold,12]},{Directive [ White,Bold,12] }} ] 
+        Grid[ Q ,Frame->All, Alignment->Center,Background->{{Gray},{Gray},Automatic},ItemStyle->{{Directive[White,Bold,12]},{Directive [ White,Bold,12] }} ]
       ],
-      
+
       Print["DOF should be a positive Integer"];
       Return[]
 
     ];
 
 
-    If[ Dimensions[DH]!= {6} || DH == k , 
+    If[ Dimensions[DH]!= {6} || DH == k ,
       Print["Cancelled"];
       Return[]
     ];
 
     For[ i=1,i<=dof,i++,
       zz=ToString[DH[[1,i+1,2]] ];
-      If[ !MemberQ[{"Prismatic","prismatic","P","p","Revolute","revolute","R","r"},zz], 
+      If[ !MemberQ[{"Prismatic","prismatic","P","p","Revolute","revolute","R","r"},zz],
         Print[" Type column, should include only:
           Revolute, revolute , R, r, Prismatic, prismatic, P or p"];
         Return[]
@@ -927,28 +906,28 @@ createdh[]:=
     For[ i=1,i<=dof,i++,
       thetac[i]=DH[[1,i+1,6]];
       zz=ToString[DH[[1,i+1,2]] ];
-      If[MemberQ[{"Prismatic","prismatic","P","p"},zz], 
+      If[MemberQ[{"Prismatic","prismatic","P","p"},zz],
         DH[[1,i+1,5]] = Subsuperscript["d",i,"*"];
         DH[[1,i+1,2]]="prismatic",
 
         If[ NumberQ[DH[[1,i+1,5]]] || NumericQ[DH[[1,i+1,5]]],
           DH[[1,i+1,5]],
-          
+
           DH[[1,i+1,5]]=Subscript["d",i]
         ]
       ];
 
 
-      If[ MemberQ[{"Revolute","revolute","R","r"},zz], 
+      If[ MemberQ[{"Revolute","revolute","R","r"},zz],
         DH[[1,i+1,6]] = Subsuperscript["\[Theta]",i,"*"];
         DH[[1,i+1,2]]="revolute",
-        
+
         DH[[1,i+1,6]]
       ];
-      
+
       If[ NumberQ[DH[[1,i+1,3]]] || NumericQ[DH[[1,i+1,3]]],
         DH[[1,i+1,3]],
-        
+
         DH[[1,i+1,3]]=Subscript["r",i]
       ];
 
@@ -978,47 +957,64 @@ createdh[]:=
 (*Create DH 2*)
 
 createdh2[]:=
-Do[
-For[i=1,i<=dof,i++,
-zz=ToString[DH[[1,i]] ];
- If[ !MemberQ[{"Prismatic","prismatic","P","p","Revolute","revolute","R","r"},zz], 
-Print[" Type column, should include only:
- Revolute, revolute, R, r, Prismatic, prismatic, P, or p"]; Return[]] ];
-For[i=1,i<=dof,i++,
-alphac[i]=DH[[3,i]];
-thetac[i]=DH[[5,i]];
-zz=ToString[DH[[1,i]] ];
+  Do[
+    For[ i=1,i<=dof,i++,
+      zz=ToString[DH[[1,i]] ];
+      If[ !MemberQ[{"Prismatic","prismatic","P","p","Revolute","revolute","R","r"},zz],
+        Print[" Type column, should include only:
+          Revolute, revolute, R, r, Prismatic, prismatic, P, or p"];
+        Return[]
+      ]
+    ];
+    For[ i=1,i<=dof,i++,
+      alphac[i]=DH[[3,i]];
+      thetac[i]=DH[[5,i]];
+      zz=ToString[ DH[[1,i]] ];
+      If[ MemberQ[{"Prismatic","prismatic","P","p"},zz],
+        DH[[4,i]] = Subsuperscript["d",i,"*"];
+        DH[[1,i]]="prismatic",
 
+        If[ NumberQ[DH[[4,i]]] ||  NumericQ[DH[[4,i]]],
+          DH[[4,i]],
 
-If[MemberQ[{"Prismatic","prismatic","P","p"},zz],DH[[4,i]] = Subsuperscript["d",i,"*"];DH[[1,i]]="prismatic",
-If[NumberQ[DH[[4,i]]] ||  NumericQ[DH[[4,i]]],DH[[4,i]],DH[[4,i]]=Subscript["d",i]]];
-If[MemberQ[{"Revolute","revolute","R","r"},zz],DH[[5,i]] = Subsuperscript["\[Theta]",i,"*"];DH[[1,i]]="revolute"];
-If[NumberQ[DH[[2,i]]] || NumericQ[DH[[2,i]]],DH[[2,i]],DH[[2,i]]=Subscript["r",i]];
+          DH[[4,i]]=Subscript["d",i]
+        ]
 
-a[i]=DH[[2,i]];
-alpha[i]=DH[[3,i]];
-d[i] =DH[[4,i]];
-theta[i]=DH[[5,i]];
- jointtype[i] = ToString[DH[[1,i]]];
-];
-$DATAFILE$="NO";
-$dhInput$ = "YES";
-DH1=Transpose[DH];
+      ];
 
-k2={Type,r, \[Alpha],d,\[Theta]};
-b2=Join[{k2},DH1];
-b3=Transpose[b2];
-k3=Join[{Joint},Array[#&,dof]];
-l2 = Join[{k3},b3];
-L2=Transpose[l2];
+      If[ MemberQ[{"Revolute","revolute","R","r"},zz],
+        DH[[5,i]] = Subsuperscript["\[Theta]",i,"*"];
+        DH[[1,i]]="revolute"
+      ];
 
-Print[Grid[L2,Frame->All]]
+      If[NumberQ[DH[[2,i]]] || NumericQ[DH[[2,i]]],
+        DH[[2,i]],
+        DH[[2,i]]=Subscript["r",i]
+      ];
+      a[i]=DH[[2,i]];
+      alpha[i]=DH[[3,i]];
+      d[i] =DH[[4,i]];
+      theta[i]=DH[[5,i]];
+      jointtype[i] = ToString[ DH[[1,i]] ];
+    ];
+    $DATAFILE$="NO";
+    $dhInput$ = "YES";
+    DH1=Transpose[DH];
 
-For[i=1,i<=dof,i++,
-theta[i]=thetac[i];
-alpha[i]=alphac[i];
-];
-];
+    k2={Type,r, \[Alpha],d,\[Theta]};
+    b2=Join[{k2},DH1];
+    b3=Transpose[b2];
+    k3=Join[{Joint},Array[#&,dof]];
+    l2 = Join[{k3},b3];
+    L2=Transpose[l2];
+
+    Print[Grid[L2,Frame->All]]
+
+    For[ i=1,i<=dof,i++,
+      theta[i]=thetac[i];
+      alpha[i]=alphac[i];
+    ];
+  ];
 
 (*
   reset variables
@@ -1071,15 +1067,15 @@ PrintInputData[]:=
 	   Prepend[Table[jointtype[j],{j,dof}],Style["Type",Bold]]
 	  ];
 	aColumn=ColumnForm[
-	   Prepend[Table[a[j],{j,dof}],Style["r",Bold]] 
+	   Prepend[Table[a[j],{j,dof}],Style["r",Bold]]
 	   ];
-	alphaColumn=ColumnForm[ 
+	alphaColumn=ColumnForm[
 	Prepend[Table[alpha[j],{j,dof}],Style["\[Alpha]",Bold]]
 	      ];
 	dColumn=ColumnForm[
 	   Prepend[Table[d[j],{j,dof}],Style["d",Bold]]
 	  ];
-	thetaColumn=ColumnForm[ 
+	thetaColumn=ColumnForm[
 	Prepend[Table[theta[j],{j,dof}],Style["\[Theta]",Bold]]
 			      ];
 
@@ -1139,8 +1135,8 @@ FKin[]:=
     If[$dhInput$ == "YES", (*DH Parameter entered from dhInput[]*)
       Print[""],
       If[$DATAFILE$ == "YES",(*DH Parameter entered from DataFile[]*)
-        Print[""],   
-	      If[ $DATAFILE$ == "NO" && $dhInput$ == "NO", 
+        Print[""],
+	      If[ $DATAFILE$ == "NO" && $dhInput$ == "NO",
           dhInput[]
         ]
       ]
@@ -1165,7 +1161,7 @@ FormAllAs[]:=
         If[i>1,", "," "],
         ToString[StringForm["A[``]",i]]
       ];
-        
+
         A[i]=FormA[
           a[i],
           alpha[i],
@@ -1186,7 +1182,7 @@ Chop[{ {Cos[theta], -Sin[theta] Cos[alpha], Sin[theta] Sin[alpha], a Cos[theta]}
 
 FormAllTs[]:=
 	Block[{i,j},
-	
+
   T[0,0]=IdentityMatrix[4];
   st = "T Matrices Formed: T[0,0]";
 	For[ i=0,i < dof, i++,
@@ -1199,48 +1195,49 @@ FormAllTs[]:=
 			]
 		]
 	]
-  
+
   ]
 (*
   Recursively form the T matrix T[i,j]
 *)
-FormTij[k_,l_]:= 
+FormTij[k_,l_]:=
   If[ (l-k)==1,
-    A[l], 
-    
+    A[l],
+
     A[k+1].FormTij[k+1, l]
   ];
 
-FormTheJacobianJ[]:= Block[{i,j,v,w,Jvw},
+FormTheJacobianJ[]:=
+  Block[ {i,j,v,w,Jvw},
+    Do[
+      z[j] = {T[0,j][[1,3]], T[0,j][[2,3]], T[0,j][[3,3]]};
+      o[j] = {T[0,j][[1,4]], T[0,j][[2,4]], T[0,j][[3,4]]},
 
-        Do[z[j] = {T[0,j][[1,3]], T[0,j][[2,3]], T[0,j][[3,3]]};
-           o[j] = {T[0,j][[1,4]], T[0,j][[2,4]], T[0,j][[3,4]]},
-           {j,0,dof}];
-
-        For[j=1, j<=dof, j++,
-          If[jointtype[j]=="revolute",
-           v=Cross3[z[j-1],o[dof]-o[j-1]];
-           w=z[j-1];
-           Jvw[j]=Join[v,w]
-            ];
-
-          If[jointtype[j]=="prismatic",
-           v=z[j-1];
-           w={0,0,0};
-           Jvw[j]=Join[v,w]
-            ]];
-
-        J = Transpose[Table[Jvw[j], {j, 1, dof}]];
-	(*Print["Jacobian Formed:  J","(6","x",dof,")"];*)
+      {j,0,dof}
+    ];
+    For[ j=1, j<=dof, j++,
+      If[ jointtype[j]=="revolute",
+        v= Cross3[z[j-1],o[dof]-o[j-1]];
+        w=z[j-1];
+        Jvw[j]=Join[v,w]
+      ];
+      If[ jointtype[j]=="prismatic",
+        v=z[j-1];
+        w={0,0,0};
+        Jvw[j]=Join[v,w]
+      ]
+    ];
+    J = Transpose[ Table[Jvw[j], {j, 1, dof} ] ];
+	  (*Print["Jacobian Formed:  J","(6","x",dof,")"];*)
 	]
 
 (*
   A simple cross product calculator
 *)
 Cross3[x_,y_]:=
-	Return[{x[[2]]y[[3]]-x[[3]]y[[2]],
-                x[[3]]y[[1]]-x[[1]]y[[3]],
-                x[[1]]y[[2]]-x[[2]]y[[1]]}]
+	Return[{ x[[2]]y[[3]]-x[[3]]y[[2]],
+           x[[3]]y[[1]]-x[[1]]y[[3]],
+           x[[1]]y[[2]]-x[[2]]y[[1]] }]
 
 (*
   Calculate the Euler-Lagrange dynamics
@@ -1387,18 +1384,16 @@ FormChristoffelSymbols[x_]:=
   Make the C Matrix, force joint variables to be funtions of time
 *)
 FormCMatrix[]:=
-	Block[{i,j,k},
-	CM=Table[0,{dof},{dof}];
+  Block[ {i,j,k},
+	 CM=Table[ 0,{dof},{dof} ];
+   Do[
+	  CM[[k,j]]= Sum[
+      c[[i,j,k]] * D[q[i][Global`t], Global`t] , {i,1,dof}
+    ],
 
-	Do[
-	CM[[k,j]]=Sum[c[[i,j,k]] *
-                D[q[i][Global`t], Global`t]
-(*
-		D[q[i],t,NonConstants -> joints]
-*)
-		,{i,1,dof}]
-	,{k,1,dof},{j,1,dof}];
-	Print[" "];
+    {k,1,dof},{j,1,dof}
+   ];
+	 Print["C Matrix Done"];
 	]
 
 (*
@@ -1785,7 +1780,7 @@ TellFunctions[fname_String]:= Block[{ttt},
 
   Write[ttt, OutputForm["PrintInputData:END;"]];
 
- 
+
   Write[ttt, OutputForm["RElp:RListParameter List:OList,frame,animate,single,measures,monly,scale,print,xprint,mprint,file,:END;"]];
 
   Write[ttt, OutputForm["Response:RListTime range:RListInitial Conditions:END;"]];
@@ -2019,7 +2014,7 @@ drawRobot[OptionsPattern[]]:=
 Manipulate[Chop[%,10^-10];
 Module[{jr = 1/10,ar = 1/40,Ad,Td,Ts,j,i,ii,jj,Tv},
 
-Ad =Table[ 
+Ad =Table[
 If[jointtype[i]=="prismatic",
 dhTransform[params[[i]],a[i],theta[i],alpha[i]],dhTransform[d[i],a[i],params[[i]],alpha[i]]],{i,1,dof}];
 
@@ -2118,8 +2113,8 @@ If[Last@Dimensions[Jvalw]==2, Jvalw =Join[Jvalw,Jvalw,2]];
 (*\[CapitalSigma] =\[CapitalSigma]/\[CapitalSigma][[1,1]];*)
 ];
 Column[{
-If[showJacobian, 
-Text[Style[StringForm["\!\(\* 
+If[showJacobian,
+Text[Style[StringForm["\!\(\*
 StyleBox[\"\!\(\*SubscriptBox[\(\[Mu]\), \(v\)]\)\",\nFontSlant->\"Italic\"]\)=``",Det[Jval.Transpose[Jval]]],TextAlignment->Right]]],
 
 If[showJacobianw,
@@ -2233,62 +2228,62 @@ TagBox[
 RowBox[{"(", GridBox[{
 {
 RowBox[{
-RowBox[{"-", 
-RowBox[{"(", 
+RowBox[{"-",
+RowBox[{"(",
 RowBox[{
-RowBox[{"r2", " ", 
-RowBox[{"Cos", "[", "\[Theta]2", "]"}]}], "+", 
-RowBox[{"r3", " ", 
-RowBox[{"Cos", "[", 
-RowBox[{"\[Theta]2", "+", "\[Theta]3"}], "]"}]}]}], ")"}]}], " ", 
-RowBox[{"Sin", "[", "\[Theta]1", "]"}]}], 
+RowBox[{"r2", " ",
+RowBox[{"Cos", "[", "\[Theta]2", "]"}]}], "+",
+RowBox[{"r3", " ",
+RowBox[{"Cos", "[",
+RowBox[{"\[Theta]2", "+", "\[Theta]3"}], "]"}]}]}], ")"}]}], " ",
+RowBox[{"Sin", "[", "\[Theta]1", "]"}]}],
 RowBox[{
 RowBox[{
-RowBox[{"-", "r2"}], " ", 
-RowBox[{"Sin", "[", "\[Theta]2", "]"}], 
-RowBox[{"Cos", "[", "\[Theta]1", "]"}]}], "-", 
-RowBox[{"r3", " ", 
-RowBox[{"Cos", "[", "\[Theta]1", "]"}], 
-RowBox[{"Sin", "[", 
-RowBox[{"\[Theta]2", "+", "\[Theta]3"}], "]"}]}]}], 
+RowBox[{"-", "r2"}], " ",
+RowBox[{"Sin", "[", "\[Theta]2", "]"}],
+RowBox[{"Cos", "[", "\[Theta]1", "]"}]}], "-",
+RowBox[{"r3", " ",
+RowBox[{"Cos", "[", "\[Theta]1", "]"}],
+RowBox[{"Sin", "[",
+RowBox[{"\[Theta]2", "+", "\[Theta]3"}], "]"}]}]}],
 RowBox[{
-RowBox[{"-", "r3"}], " ", 
-RowBox[{"Cos", "[", "\[Theta]1", "]"}], 
-RowBox[{"Sin", "[", 
+RowBox[{"-", "r3"}], " ",
+RowBox[{"Cos", "[", "\[Theta]1", "]"}],
+RowBox[{"Sin", "[",
 RowBox[{"\[Theta]2", "+", "\[Theta]3"}], "]"}]}]},
 {
 RowBox[{
-RowBox[{"Cos", "[", "\[Theta]1", "]"}], " ", 
-RowBox[{"(", 
+RowBox[{"Cos", "[", "\[Theta]1", "]"}], " ",
+RowBox[{"(",
 RowBox[{
-RowBox[{"r2", " ", 
-RowBox[{"Cos", "[", "\[Theta]2", "]"}]}], "+", 
-RowBox[{"r3", " ", 
-RowBox[{"Cos", "[", 
-RowBox[{"\[Theta]2", "+", "\[Theta]3"}], "]"}]}]}], ")"}]}], 
+RowBox[{"r2", " ",
+RowBox[{"Cos", "[", "\[Theta]2", "]"}]}], "+",
+RowBox[{"r3", " ",
+RowBox[{"Cos", "[",
+RowBox[{"\[Theta]2", "+", "\[Theta]3"}], "]"}]}]}], ")"}]}],
 RowBox[{
 RowBox[{
-RowBox[{"-", "r2"}], " ", 
-RowBox[{"Sin", "[", "\[Theta]1", "]"}], 
-RowBox[{"Sin", "[", "\[Theta]2", "]"}]}], "-", 
-RowBox[{"r3", " ", 
-RowBox[{"Sin", "[", "\[Theta]1", "]"}], 
-RowBox[{"Sin", "[", 
-RowBox[{"\[Theta]2", "+", "\[Theta]3"}], "]"}]}]}], 
+RowBox[{"-", "r2"}], " ",
+RowBox[{"Sin", "[", "\[Theta]1", "]"}],
+RowBox[{"Sin", "[", "\[Theta]2", "]"}]}], "-",
+RowBox[{"r3", " ",
+RowBox[{"Sin", "[", "\[Theta]1", "]"}],
+RowBox[{"Sin", "[",
+RowBox[{"\[Theta]2", "+", "\[Theta]3"}], "]"}]}]}],
 RowBox[{
-RowBox[{"-", "r3"}], " ", 
-RowBox[{"Sin", "[", "\[Theta]1", "]"}], 
-RowBox[{"Sin", "[", 
+RowBox[{"-", "r3"}], " ",
+RowBox[{"Sin", "[", "\[Theta]1", "]"}],
+RowBox[{"Sin", "[",
 RowBox[{"\[Theta]2", "+", "\[Theta]3"}], "]"}]}]},
-{"0", 
+{"0",
 RowBox[{
-RowBox[{"r2", " ", 
-RowBox[{"Cos", "[", "\[Theta]2", "]"}]}], "+", 
-RowBox[{"r3", " ", 
-RowBox[{"Cos", "[", 
-RowBox[{"\[Theta]2", "+", "\[Theta]3"}], "]"}]}]}], 
-RowBox[{"r3", " ", 
-RowBox[{"Cos", "[", 
+RowBox[{"r2", " ",
+RowBox[{"Cos", "[", "\[Theta]2", "]"}]}], "+",
+RowBox[{"r3", " ",
+RowBox[{"Cos", "[",
+RowBox[{"\[Theta]2", "+", "\[Theta]3"}], "]"}]}]}],
+RowBox[{"r3", " ",
+RowBox[{"Cos", "[",
 RowBox[{"\[Theta]2", "+", "\[Theta]3"}], "]"}]}]}
 },
 GridBoxAlignment->{"Columns" -> {{Center}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
