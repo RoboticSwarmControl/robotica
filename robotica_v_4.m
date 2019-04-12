@@ -163,10 +163,7 @@ $dhInput$ = "NO";
 $createdh$= "NO";
 $FKINRUN$ = "NO";
 $DYNRUN$ = "NO";
-$REVJOINT$ = Null;
-$PRISJOINT$ = Null;
 $LINK$ = Null;
-$NDS$ = Null;
 $ENDEFF$=Null;
 $MOVIE$ = Null;
 $XRANGE$ = {-10,10};
@@ -174,8 +171,6 @@ $YRANGE$ = {-10,10};
 $ZRANGE$ = {-10,10};
 $RANGES$ = {$XRANGE$, $YRANGE$, $ZRANGE$};
 $FILE$="NOT_SET";
-$SIMVARLIST$ = {};
-$SIMVALUES$ = Null;
 $VERSION$ = "4.01";
 (*todo: make this draw robots again*)
 (*Version 3.62 fixes TrigSimplify so it works with more than 2 arguments (up to 4).  Also formats the output of FKin*)
@@ -981,9 +976,6 @@ ResetState[] := Block[{},
    $dhInput$ = "NO";
    $FKINRUN$ = "NO";
    $DYNRUN$ = "NO";
-   $SIMVARLIST$ = {};
-   $SIMVALUES$ = Null;
-   $NDS$ = Null;
    $XRANGE$ = {-10, 10};
    $YRANGE$ = {-10, 10};
    $ZRANGE$ = {-10, 10};
@@ -1671,7 +1663,6 @@ TellFunctions[fname_String]:= Block[{ttt},
   Write[ttt, OutputForm["SimplifyExpression:RSymbolExpression:END;"]];
 
   Write[ttt, OutputForm["SimplifyTrigNotation::END;"]];
-
 
   Write[ttt, OutputForm["TPrint:OStringFilename:END;"]];
 
