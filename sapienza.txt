@@ -1,0 +1,35 @@
+mathematica things
+
+Block, defines vars as local
+Do
+	https://reference.wolfram.com/language/ref/Do.html
+
+
+Forwards Kinematics
+
+FKin è la funzione principale. Non prende nulla in input e restituisce 
+diverse matrici, che vengono calcolate tramite tre funzioni:
+- FormAllAs[]
+- FormAllTs[]
+- FormTheJacobianJ[]
+
+ForAllAs[]:
+Crea un numero di matrici A pari al grado di libertà che viene preso
+in input tramite la funzione dhInput[]. Ogni grado di libertà corrisponde
+ad ogni direzione di rotazione lungo ogni asse, che ogni singolo
+motore può fare.  
+
+ForAllTs[]:
+Crea le matrici T[i,j] con i, j tali che:
+0 <= i < dof
+1 <= j <= dof
+i < j
+partendo da T[0,0] che è la matrice identità.
+
+Il nesso tra le matrici T e quelle A è che - GUARDA IL FOGLIO. 
+
+Chop[]:
+arrotonda i numeri vicini allo 0 con esattamente 0 e viene utilizzata
+per arrotondare i valori nelle matrici A ed S. 
+
+Il nesso tra le matrici A e dhInput
