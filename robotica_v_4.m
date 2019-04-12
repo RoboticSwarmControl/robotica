@@ -59,7 +59,6 @@ z::usage = ""
 o::usage = ""
 M::usage = ""
 MU::usage = ""
-CM::usage = ""
 G::usage = ""
 gravity::usage = ""
 mass::usage = ""
@@ -1038,7 +1037,7 @@ ResetState[] := Block[{},
    Clear[mass, com, gravity, inertia, OKDynamics];
 
 (* created by ELDynamics[] to generate dynamics info *)
-   Clear[Jc, Jvc, Jwc, MU, M, G, CM, c];
+   Clear[Jc, Jvc, Jwc, MU, M, G, c];
    ];
 
 (*
@@ -1250,10 +1249,6 @@ ELDynamics[]:=
 	Print[" "];
 	Print["Christoffel Symbols Formed. "];
 
-	FormCMatrix[];
-	Print[" "];
-	Print["C Matrix CM(",dof," x ",dof,") Formed. "];
-
 	FormGravityVector[];
 	Print[" "];
 	Print["Gravity Vector G(",dof," x 1) Formed. "];
@@ -1282,9 +1277,6 @@ SDynamics[] :=
 	FormChristoffelSymbols[M];
         c=SimplifyExpression[c];
 
-        Print["Working on the C matrix..."];
-	FormCMatrix[];
-        CM=SimplifyExpression[CM];
 
         Print["Working on the gravity vector..."];
 	FormGravityVector[];
@@ -1373,22 +1365,6 @@ FormChristoffelSymbols[x_]:=
 	Print[" "];
 	]
 
-
-(*
-  Make the C Matrix, force joint variables to be funtions of time
-*)
-FormCMatrix[]:=
-  Block[ {i,j,k},
-	 CM=Table[ 0,{dof},{dof} ];
-   Do[
-	  CM[[k,j]]= Sum[
-      c[[i,j,k]] * D[q[i][Global`t], Global`t] , {i,1,dof}
-    ],
-
-    {k,1,dof},{j,1,dof}
-   ];
-	 Print["C Matrix Done"];
-	]
 
 (*
   Calculate the gravity vector
