@@ -165,7 +165,6 @@ $FKINRUN$ = "NO";
 $DYNRUN$ = "NO";
 $LINK$ = Null;
 $ENDEFF$=Null;
-$MOVIE$ = Null;
 $XRANGE$ = {-10,10};
 $YRANGE$ = {-10,10};
 $ZRANGE$ = {-10,10};
@@ -979,7 +978,6 @@ ResetState[] := Block[{},
    $XRANGE$ = {-10, 10};
    $YRANGE$ = {-10, 10};
    $ZRANGE$ = {-10, 10};
-   $MOVIE$ = Null;
    $RANGES$ = {$XRANGE$, $YRANGE$, $ZRANGE$};
 
 (* created by datafile for kinematics info *)
@@ -1532,8 +1530,6 @@ Needs["Graphics`Animation`"];
 
   manplot = Gr[manout, dim];
 
-  If [Length[anim] != 0 && MemberQ[opts, Global`animate],
-    $MOVIE$ = anim;];
 
   If [!MemberQ[opts, Global`animate],
   manplot = Show[manplot,
