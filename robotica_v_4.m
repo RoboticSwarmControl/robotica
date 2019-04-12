@@ -122,10 +122,6 @@ ELDynamics::usage =
 "ELDynamics[] generates Euler Lagrange dynamics equations provided
 that the A, T, and Jacobian matrices are generated."
 
-SDynamics::usage =
-"SDynamics[] simplifies the dynamics equations generated with ELDynamics."
-
-
 drawZArrow::usage = ""
 drawCoordAxes::usage = ""
 drawJoint::usage = ""
@@ -1254,25 +1250,6 @@ ELDynamics[]:=
         $DYNRUN$ = "YES";
 	]
 
-(*
-  Run simplify on the dynamics info
-*)
-SDynamics[] :=
-      Do[
-        If[ $DYNRUN$ == "NO", Print["You must run ELDynamics[] first..."];
-                               Return[]];
-        If[ $DYNRUN$ == "CANT", Print["You must run ELDynamics[] first..."];
-                               Return[]];
-        Print["Working on the intertia matrix..."];
-
-(* M is created by SimplifyInertiaMatrix *)
-	SimplifyInertiaMatrix[MU];
-
-        Print["Working on the Christoffel symbols..."];
-	FormChristoffelSymbols[M];
-        c=SimplifyExpression[c];
-
-       ];
 
 (*
   The inertia matrix MU, unsimplified, is created
@@ -1729,8 +1706,6 @@ TellFunctions[fname_String]:= Block[{ttt},
   Write[ttt, OutputForm["RElp:RListParameter List:OList,frame,animate,single,measures,monly,scale,print,xprint,mprint,file,:END;"]];
 
   Write[ttt, OutputForm["Response:RListTime range:RListInitial Conditions:END;"]];
-
-  Write[ttt, OutputForm["SDynamics:END;"]];
 
   Write[ttt, OutputForm["SaveResponse:RStringFilename:RListTime Range:OSymbolTime step:END;"]];
 
