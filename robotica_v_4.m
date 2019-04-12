@@ -1280,17 +1280,7 @@ FormDynamicsJacobians[] := Block[{i,j,lp,ap,cmv,col},
          ]
        ];
 
-(*
-  Simplify the inertia matrix with SimplifyExpression, M is created.
-*)
-SimplifyInertiaMatrix[x_]:=
-	Do[
-	M=SimplifyExpression[x];
-	Print[" "];
-	Print["Mass Matrix M(",dof," x ",dof,")",
-               " with Trigonometric Simplification Formed "];
-	Print[" "];
-	];
+
 
 (*
   Simplify is just this
