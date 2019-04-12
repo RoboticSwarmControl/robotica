@@ -79,14 +79,6 @@ range for viewlimits used during animations."
 SimplifyExpression::usage = "SimplifyExpression[x_] tries to reduce the
 expression 'x' to its most reduced form."
 
-
-
-DisplayTau::usage = "DisplayTau[] shows the elements of the Response
-tau vector."
-
-GetInputTau::usage = "GetInputTau[file_String] loads a definition file
-for the tau vector used in Response for solving the dynamics equations."
-
 TPrint::usage = "TPrint[name_String:''] prints all T matrices to the
 file 'name', or to screen if no name is given."
 
@@ -170,7 +162,6 @@ $DATAFILE$ = "NO";
 $dhInput$ = "NO";
 $createdh$= "NO";
 $FKINRUN$ = "NO";
-$TAU$ = Null;
 $DYNRUN$ = "NO";
 $REVJOINT$ = Null;
 $PRISJOINT$ = Null;
@@ -989,7 +980,6 @@ ResetState[] := Block[{},
    $DATAFILE$ = "NO";
    $dhInput$ = "NO";
    $FKINRUN$ = "NO";
-   $TAU$ = Null;
    $DYNRUN$ = "NO";
    $SIMVARLIST$ = {};
    $SIMVALUES$ = Null;
@@ -1637,7 +1627,6 @@ TellFunctions[fname_String]:= Block[{ttt},
 
   ttt = OpenWrite[fname, PageWidth -> Infinity];
 
-
   Write[ttt, OutputForm["APrint:OStringFilename:END;"]];
 
   Write[ttt, OutputForm["ClearLinkShape:END;"]];
@@ -1710,50 +1699,6 @@ SetRanges[x_List, y_List, z_List] :=
   $XRANGE$ = x;
   $YRANGE$ = y;
   $ZRANGE$ = z;
-];
-
-
-(*
-  Read the input file defining the tau vector for response function
-*)
-
-GetInputTau[file_String:""] :=
-  Block[{list, f},
-
-  If[ $DATAFILE$ == "NO", Print["You must load a data file first..."];
-                          Return[]];
-
-  If[file=="",
-   $TAU$ = Table[0, {dof}];
-   Print["Tau set to 0."];
-    Return[]];
-
-  f = OpenRead[file];
-  If[f == Null || f == $Failed,
-    Print["Couldn't find file..."];
-    $TAU$ = Null;
-    Return[]];
-
-  list = ReadList[f];
-  Close[f];
-
-  If[MemberQ[list,  $Failed],
-     Print["Input file error at expression position ", Position[list, $Failed]];
-     $TAU$ = Null;
-     Return[]];
-
-  $TAU$ = {};
-
-  For[i=1, i<=dof, i++,
-   AppendTo[$TAU$, N[Global`tau[i] /. tq]]];
-
-  For[i=1, i<=dof, i++,
-   If[Head[$TAU$[[i]]] == tau,
-     Print["Undefined tau entry at position ",i];
-     $TAU$ = Null;
-     Return[]]];
-
- Print["Tau vector loaded."];
 ];
 
 
@@ -2111,15 +2056,5 @@ BSplineCurve[pts,SplineDegree->2,SplineKnots->k,SplineWeights->w]]/;Length[m]==2
 
 
 
-DisplayTau[]:=
- Block[{i},
-
-  If[$TAU$==Null,
-    Print["The vector is undefined."];
-    Return[]];
-
-  EPrint[$TAU$, "tau"];
-
-];
 End[]
 EndPackage[]
