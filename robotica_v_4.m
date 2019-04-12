@@ -143,14 +143,6 @@ JvRRRanthro::usage=""
 splineCircle::usage=""
 
 
-(*
-WireE::usage = "WireE[{xc_, yc_, zc_:0}, {x1_, y1_, z1_},
-{x2_, y2_, z2_}, {x3_, y3_, z3_}, fine_:0.1] returns a set
-of lines approximating an ellipsoid at xc, yc, zc, with axes x1...z3.  A
-smaller value for fine gives a smoother ellipse."
-*)
-
-
 SimplifyTrigNotation::usage =
 "SimplifyTrigNotation[] changes the notation of Cosine and Sine functions.
 Cos[q1] --> C1,
@@ -165,20 +157,6 @@ Cos[q1+q2-q3] --> C12-3,
 Sin[q1+q2-q3] --> S12-3,
 Sin[q1+q2+q3+q4] --> C1234,
 Cos[q1+q2+q3+q4] --> C1234."
-
-(*
-SimplifyDerivativeNotation::usage =
-"SimplifyDerivativeNotation[] simplifies the notation of the derivative
-of the position vector {q1,q2,..} with respect to time t,
-D[qi,t,NonConstants{q1,q2,...}] --> Dqi."
-*)
-
-(*
-Adopted From Trigonometry.m
-TrigFactor::usage = "TrigFactor[expr] writes sums of trigonometric
-	functions as products."
-*)
-
 
 
 Begin["`Private`"]
