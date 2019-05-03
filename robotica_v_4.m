@@ -497,7 +497,7 @@ loadRobot[jt]:=
         jt[[4,i]] = Subsuperscript["d",i,"*"];
         jt[[1,i]]="prismatic",
 
-        If[ NumberQ[jt[[4,i]]] ||  NumericQ[jt[[4,i]]],
+        If[ NumberQ[jt[[4,i]]],
           jt[[4,i]],
 
           jt[[4,i]]=Subscript["d",i]
@@ -510,7 +510,7 @@ loadRobot[jt]:=
         jt[[1,i]]="revolute"
       ];
 
-      If[NumberQ[jt[[2,i]]] || NumericQ[jt[[2,i]]],
+      If[NumberQ[jt[[2,i]]],
         jt[[2,i]],
         jt[[2,i]]=Subscript["r",i]
       ];
