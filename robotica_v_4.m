@@ -91,7 +91,6 @@ Cos[q1+q2+q3+q4] --> C1234."
 
 Begin["`Private`"]
 
-$dhInput$ = "NO";
 $XRANGE$ = {-10,10};
 $YRANGE$ = {-10,10};
 $ZRANGE$ = {-10,10};
@@ -275,7 +274,6 @@ dhInput[jt_List]:=
 		If[checkJointTable[jt],
 			loadRobot[jt]
 		];
-		$dhInput$ = "YES";
 	]
 
 (*
@@ -401,7 +399,6 @@ loadRobot[jt]:=
 		FormAllAs[];
 		FormAllTs[];
 
-    $dhInput$ = "YES";
   ];
 
 
