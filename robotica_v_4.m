@@ -28,7 +28,6 @@ x5::usage = ""
 x4::usage= ""
 cc::usage = ""
 zz::usage = ""
-xx::usage = ""
 x3::usage = ""
 ze::usage = ""
 b::usage = ""
@@ -38,20 +37,9 @@ l::usage = ""
 v::usage = ""
 A::usage = ""
 T::usage = ""
-Jvw::usage = ""
 z::usage = ""
-o::usage = ""
 M::usage = ""
-MU::usage = ""
-gravity::usage = ""
-mass::usage = ""
-com::usage = ""
-inertia::usage = ""
-Jc::usage = ""
-Jvc::usage = ""
-Jwc::usage = ""
 c::usage = ""
-TellFunctions::usage = ""
 
 SetRanges::usage = "SetRanges[xrange, yrange, zrange] sets a consistent
 range for viewlimits used during animations."
@@ -75,8 +63,6 @@ dhInput::usage = "dhInput[] lets the user enter the DH parameters, in a list of 
 
 createdh::usage = "create DH parameter by Given DOF"
 createdh2::usage " Create DH Parameter Table by given DH Matrix"
-PrintInputData::usage = "PrintInputData[] prints the current robot
-data set in tabular form to the screen."
 
 FKin::usage = "FKin[] generates the A and T matrices, as well as the Jacobian
 for the current input data set."
@@ -114,11 +100,6 @@ Cos[q1+q2+q3+q4] --> C1234."
 
 Begin["`Private`"]
 
- (*
-   Here are some variables which define the overall state of the Robotica
-   session.  They should be available to all the functions in the package.
- *)
-
 $DATAFILE$ = "NO";
 $dhInput$ = "NO";
 $createdh$= "NO";
@@ -132,12 +113,6 @@ $ZRANGE$ = {-10,10};
 $RANGES$ = {$XRANGE$, $YRANGE$, $ZRANGE$};
 $FILE$="NOT_SET";
 $VERSION$ = "4.01";
-(*todo: make this draw robots again*)
-(*Version 3.62 fixes TrigSimplify so it works with more than 2 arguments (up to 4).  Also formats the output of FKin*)
-(* Version 3.61 is the same as 3.60, with a few small errors fixed
-to squelch warnings which appear on newer versions of Mathematica. *)
-(* Version 3.62 is the same as 3.61, with SimplifyTrigNotation[] modified to use subscripts. *)
-(* Version 3.63 is the same as 3.62, with simplifications to formatting and a few extra *)
 
 $ROBGUY$ = "atbecker@uh.edu mmsultan@uh.edu";
 
@@ -452,7 +427,7 @@ dhInput[x2_]:=
 (*
 Create DH function: parses input and generates the DH table
 *)
-(*'*)
+(**)
 createdh[]:=
   Do[
     If[ IntegerQ[dof] && dof>0,
@@ -601,112 +576,6 @@ createdh2[]:=
     ];
   ];
 
-(*
-  reset variables'
-*)
-
-ResetState[] := Block[{},
-   $DATAFILE$ = "NO";
-   $dhInput$ = "NO";
-   $FKINRUN$ = "NO";
-   $DYNRUN$ = "NO";
-   $XRANGE$ = {-10, 10};
-   $YRANGE$ = {-10, 10};
-   $ZRANGE$ = {-10, 10};
-   $RANGES$ = {$XRANGE$, $YRANGE$, $ZRANGE$};
-
-(* created by datafile for kinematics info *)
-   Clear[dof, jointtype, a, alpha, d, theta, q];
-
-(* created by FKIN to generate forward kinematics *)
-   Clear[A, J, T, z, o];
-
-(* created by datafile for dynamics info *)
-   Clear[mass, com, gravity, inertia, OKDynamics];
-
-(* created by ELDynamics[] to generate dynamics info *)
-   Clear[Jc, Jvc, Jwc, MU, M, c];
-   ];
-
-(*
-  display a table of the various parameters read in
-*)
-PrintInputData[]:=
-	Block[{i,j,k,jointVector,jointtypeVector,aColumn,alphaColumn,
-               dColumn, thetaColumn, linkVector, massColumn, temp2,
-               lcColumn},
-
-        If [$DATAFILE$ == "NO" && $dhInput$ == "NO",
-          Print["You must first load or a data file or input DH parameters."];
-          Return[];
-          ];
-	Print[Style["Kinematics Input Data:",Italic]];
-	jointVector=ColumnForm[
-	   Prepend[Table[j,{j,dof}],Style["Joint",Bold]]
-	  ];
-	jointtypeVector=ColumnForm[
-	   Prepend[Table[jointtype[j],{j,dof}],Style["Type",Bold]]
-	  ];
-	aColumn=ColumnForm[
-	   Prepend[Table[a[j],{j,dof}],Style["r",Bold]]
-	   ];
-	alphaColumn=ColumnForm[
-	Prepend[Table[alpha[j],{j,dof}],Style["\[Alpha]",Bold]]
-	      ];
-	dColumn=ColumnForm[
-	   Prepend[Table[d[j],{j,dof}],Style["d",Bold]]
-	  ];
-	thetaColumn=ColumnForm[
-	Prepend[Table[theta[j],{j,dof}],Style["\[Theta]",Bold]]
-			      ];
-
-	Print[SequenceForm[jointVector,
-	 	     ColumnForm[{"   "}],
-		     jointtypeVector,
-	 	     ColumnForm[{"   "}],
-		     aColumn,
-	 	     ColumnForm[{"   "}],
-		     alphaColumn,
-		     ColumnForm[{"   "}],
-		     dColumn,
-		     ColumnForm[{"   "}],
-		     thetaColumn]];
-
-	If[OKDynamics === True,
-		Print["Dynamics Input Data"];
-		Print["-------------------"];
-                Print["Gravity vector: [",gravity[1][[1]], ", ",
-                                          gravity[1][[2]], ", ",
-                                          gravity[1][[3]], "]" ];
-
-		linkVector=ColumnForm[Prepend[
-		   Prepend[Table[j,{j,dof}]," "],"Link"]
-		  ];
-		massColumn=ColumnForm[Prepend[
-		   Prepend[Table[FortranForm[mass[j]],{j,dof}]," "],"mass"]
-		  ];
-		lcColumn=ColumnForm[Prepend[
-		   Prepend[Table[SequenceForm[ "[", CForm[com[j][[1]]], ", ",
-                                     CForm[com[j][[2]]], ", ",
-                                     CForm[com[j][[3]]],  "]"],
-                                  {j,dof}]," "],"com vector"]
-			  ];
-		Print[SequenceForm[
-		     linkVector,
-	 	     ColumnForm[{"   "}],
-		     massColumn,
-	 	     ColumnForm[{"   "}],
-		     lcColumn
-		     ]];
-		Print[" "];
-		Do[
-			temp2=StringJoin["Inertia[",ToString[i],"] = "];
-			Print[MPrint[inertia[i],temp2]];
-                        Print[""]
-			,{i,1,dof}]
-
-  	  ]
-        ];
 
 (*
   Run the functions that generate the forward kinematics
