@@ -494,9 +494,7 @@ loadRobot[jt]:=
 
     For[ i=1,i<=dof,i++,
       alpha[i]=jt[[3,i]];
-      theta[i]=jt[[5,i]];
-
-
+			a[i]=jt[[2,i]];
 			If[ MemberQ[{"Prismatic","prismatic","P","p"},ToString[ jt[[1,i]] ]],
 				theta[i] = 0;
 				d[i] = _,
@@ -504,8 +502,6 @@ loadRobot[jt]:=
 				theta[i] = _;
 				d[i] = 0;
 			];
-      a[i]=jt[[2,i]];
-      d[i] =jt[[4,i]];
       jointtype[i] = ToString[ jt[[1,i]] ];
     ];
 
