@@ -457,6 +457,7 @@ For[ i=1,i<=dof,i++,
 (*print Joint table, recap, for what I understood, as debug
 
 
+
 	Print[
 		Grid[
 			Transpose[
@@ -480,6 +481,8 @@ For[ i=1,i<=dof,i++,
 	]
 
 
+
+
 	*)
 
 
@@ -490,46 +493,25 @@ loadRobot[jt]:=
   Do[ (*use block instead*)
 
     For[ i=1,i<=dof,i++,
-      alphac[i]=jt[[3,i]];
-      thetac[i]=jt[[5,i]];
-      zz=ToString[ jt[[1,i]] ];
-      If[ MemberQ[{"Prismatic","prismatic","P","p"},zz],
-        jt[[4,i]] = Subsuperscript["d",i,"*"];
-        jt[[1,i]]="prismatic",
-
-        If[ NumberQ[jt[[4,i]]],
-          jt[[4,i]],
-
-          jt[[4,i]]=Subscript["d",i]
-        ]
-
-      ];
-
-      If[ MemberQ[{"Revolute","revolute","R","r"},zz],
-        jt[[5,i]] = Subsuperscript["\[Theta]",i,"*"];
-        jt[[1,i]]="revolute"
-      ];
-
-      If[NumberQ[jt[[2,i]]],
-        jt[[2,i]],
-        jt[[2,i]]=Subscript["r",i]
-      ];
-      a[i]=jt[[2,i]];
       alpha[i]=jt[[3,i]];
-      d[i] =jt[[4,i]];
       theta[i]=jt[[5,i]];
+
+
+			If[ MemberQ[{"Prismatic","prismatic","P","p"},ToString[ jt[[1,i]] ]],
+				theta[i] = 0;
+				d[i] = _,
+
+				theta[i] = _;
+				d[i] = 0;
+			];
+      a[i]=jt[[2,i]];
+      d[i] =jt[[4,i]];
       jointtype[i] = ToString[ jt[[1,i]] ];
     ];
 
 
     $DATAFILE$="NO";
     $dhInput$ = "YES";
-
-
-    For[ i=1,i<=dof,i++,
-      theta[i]=thetac[i];
-      alpha[i]=alphac[i];
-    ];
   ];
 
 
