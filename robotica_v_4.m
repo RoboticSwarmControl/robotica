@@ -103,7 +103,6 @@ Begin["`Private`"]
 $DATAFILE$ = "NO";
 $dhInput$ = "NO";
 $createdh$= "NO";
-$FKINRUN$ = "NO";
 $XRANGE$ = {-10,10};
 $YRANGE$ = {-10,10};
 $ZRANGE$ = {-10,10};
@@ -517,8 +516,7 @@ FKin[]:=
 
 	  FormAllAs[];
 	  FormAllTs[];
-    (*FormTheJacobianJ[];*)
-    $FKINRUN$ = "YES";
+
   ]
 
 (*
