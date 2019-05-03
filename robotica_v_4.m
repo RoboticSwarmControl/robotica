@@ -380,23 +380,23 @@ readJointTable[]:=
 
 checkJointTable(jt_List):=
 	Do[
-	x3 = Dimensions[jt];
-	dof= x3[[2]];
-	If[ !NumberQ[x2] || x2<=0,
-		Return[False]
-	]
-	If[ Length[x2]!=5 || Length[x3]!=2 ,
-		Return[False]
-	]
-
-	For[ i=1,i<=dof,i++,
-		If[ !MemberQ[{"Prismatic","prismatic","P","p","Revolute","revolute","R","r"},ToString[jt[[1,i]] ]],
-			Print[" Type column, should include only:
-				Revolute, revolute, R, r, Prismatic, prismatic, P, or p"];
+		x3 = Dimensions[jt];
+		dof= x3[[2]];
+		If[ !NumberQ[x2] || x2<=0,
 			Return[False]
 		]
-	];
+		If[ Length[x2]!=5 || Length[x3]!=2 ,
+			Return[False]
+		]
 
+		For[ i=1,i<=dof,i++,
+			If[ !MemberQ[{"Prismatic","prismatic","P","p","Revolute","revolute","R","r"},ToString[jt[[1,i]] ]],
+				Print[" Type column, should include only:
+					Revolute, revolute, R, r, Prismatic, prismatic, P, or p"];
+				Return[False]
+			]
+		];
+	];
 
 (*function isPrismatic
 	isRevolutionary
@@ -434,8 +434,6 @@ checkJointTable(jt_List):=
 	*)
 
 
-
-(*Create DH 2*)
 (*assuming jt to be a valid matrix describing joints*)
 loadRobot[jt]:=
   Do[ (*use block instead*)
@@ -453,24 +451,18 @@ loadRobot[jt]:=
       jointtype[i] = ToString[ jt[[1,i]] ];
     ];
 
+		FormAllAs[];
+		FormAllTs[];
+
     $dhInput$ = "YES";
   ];
 
 
 (*
-  Run the functions that generate the forward kinematics
+  Run the functions that calculates the forward kinematics
 *)
-FKin[]:=
+FKin[parD,parTheta]:=
 	Do[
-    If[$dhInput$ == "YES",
-      Print[""],
-
-	    dhInput[]
-    ];
-
-	  FormAllAs[];
-	  FormAllTs[];
-
   ]
 
 (*
