@@ -213,45 +213,6 @@ SimplifyTrigNotation[]:=
 	]
 
 
-`TrigCanonicalRel =
-{
-    Sin[x_]^n_. Cos[x_]^m_.	:> Tan[x]^n	/; n+m == 0,
-    Sin[- a_. x_]       :>   - Sin[a x] ,
-    Sin[r_Rational Pi]	:>   Sin[(r - 2 Floor[r/2]) Pi] /; r > 2,
-    Cos[r_Rational Pi]	:>   Cos[(r - 2 Floor[r/2]) Pi] /; r > 2,
-    Tan[r_Rational Pi]	:>   Tan[(r - 2 Floor[r/2]) Pi] /; r > 2,
-    Sin[r_Rational Pi]	:> - Sin[(r - 1) Pi] /; r > 1,
-    Cos[r_Rational Pi]	:> - Cos[(r - 1) Pi] /; r > 1,
-    Tan[r_Rational Pi]	:>   Tan[(r - 1) Pi] /; r > 1,
-    Sin[r_Rational Pi]	:>   Sin[(1 - r) Pi] /; r > 1/2,
-    Cos[r_Rational Pi]	:> - Cos[(1 - r) Pi] /; r > 1/2,
-    Tan[r_Rational Pi]	:> - Tan[(1 - r) Pi] /; r > 1/2,
-    Sin[r_Rational Pi]	:>   Cos[(1/2 - r) Pi] /; r > 1/4,
-    Cos[r_Rational Pi]	:>   Sin[(1/2 - r) Pi] /; r > 1/4
-
-}
-
-
-TrigCanonical[e_] := e //. TrigCanonicalRel
-
-`TrigFactorRel = {
-    a_. Sin[x_] + a_. Sin[y_] :> 2 a Sin[x/2+y/2] Cos[x/2-y/2],
-    a_. Sin[x_] - a_. Sin[y_] :> 2 a Sin[x/2-y/2] Cos[x/2+y/2],
-    a_. Cos[x_] + a_. Cos[y_] :> 2 a Cos[x/2+y/2] Cos[x/2-y/2],
-    a_. Cos[x_] - a_. Cos[y_] :> 2 a Sin[x/2+y/2] Sin[y/2-x/2],
-    a_. Tan[x_] + a_. Tan[y_] :> a Sin[x+y]/(Cos[x] Cos[y]),
-    a_. Tan[x_] - a_. Tan[y_] :> a Sin[x-y]/(Cos[x] Cos[y]),
-
-    a_. Sin[x_] Cos[y_] + a_. Sin[y_] Cos[x_] :> a Sin[x + y],
-    a_. Cos[x_] Cos[y_] - a_. Sin[x_] Sin[y_] :> a Cos[x + y],
-    a_. Cos[x_] Cos[y_] + a_. Sin[x_] Sin[y_] :> a Cos[x - y],
-    a_. Cos[x_] Cos[y_ + z_] + a_. Sin[x_] Sin[y_ +z_] :> a Cos[x - y -z],
-    a_. Sin[x_] Cos[y_] - a_. Sin[y_] Cos[x_] :> a Sin[x - y],
-    (* Added by Fathi Ghorbel *)
-    a_. Sin[x_]^2 + a_. Cos[x_]^2	      :> a
-
-}
-
 (*
    TPrint prints all the T Matrices to a file or to the screen.
    If the filename is $, the default file name is used
