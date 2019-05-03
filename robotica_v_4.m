@@ -897,8 +897,9 @@ createdh2[]:=
   ];
 
 (*
-  reset variables
+  reset variables'
 *)
+
 ResetState[] := Block[{},
    $DATAFILE$ = "NO";
    $dhInput$ = "NO";
@@ -1113,29 +1114,6 @@ Cross3[x_,y_]:=
 	Return[{ x[[2]]y[[3]]-x[[3]]y[[2]],
            x[[3]]y[[1]]-x[[1]]y[[3]],
            x[[1]]y[[2]]-x[[2]]y[[1]] }]
-
-(*
-  Calculate the Euler-Lagrange dynamics
-*)
-ELDynamics[]:=
-	Do[
-        If[ $FKINRUN$ == "NO", Print["You must run FKin[] first..."];
-                               Return[]];
-        If[ $DYNRUN$ == "CANT",
-               	 Print["There was no dynamics data in the file."];
-                 Return[]];
-
-	FormInertiaMatrix[];
-
-	FormChristoffelSymbols[MU];
-	Print[" "];
-	Print["Christoffel Symbols Formed. "];
-
-(*
-	SimplifyDerivativeNotation[];
-*)
-        $DYNRUN$ = "YES";
-	]
 
 
 (*
