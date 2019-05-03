@@ -325,6 +325,12 @@ EPrint[M_List, text_String, name_String:""] :=
 
 dhInput[x2_]:=
   Do[
+
+	checkJointTable
+		loadRobot
+
+
+
     x3 = Dimensions[x2];
     If[ NumberQ[x2] && x2>0,
       dof = x2;
@@ -433,18 +439,24 @@ readJointTable[]:=
 
 
 (*
-checkJT
-check Dimensions
-check joint type
-
-For[ i=1,i<=dof,i++,
-	zz=ToString[jt[[1,i]] ];
-	If[ !MemberQ[{"Prismatic","prismatic","P","p","Revolute","revolute","R","r"},zz],
-		Print[" Type column, should include only:
-			Revolute, revolute, R, r, Prismatic, prismatic, P, or p"];
-		Return[]
+checkJointTable(jt_List):=
+	Do[
+	x3 = Dimensions[jt];
+	dof= x3[[2]];
+	If[ !NumberQ[x2] || x2<=0,
+		Return[False]
 	]
-];
+	If[ Length[x2]!=5 || Length[x3]!=2 ,
+		Return[False]
+	]
+
+	For[ i=1,i<=dof,i++,
+		If[ !MemberQ[{"Prismatic","prismatic","P","p","Revolute","revolute","R","r"},ToString[jt[[1,i]] ]],
+			Print[" Type column, should include only:
+				Revolute, revolute, R, r, Prismatic, prismatic, P, or p"];
+			Return[False]
+		]
+	];
 
 	*)
 
@@ -512,13 +524,10 @@ loadRobot[jt]:=
 *)
 FKin[]:=
 	Do[
-    If[$dhInput$ == "YES", (*DH Parameter entered from dhInput[]*)
+    If[$dhInput$ == "YES",
       Print[""],
 
-
 	    dhInput[]
-
-
     ];
 
 	  FormAllAs[];
