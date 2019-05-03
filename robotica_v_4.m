@@ -54,15 +54,8 @@ Jwc::usage = ""
 c::usage = ""
 TellFunctions::usage = ""
 
-
-RElp::usage = "RElp[vars_List, options_List:{}] plots manipulability or force
-ellipsoids over a range of variables, subject to the options listed."
-
 SetRanges::usage = "SetRanges[xrange, yrange, zrange] sets a consistent
 range for viewlimits used during animations."
-
-SimplifyExpression::usage = "SimplifyExpression[x_] tries to reduce the
-expression 'x' to its most reduced form."
 
 TPrint::usage = "TPrint[name_String:''] prints all T matrices to the
 file 'name', or to screen if no name is given."
@@ -78,9 +71,6 @@ EPrint::usage = "EPrint[M_List, text_String, name_String:''] prints the
 elements of M one per line, each with label 'text'.  Saved in file 'name' if
 specified."
 
-CPrint::usage = "CPrint[text_String, name_String:''] prints the Christoffel
-symbols stored in 'c' one per line each with a label 'text'.  Saved in
-file 'name' if specified."
 
 DataFile::usage = "DataFile[name_String:''] reads in a DH input file
 from 'name' if given.  Otherwise prompt for a file and read it."
@@ -94,10 +84,6 @@ data set in tabular form to the screen."
 
 FKin::usage = "FKin[] generates the A and T matrices, as well as the Jacobian
 for the current input data set."
-
-ELDynamics::usage =
-"ELDynamics[] generates Euler Lagrange dynamics equations provided
-that the A, T, and Jacobian matrices are generated."
 
 drawZArrow::usage = ""
 drawCoordAxes::usage = ""
@@ -1116,13 +1102,6 @@ Cross3[x_,y_]:=
            x[[1]]y[[2]]-x[[2]]y[[1]] }]
 
 
-
-(*
-  Simplify is just this
-*)
-SimplifyExpression[x_]:=
-	Simplify[TrigFactor[Simplify[Expand[x]]]]
-
 (*
   Form the nxnxn table of ChristoffelSymbols
 *)
@@ -1137,306 +1116,6 @@ FormChristoffelSymbols[x_]:=
 	]
 
 
-
-(*
-   RElp calculates the manipulability ellipsoids
-*)
-RElp[vars_List, options_List:{}] :=
-    Block[{i, j, k, num, evallist, axis,
-           dim, maxaxis, anim, opts, axeslabel,tj, manout,
-           forceout, temp, mj, endlocation, XtoZ, len, file,
-           fval, frameopt },
-
-  If[$FKINRUN$ == "NO",
-    Print["You must run FKin first."];
-    Return[]];
-
-  opts = options;
-  num = Null;
-  file = Null;
-
-  If [MemberQ[opts, Global`frame], fval = True, fval = False];
-Needs["Graphics`Animation`"];
-  If [MemberQ[$ContextPath, "Graphics`Animation`"],Null,
-
-   If [MemberQ[opts, Global`animate],
-     Print["Animation functions haven't been loaded...\n"];
-     opts = Delete[opts, Position[opts, Global`animate]]]];
-
-(* find the numerical step parameter in the var list *)
-
-  If[Length[vars]>0, num = vars[[-1]]];
-
-  If[NumberQ[N[num]], i = Length[vars] -1, i = Length[vars]; num = 5];
-  For[j=1, j<=i, j++,
-    If[ ( (Length[vars[[j]]]<3 && !MemberQ[opts,Global`single]) ||
-         (Length[vars[[j]]]<2 && MemberQ[opts,Global`single]) ||
-         !NumberQ[N[vars[[j,2]]]] ||
-         !NumberQ[N[vars[[j,3]]]]),
-       Print["Bad parameter list at ", j];
-       Return[]
-      ]];
-
-  For[j=1, j<=Length[opts], j++,
-    If[Head[opts[[j]]] == String &&
-      (MemberQ[opts,Global`monly] || MemberQ[opts,Global`measures]) ,
-       file=opts[[j]];
-          If[file == "$", file = ToString[$FILE$], $FILE$=file];
-          If[file == "NOT_SET",
-            Print["No default filename yet..."];
-            Return[]];
-    Break[]]];
-
-  If [file =!= Null,
-    Print["Saving measures in file:", file]];
-
-  If[MemberQ[opts, Global`single], num=0];
-
-  If[!MatrixQ[J],
-    Print["Bad Jacobian - Did you FKinematics?"];
-    Return[]];
-
-  dim=Planar[];
-  Print["Planar number: ", dim];
-  Print[" "];
-
-(* set the frame option for two or three dimention graphics *)
-  If [dim == 7,
-    frameopt = Boxed->fval,
-    frameopt = Frame->fval];
-
-  centers[0]={0,0,0};
-  maxaxis=-5;
-
-(* find out which dimention we are working in, and take the appropriate
-   elements of the Jacobian
-*)
-  If[dim==3,
-    axeslabel={"x", "y"};
-    mj = {J[[1]], J[[2]]};
-    $RANGES$ = {$XRANGE$, $YRANGE$};
-    ];
-
-  If[dim==4,
-    axeslabel={"x", "z"};
-    mj = {J[[1]]};
-    $RANGES$ = {$XRANGE$, $ZRANGE$};
-    ];
-
-  If[dim==5,
-    axeslabel={"x", "z"};
-    mj = {J[[1]], J[[3]]};
-    $RANGES$ = {$XRANGE$, $ZRANGE$};
-    ];
-
-  If[dim==6,
-    axeslabel={"y", "z"};
-    mj = {J[[2]], J[[3]]};
-    $RANGES$ = {$YRANGE$, $ZRANGE$};
-    ];
-
-  If[dim==7,
-    axeslabel = {"x", "y", "z"};
-    mj = {J[[1]], J[[2]], J[[3]]};
-    $RANGES$ = {$XRANGE$, $YRANGE$, $ZRANGE$};
-    ];
-
-  forceout = {};
-  manout = {};
-  anim = {};
-
-  For[j=1, j<=num+1, j++,
-    evallist = {};
-
-(* create a list of eval rules that step through param values *)
-
-    For[k=1, k<=i, k++,
-      If[num>0,
-        evallist=Append[evallist, vars[[k,1]] -> vars[[k,2]] +
-                    (j-1) (vars[[k,3]] - vars[[k,2]])/num] ,
-
-        evallist=Append[evallist, vars[[k,1]] -> vars[[k,2]]]]];
-
-    tj = { J[[1]], J[[2]], J[[3]] } /. evallist;
-    If[!NumberQ[Plus @@ Flatten[N[tj]]],
-      Print["There are undefined symbols in the Jacobian..."];
-      Return[]];
-
-(* set the frame to frame translation and rotation matrices *)
-
-    For[k=1, k<=dof, k++,
-      centers[k] = { T[0,k][[1,4]], T[0,k][[2,4]], T[0,k][[3,4]] } /. evallist;
-       ];
-
-    endlocation = centers[dof];
-
-    For[k=1, k<=dof, k++,
-      If[!NumberQ[Plus @@ N[centers[k]]],
-        Print["Can't get numbers - are all variables set?"];
-        Print[centers[k]];
-        Return[]];
-       ];
-
-    Print["Working... ", j-1];
-    If [file === Null,
-      Print[evallist],
-      PutAppend[OutputForm[evallist], file]];
-
-    Print[" "];
-    {u, md, v} = SingularValueDecomposition[N[tj]];
-
-(* remember the maxaxis size for scaling *)
-
-   If[md[[1]] > maxaxis, maxaxis=md[[1]]];
-
-   axis[1] = {0,0,0};
-   axis[2] = {0,0,0};
-   axis[3] = {0,0,0};
-
-   For[k=1, k<=Length[md], k++,
-      axis[k] = Chop[N[md[[k]] u[[k]]]]];
-
-(* store the axes for a call to wire ellipsoid *)
-
-   axisset[j]={axis[1], axis[2], axis[3], endlocation};
-
-(* calculate measures *)
-   If [MemberQ[opts, Global`measures] || MemberQ[opts, Global`monly],
-     If [file === Null,
-       If [Length[md] == 1,
-         Print["The ellipse has become a line at this point."]];
-
-       temp = Chop[Sqrt[N[Det[N[(mj /. evallist)] .
-                    Transpose[N[(mj /. evallist)]]]]]];
-       Print["axis 1:", axis[1]];
-       Print["axis 2:", axis[2]];
-       Print["axis 3:", axis[3]];
-       Print["Volume of ellipsoid: ", N[temp]];
-       Print["Eccentricity:", N[md[[-1]] / md[[1]] ]];
-       Print["Minimum Radius:", N[md[[-1]]]];
-       Print["Geometric Mean:", N[temp ^ (1/Length[md])]];
-       Print[""],
-
-       If [Length[md] == 1,
-          PutAppend[OutputForm["The ellipse has become a line at this point."],
-          file]];
-
-       temp = Chop[Sqrt[N[Det[N[(mj /. evallist)] .
-                               Transpose[N[(mj /. evallist)]]]]]];
-       PutAppend[OutputForm[
-                 StringForm["````", "axis 1:", axis[1]]], file];
-
-       PutAppend[OutputForm[StringForm["````", "axis 2:", axis[2]]], file];
-
-       PutAppend[OutputForm[StringForm["````", "axis 3:", axis[3]]], file];
-
-       PutAppend[OutputForm[
-                 StringForm["````", "Volume of ellipsoid: ", N[temp]]], file];
-
-       PutAppend[OutputForm[StringForm["````",
-           "Eccentricity:", N[md[[-1]] / md[[1]] ]]], file];
-
-       PutAppend[OutputForm[
-                 StringForm["````", "Minimum Radius:", N[md[[-1]]]]], file];
-
-       PutAppend[OutputForm[StringForm["````",
-           "Geometric Mean:", N[temp ^ (1/Length[md])]]], file];
-
-       PutAppend[OutputForm[" "], file];
-      ];
-    ];
-
-   If [!MemberQ[opts, Global`monly],
-     AppendTo[manout, DrawRobot[evallist, dim, 0]];
-
-(* when force ellipsoids are implemented, this will create a plot *)
-    If[MemberQ[opts, Global`forces],
-       AppendTo[forceout, DrawRobot[evallist, dim]]];
-
-      ]
-  ];  (* calculate over all steps *)
-
-  If [MemberQ[opts,Global`monly],
-    Return[]];
-
-(* scale ellipsoids *)
-  If [MemberQ[opts,Global`scale], norm=maxaxis/2 , norm=1];
-
-(* call WireE to generate a rotated ellipse, it is returned in ellipse.
-   forceell is there to hold a force ellipsoid, but is not implemented
-*)
-  For[j=1, j<=num+1, j++,
-    {ellipse, forceell}=
-       WireE[axisset[j][[-1]], axisset[j][[1]]/norm,
-             axisset[j][[2]]/norm, axisset[j][[3]]/norm];
-
-    If [MemberQ[opts, Global`animate],
-      AppendTo[anim,  Append[Gr[{manout[[j]], Planarize[ellipse,dim]}, dim],
-          List[
-          Rule[ Axes, True],
-          Rule[ AspectRatio, Automatic],
-          Rule[ PlotRange, $RANGES$],
-          frameopt,
-          Rule[ PlotLabel, "Manipulating Ellipsoids"],
-          Rule[ AxesLabel, axeslabel]]]]];
-
-       AppendTo[manout, Planarize[ellipse, dim]];
-       AppendTo[forceout, Planarize[forceell,dim]]];
-
-  manplot = Gr[manout, dim];
-
-
-  If [!MemberQ[opts, Global`animate],
-  manplot = Show[manplot,
-               PlotRange->All,
-               DisplayFunction->$DisplayFunction,
-               Axes->True,
-               frameopt,
-               AspectRatio->Automatic,
-               PlotLabel->"Manipulating Ellipsoid",
-               AxesLabel->axeslabel];
-
-  If[MemberQ[opts,Global`forces],
-  Print["Force ellipsoids not implemented."];
-(*
-  Show[forceout,
-                 PlotRange->All,
-                 DisplayFunction->$DisplayFunction,
-                 AspectRatio->Automatic,
-                 Axes->True,
-                 PlotLabel->"Force Ellipsoid",
-                 AxesLabel->axeslabel]
-*)
-   ];
-
-  If[MemberQ[opts, Global`print],
-    If [Context[LaserPrint] == "System`" ,
-      Print["Using LaserPrint to print graphics..."];
-      LaserPrint[manplot];
-      Print["Done..."],
-    Print["There is no internal LaserPrint command..."]]];
-
-  If[MemberQ[opts,Global`xprint],
-      Print["Adjust windows, then press return. "];
-      Print["When the cursor changes to a cross, click on the graphics"];
-      Print["window you want to store as 'xrelp.out'."];
-      InputString["Waiting..."];
-
-      Run["xwd >relp.t"];
-      Run["xpr -device ps -gray 3 -portrait relp.t >xrelp.out"];
-      Run["rm relp.t"];
-      Print["File 'xrelp.out' created."]];
-
-  If[MemberQ[opts,Global`mprint],
-      Display["mrelp.out", manplot];
-      Print["mrelp.out created."]];
-  ];
-
-  If [Length[anim] != 0 && MemberQ[opts, Global`animate],
-    Print["Invoking ShowAnimation; this may take a while."];
-    Graphics`Animation`ShowAnimation[anim];
-   ];
-];
 
 
 
@@ -1461,66 +1140,6 @@ Gr[x_, dim_] :=
    Return[Graphics[{AbsoluteThickness[1], x}]]];
 ];
 
-
-(*
-  This functions writes a file containing all of the functions available
-  to the user for the front end to read
-*)
-TellFunctions[fname_String]:= Block[{ttt},
-
-  ttt = OpenWrite[fname, PageWidth -> Infinity];
-
-  Write[ttt, OutputForm["APrint:OStringFilename:END;"]];
-
-  Write[ttt, OutputForm["ClearLinkShape:END;"]];
-
-  Write[ttt, OutputForm["ClearPrisJoint:END;"]];
-
-  Write[ttt, OutputForm["ClearRevJoint:END;"]];
-
-  Write[ttt, OutputForm["CPrint:RStringLabel:OStringFilename:END;"]];
-
-  Write[ttt, OutputForm["DataFile:RStringFilename:END;"]];
-
-  Write[ttt, OutputForm["DisplayTau::END;"]];
-
-  Write[ttt, OutputForm["ELDynamics:END;"]];
-
-  Write[ttt, OutputForm["EPrint:RSymbolMatrix:RStringLabel:OStringFilename:END;"]];
-
-  Write[ttt, OutputForm["FKin:END;"]];
-
-  Write[ttt, OutputForm["GetInputTau:RStringFilename:END;"]];
-
-  Write[ttt, OutputForm["LinkShape:RStringFilename:END;"]];
-
-  Write[ttt, OutputForm["LoadAnim:RStringFilename:END;"]];
-
-  Write[ttt, OutputForm["MPrint:RSymbolMatrix:RStringLabel:OStringFilename:END;"]];
-
-  Write[ttt, OutputForm["Planar:END;"]];
-
-  Write[ttt, OutputForm["PrintInputData:END;"]];
-
-
-  Write[ttt, OutputForm["RElp:RListParameter List:OList,frame,animate,single,measures,monly,scale,print,xprint,mprint,file,:END;"]];
-
-  Write[ttt, OutputForm["Response:RListTime range:RListInitial Conditions:END;"]];
-
-  Write[ttt, OutputForm["SaveResponse:RStringFilename:RListTime Range:OSymbolTime step:END;"]];
-
-  Write[ttt, OutputForm["SetRanges:RListX Range:RListY Range:RListZ Range:END;"]];
-
-  Write[ttt, OutputForm["SimplifyExpression:RSymbolExpression:END;"]];
-
-  Write[ttt, OutputForm["SimplifyTrigNotation::END;"]];
-
-  Write[ttt, OutputForm["TPrint:OStringFilename:END;"]];
-
-  Close[ttt];
-
-  Print["THESTART"];
-];
 
 (*
   Set the x, y, and z plot ranges for animations
