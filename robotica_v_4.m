@@ -203,7 +203,7 @@ SimplifyTrigNotation[]:=
 *)
 TPrint[name_String:""] :=
 	Block[
-		{i,j,temp,file},
+		{i,j},
 
     For[i=0, i<dof, i++,
     	For[j=1, j<=dof, j++,
@@ -220,23 +220,12 @@ TPrint[name_String:""] :=
   TODO: display all the A matrices, not print them
 *)
 APrint[name_String:""] :=
-   Block[{j,temp, file},
-     file=name;
-     If[file != "",
-     If[file == "$", file = ToString[$FILE$], $FILE$=file]];
-     If[file == "NOT_SET",
-      Print["No default filename yet..."];
-      Return[]];
-      For[j=1, j<=dof, j++,
-       temp=MPrint[A[j], StringJoin["A[", ToString[j], "]= "]];
-       If [file != "",
-         PutAppend[OutputForm[temp], file];
-         PutAppend[OutputForm[""], file],
-
-         Print[temp];
-         ]
-      ]
-     ]
+	Block[
+		{j},
+    For[j=1, j<=dof, j++,
+    	Print[MPrint[A[j], StringJoin["A[", ToString[j], "]= "]]];
+    ]
+  ]
 
 (*
    MPrint prints any matrix with a label to the screen or to a file.
