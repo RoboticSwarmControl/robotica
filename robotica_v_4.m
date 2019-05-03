@@ -277,9 +277,8 @@ dhInput[jt_List]:=
 	]
 
 (*
-Create DH function: parses input and generates the DH table
+show to the user a table to fill with the values
 *)
-(**)
 readJointTable[]:=
   Do[
 		(*ask the user for
@@ -336,22 +335,23 @@ checkJointTable(jt_List):=
 
 		For[ i=1,i<=dof,i++,
 			If[ !MemberQ[{"Prismatic","prismatic","P","p","Revolute","revolute","R","r"},ToString[jt[[1,i]] ]],
-				Print[" Type column, should include only:
-					Revolute, revolute, R, r, Prismatic, prismatic, P, or p"];
-				Return[False]
+				Print[" Type column, should include only: Revolute, revolute, R, r, Prismatic, prismatic, P, or p"];
+				Return[False];
 			]
 		];
+		Return[True];
 	];
+
+
+
 
 (*function isPrismatic
 	isRevolutionary
 	*)
 
-(*print Joint table, recap, for what I understood, as debug
+(*print Joint table, recap, for what I understood, as debug *)
 
-
-
-	Print[
+JTRecapPrint[]:=Print[
 		Grid[
 			Transpose[
 				Join[
@@ -364,7 +364,7 @@ checkJointTable(jt_List):=
 					Transpose[
 						Join[
 							{{Type,r, \[Alpha],d,\[Theta]}},
-							Transpose[jt]
+							Transpose[JTRecap]
 						]
 					]
 				]
@@ -374,15 +374,10 @@ checkJointTable(jt_List):=
 	]
 
 
-
-
-	*)
-
-
 (*assuming jt to be a valid matrix describing joints*)
 loadRobot[jt]:=
     Block[{},
-
+			(*load JTRecap*)
     For[ i=1,i<=dof,i++,
       alpha[i]=jt[[3,i]];
 			a[i]=jt[[2,i]];
@@ -545,24 +540,6 @@ drawJoint[ j_,d_,r_,\[Theta]_,showArrow_:True]:=
       },
 
       Rotate[{Opacity[0.5],Gray,Cuboid[{-ar,-ar,d-ar},{r,ar,d+ar}]},\[Theta],{0,0,1}]
-    }
-  ];
-
-
-drawShaft[ j_,d_,r_,\[Theta]_]:=
-  Module[
-    {jr = 1/5,ar = 1/20},
-    {
-      Opacity[1],
-      {
-        Opacity[0.5],
-        Gray,
-        If[ j == "prismatic",
-          Cuboid[{-ar,-ar,-1+d-jr-.01},{ar,ar,d+.01}],
-
-          Cylinder[{{0,0,Min[-ar,d-jr]-.01},{0,0,Max[ar,d]+.01}},ar]
-        ]
-      }
     }
   ];
 
