@@ -61,8 +61,8 @@ specified."
 
 dhInput::usage = "dhInput[] lets the user enter the DH parameters, in a list of {joint_type,r,alpha,d,theta}."
 
-createdh::usage = "create DH parameter by Given DOF"
-createdh2::usage " Create DH Parameter Table by given DH Matrix"
+readJointTable::usage = "create DH parameter by Given DOF"
+loadRobot::usage " Create DH Parameter Table by given DH Matrix"
 
 FKin::usage = "FKin[] generates the A and T matrices, as well as the Jacobian
 for the current input data set."
@@ -329,15 +329,15 @@ dhInput[x2_]:=
     x3 = Dimensions[x2];
     If[ NumberQ[x2] && x2>0,
       dof = x2;
-      createdh[],
+      readJointTable[],
 
       If[ Length[x2]==5 && Length[x3]==2 ,
         dof= x3[[2]];
         DH = x2;
-        createdh2[],
+        loadRobot[x2],
 
         dof= Input["You entered an incorrect Matrix. How many joints (DOF) does your robot have?"];
-        createdh[]
+        readJointTable[]
       ]
     ];
   $dhInput$ = "YES";
@@ -347,7 +347,7 @@ dhInput[x2_]:=
 Create DH function: parses input and generates the DH table
 *)
 (**)
-createdh[]:=
+readJointTable[]:=
   Do[
     If[ IntegerQ[dof] && dof>0,
 
@@ -433,61 +433,89 @@ createdh[]:=
     ]
   ];
 
+
+(*
+checkJT
+check Dimensions
+check joint type
+
+For[ i=1,i<=dof,i++,
+	zz=ToString[jt[[1,i]] ];
+	If[ !MemberQ[{"Prismatic","prismatic","P","p","Revolute","revolute","R","r"},zz],
+		Print[" Type column, should include only:
+			Revolute, revolute, R, r, Prismatic, prismatic, P, or p"];
+		Return[]
+	]
+];
+
+	*)
+
+(*function isPrismatic
+	isRevolutionary
+	*)
+
 (*Create DH 2*)
+(*assuming jt to be a valid matrix describing joints*)
+loadRobot[jt]:=
+  Do[ (*use block instead*)
 
-createdh2[]:=
-  Do[
     For[ i=1,i<=dof,i++,
-      zz=ToString[DH[[1,i]] ];
-      If[ !MemberQ[{"Prismatic","prismatic","P","p","Revolute","revolute","R","r"},zz],
-        Print[" Type column, should include only:
-          Revolute, revolute, R, r, Prismatic, prismatic, P, or p"];
-        Return[]
-      ]
-    ];
-    For[ i=1,i<=dof,i++,
-      alphac[i]=DH[[3,i]];
-      thetac[i]=DH[[5,i]];
-      zz=ToString[ DH[[1,i]] ];
+      alphac[i]=jt[[3,i]];
+      thetac[i]=jt[[5,i]];
+      zz=ToString[ jt[[1,i]] ];
       If[ MemberQ[{"Prismatic","prismatic","P","p"},zz],
-        DH[[4,i]] = Subsuperscript["d",i,"*"];
-        DH[[1,i]]="prismatic",
+        jt[[4,i]] = Subsuperscript["d",i,"*"];
+        jt[[1,i]]="prismatic",
 
-        If[ NumberQ[DH[[4,i]]] ||  NumericQ[DH[[4,i]]],
-          DH[[4,i]],
+        If[ NumberQ[jt[[4,i]]] ||  NumericQ[jt[[4,i]]],
+          jt[[4,i]],
 
-          DH[[4,i]]=Subscript["d",i]
+          jt[[4,i]]=Subscript["d",i]
         ]
 
       ];
 
       If[ MemberQ[{"Revolute","revolute","R","r"},zz],
-        DH[[5,i]] = Subsuperscript["\[Theta]",i,"*"];
-        DH[[1,i]]="revolute"
+        jt[[5,i]] = Subsuperscript["\[Theta]",i,"*"];
+        jt[[1,i]]="revolute"
       ];
 
-      If[NumberQ[DH[[2,i]]] || NumericQ[DH[[2,i]]],
-        DH[[2,i]],
-        DH[[2,i]]=Subscript["r",i]
+      If[NumberQ[jt[[2,i]]] || NumericQ[jt[[2,i]]],
+        jt[[2,i]],
+        jt[[2,i]]=Subscript["r",i]
       ];
-      a[i]=DH[[2,i]];
-      alpha[i]=DH[[3,i]];
-      d[i] =DH[[4,i]];
-      theta[i]=DH[[5,i]];
-      jointtype[i] = ToString[ DH[[1,i]] ];
+      a[i]=jt[[2,i]];
+      alpha[i]=jt[[3,i]];
+      d[i] =jt[[4,i]];
+      theta[i]=jt[[5,i]];
+      jointtype[i] = ToString[ jt[[1,i]] ];
     ];
+
+
     $DATAFILE$="NO";
     $dhInput$ = "YES";
-    DH1=Transpose[DH];
 
-    k2={Type,r, \[Alpha],d,\[Theta]};
-    b2=Join[{k2},DH1];
-    b3=Transpose[b2];
-    k3=Join[{Joint},Array[#&,dof]];
-    l2 = Join[{k3},b3];
-    L2=Transpose[l2];
-
-    Print[Grid[L2,Frame->All]]
+    Print[
+			Grid[
+				Transpose[
+					Join[
+						{
+							Join[
+								{Joint},
+								Array[#&,dof]
+							]
+						},
+						Transpose[
+							Join[
+								{{Type,r, \[Alpha],d,\[Theta]}},
+								Transpose[jt]
+							]
+						]
+					]
+				],
+				Frame->All
+			]
+		]
 
     For[ i=1,i<=dof,i++,
       theta[i]=thetac[i];
@@ -513,15 +541,7 @@ FKin[]:=
 
 	  FormAllAs[];
 	  FormAllTs[];
-		Ad =Table[
-			If[ jointtype[i]=="prismatic",
-				dhTransform[params[[i]],a[i],theta[i],alpha[i]],
 
-				dhTransform[d[i],a[i],params[[i]],alpha[i]]
-			],
-			{i,1,dof}
-		];
-		Print[Ad];
   ]
 
 (*
@@ -730,11 +750,13 @@ drawRobot[OptionsPattern[]]:=
         Tv=dhTransform[0,0,0,0];
         Ts=dhTransform[0,0,0,0];
         For[ i=1,i<=j,i++,Ts=Ts.Ad[[i]]];
-        For[ ii=1,ii<=4,ii++,
+
+				For[ ii=1,ii<=4,ii++,
           For[ jj=1,jj<=4,jj++,
             Tv[[1,ii,jj]]=Chop[Ts[[1,ii,jj]]];
           ];
         ];
+
         Td[j]=Tv;
       ];
 
