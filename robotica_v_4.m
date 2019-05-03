@@ -436,7 +436,7 @@ checkJointTable(jt_List):=
 
 (*assuming jt to be a valid matrix describing joints*)
 loadRobot[jt]:=
-  Do[ (*use block instead*)
+    Block[{},
 
     For[ i=1,i<=dof,i++,
       alpha[i]=jt[[3,i]];
@@ -465,9 +465,6 @@ FKin[parD,parTheta]:=
 	Do[
   ]
 
-(*
-  The A matrices are just a fill-in-the-blank procedure
-*)
 FormAllAs[]:=
 	Block[
     {i},
@@ -498,25 +495,22 @@ Chop[{ {Cos[theta], -Sin[theta] Cos[alpha], Sin[theta] Sin[alpha], a Cos[theta]}
 
 
 FormAllTs[]:=
-	Block[{i,j},
-
-  T[0,0]=IdentityMatrix[4];
-  st = "T Matrices Formed: T[0,0]";
-	For[ i=0,i < dof, i++,
-	  For[j=1,j<=dof , j++ ,
-      If[ j>i ,
-        st = StringJoin[st, ToString[
-          StringForm[", T[``,``]",i,j]]
-        ];
-		    T[i,j]=Chop[TrigFactor[FormTij[i,j]]]
+	Block[
+		{i,j},
+	  T[0,0]=IdentityMatrix[4];
+	  st = "T Matrices Formed: T[0,0]";
+		For[ i=0,i < dof, i++,
+		  For[j=1,j<=dof , j++ ,
+	      If[ j>i ,
+	        st = StringJoin[st, ToString[
+	          StringForm[", T[``,``]",i,j]]
+	        ];
+			    T[i,j]=Chop[TrigFactor[FormTij[i,j]]]
+				]
 			]
 		]
-	]
-
   ]
-(*
-  Recursively form the T matrix T[i,j]
-*)
+
 FormTij[k_,l_]:=
   If[ (l-k)==1,
     A[l],
@@ -530,21 +524,25 @@ FormTij[k_,l_]:=
 *)
 SetRanges[x_List, y_List, z_List] :=
   Block[{},
-   If [Length[x] !=2 || Length[y]!= 2 || Length[z]!=2,
-    Print["Each list should contain a start and end value only."];
-    Return[]];
+  	If [Length[x] !=2 || Length[y]!= 2 || Length[z]!=2,
+    	Print["Each list should contain a start and end value only."];
+    	Return[]
+		];
 
-   If[!NumberQ[Plus @@ N[x]], Print["X Ranges must be numbers."];
-    Return[]];
-   If[!NumberQ[Plus @@ N[y]], Print["Y Ranges must be numbers."];
-    Return[]];
-   If[!NumberQ[Plus @@ N[z]], Print["Z Ranges must be numbers."];
-    Return[]];
+   	If[!NumberQ[Plus @@ N[x]], Print["X Ranges must be numbers."];
+    	Return[]
+		];
+   	If[!NumberQ[Plus @@ N[y]], Print["Y Ranges must be numbers."];
+    	Return[]
+		];
+   	If[!NumberQ[Plus @@ N[z]], Print["Z Ranges must be numbers."];
+    	Return[]
+		];
 
-  $XRANGE$ = x;
-  $YRANGE$ = y;
-  $ZRANGE$ = z;
-];
+	  $XRANGE$ = x;
+	  $YRANGE$ = y;
+	  $ZRANGE$ = z;
+  ];
 
 
 (*
