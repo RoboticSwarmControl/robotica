@@ -513,7 +513,15 @@ FKin[]:=
 
 	  FormAllAs[];
 	  FormAllTs[];
+		Ad =Table[
+			If[ jointtype[i]=="prismatic",
+				dhTransform[params[[i]],a[i],theta[i],alpha[i]],
 
+				dhTransform[d[i],a[i],params[[i]],alpha[i]]
+			],
+			{i,1,dof}
+		];
+		Print[Ad];
   ]
 
 (*
