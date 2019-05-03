@@ -100,7 +100,6 @@ Cos[q1+q2+q3+q4] --> C1234."
 
 Begin["`Private`"]
 
-$DATAFILE$ = "NO";
 $dhInput$ = "NO";
 $XRANGE$ = {-10,10};
 $YRANGE$ = {-10,10};
@@ -417,7 +416,6 @@ readJointTable[]:=
       jointtype[i] = ToString[DH[[1,1+i,2]]];
     ];
 
-    $DATAFILE$="NO";
     $dhInput$ = "YES";
     DH1=ConstantArray[0,{dof+1,6}];
     For[ i=1,i<=dof+1,i++,
@@ -505,8 +503,6 @@ loadRobot[jt]:=
       jointtype[i] = ToString[ jt[[1,i]] ];
     ];
 
-
-    $DATAFILE$="NO";
     $dhInput$ = "YES";
   ];
 
@@ -518,12 +514,11 @@ FKin[]:=
 	Do[
     If[$dhInput$ == "YES", (*DH Parameter entered from dhInput[]*)
       Print[""],
-      If[$DATAFILE$ == "YES",
-        Print[""],
-	      If[ $DATAFILE$ == "NO" && $dhInput$ == "NO",
-          dhInput[]
-        ]
-      ]
+
+
+	    dhInput[]
+
+
     ];
 
 	  FormAllAs[];
