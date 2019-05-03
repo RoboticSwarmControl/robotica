@@ -202,30 +202,35 @@ SimplifyTrigNotation[]:=
    TODO: display all the T matrices, not print them
 *)
 TPrint[name_String:""] :=
-   Block[{i,j,temp,file},
-     file=name;
-     If[file =!= "",
-       If[file == "$", file = ToString[$FILE$], $FILE$=file]
-       ];
-     If[file == "NOT_SET",
+	Block[
+		{i,j,temp,file},
+
+		file=name;
+    If[ file =!= "",
+    	If[ file == "$",
+				file = ToString[$FILE$],
+
+				$FILE$=file
+			]
+    ];
+    If[ file == "NOT_SET",
       Print["No default filename yet..."];
-      Return[]];
-     For[i=0, i<dof, i++,
-      For[j=1, j<=dof, j++,
-       If[j>i,
-       temp=
-        MPrint[T[i,j], StringJoin["T[", ToString[i], ",", ToString[j], "]= "]];
+      Return[]
+		];
+    For[i=0, i<dof, i++,
+    	For[j=1, j<=dof, j++,
+        If[j>i,
+       		temp=MPrint[T[i,j], StringJoin["T[", ToString[i], ",", ToString[j], "]= "]];
+     			If [ file != "",
+       			PutAppend[OutputForm[temp], file];
+       			PutAppend[OutputForm[""], file],
 
-     If [file != "",
-       PutAppend[OutputForm[temp], file];
-       PutAppend[OutputForm[""], file],
-
-       Print[temp];
-       ]
-       ]
+       			Print[temp];
+       		]
+       	]
       ]
-     ]
     ]
+  ]
 
 (*
    APrint prints all the A matrices to the screen or to a file.
