@@ -454,6 +454,36 @@ For[ i=1,i<=dof,i++,
 	isRevolutionary
 	*)
 
+(*print Joint table, recap, for what I understood, as debug
+
+
+	Print[
+		Grid[
+			Transpose[
+				Join[
+					{
+						Join[
+							{Joint},
+							Array[#&,dof]
+						]
+					},
+					Transpose[
+						Join[
+							{{Type,r, \[Alpha],d,\[Theta]}},
+							Transpose[jt]
+						]
+					]
+				]
+			],
+			Frame->All
+		]
+	]
+
+
+	*)
+
+
+
 (*Create DH 2*)
 (*assuming jt to be a valid matrix describing joints*)
 loadRobot[jt]:=
@@ -495,27 +525,6 @@ loadRobot[jt]:=
     $DATAFILE$="NO";
     $dhInput$ = "YES";
 
-    Print[
-			Grid[
-				Transpose[
-					Join[
-						{
-							Join[
-								{Joint},
-								Array[#&,dof]
-							]
-						},
-						Transpose[
-							Join[
-								{{Type,r, \[Alpha],d,\[Theta]}},
-								Transpose[jt]
-							]
-						]
-					]
-				],
-				Frame->All
-			]
-		]
 
     For[ i=1,i<=dof,i++,
       theta[i]=thetac[i];
