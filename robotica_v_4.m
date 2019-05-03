@@ -6,9 +6,6 @@ Off[Replace::rep]
 
 
 DH::usage = ""
-DH1::usage = ""
-\[Mu]v::usage =""
-\[Mu]w::usage =""
 Q::usage = ""
 r::usage = ""
 a::usage = ""
@@ -20,12 +17,8 @@ Joint::usage = ""
 jointtype::usage = ""
 alpha::usage = ""
 theta::usage = ""
-thetac::usage = ""
-alphac::usage = ""
 dof::usage = ""
 Td::usage = ""
-x5::usage = ""
-x4::usage= ""
 cc::usage = ""
 zz::usage = ""
 x3::usage = ""
@@ -34,7 +27,6 @@ b::usage = ""
 z::usage = ""
 k::usage = ""
 l::usage = ""
-v::usage = ""
 A::usage = ""
 T::usage = ""
 z::usage = ""
@@ -64,8 +56,7 @@ dhInput::usage = "dhInput[] lets the user enter the DH parameters, in a list of 
 readJointTable::usage = "create DH parameter by Given DOF"
 loadRobot::usage " Create DH Parameter Table by given DH Matrix"
 
-FKin::usage = "FKin[] generates the A and T matrices, as well as the Jacobian
-for the current input data set."
+FKin::usage = "FKin[d_List,Theta_List] calculates the end position based on the R_List and Alpha_List preloaded and the d_List and Theta_List given by parameter"
 
 drawZArrow::usage = ""
 drawCoordAxes::usage = ""
@@ -462,8 +453,9 @@ loadRobot[jt]:=
   Run the functions that calculates the forward kinematics
 *)
 FKin[parD,parTheta]:=
-	Do[
-  ]
+	Block[{},
+		(*calculates T[parD,parTheta] somehow*)
+	]
 
 FormAllAs[]:=
 	Block[
