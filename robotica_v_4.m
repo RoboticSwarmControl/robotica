@@ -102,15 +102,12 @@ Begin["`Private`"]
 
 $DATAFILE$ = "NO";
 $dhInput$ = "NO";
-$createdh$= "NO";
 $XRANGE$ = {-10,10};
 $YRANGE$ = {-10,10};
 $ZRANGE$ = {-10,10};
 $RANGES$ = {$XRANGE$, $YRANGE$, $ZRANGE$};
 $FILE$="NOT_SET";
 $VERSION$ = "4.01";
-
-$ROBGUY$ = "atbecker@uh.edu mmsultan@uh.edu";
 
 Print["Robotica version ", $VERSION$, "."];
 
