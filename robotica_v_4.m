@@ -96,7 +96,6 @@ $XRANGE$ = {-10,10};
 $YRANGE$ = {-10,10};
 $ZRANGE$ = {-10,10};
 $RANGES$ = {$XRANGE$, $YRANGE$, $ZRANGE$};
-$FILE$="NOT_SET";
 $VERSION$ = "4.01";
 
 Print["Robotica version ", $VERSION$, "."];
@@ -231,59 +230,40 @@ APrint[name_String:""] :=
    MPrint prints any matrix with a label to the screen or to a file.
    If the filename is $, the default file name is used
 *)
-MPrint[M_List, text_String, name_String:""] :=(
-  StringForm["````",text, MatrixForm[M]]
-  );
+MPrint[M_List, text_String, name_String:""] :=(StringForm["````",text, MatrixForm[M]]);
 
 (* EPrint prints all the elements of a matrix one per line *)
 EPrint[M_List, text_String, name_String:""] :=
-    Block[{i,j, temp, file, ro, co},
-        If[VectorQ[M], ro=Length[M],
-          If[MatrixQ[M], {ro, co} = Dimensions[M], Return[]]];
+	Block[
+	{i,j, temp, file, ro, co},
+  If[ VectorQ[M],
+		ro=Length[M],
+    If[ MatrixQ[M],
+			{ro, co} = Dimensions[M],
+			Return[]
+		]
+	];
 	Print[" "];
 	Print[" "];
-        If [name == "",
+  If[ name == "",
+  	If[ MatrixQ[M],
+    	Do[
+      	Do[
+					Print[text,"[",i,",",j,"] = ",M[[i,j]]];
+          Print[""],
+	        {i,ro}
+				],
+      	{j,co}
+			],
 
-         If[MatrixQ[M],
-           Do[
-             Do[
-		Print[text,"[",i,",",j,"] = ",M[[i,j]]];
-                Print[""],
-	        {i,ro}],
-              {j,co}],
-
-           Do[
-              Print[text,"[",i,"] = ",M[[i]]];
-              Print[""],
-              {i,ro}]];
-
-	Print[" "]];
-
-        If[name != "",
-          file=name;
-          If[file == "$", file = ToString[$FILE$], $FILE$=file];
-          If[file == "NOT_SET",
-            Print["No default filename yet..."];
-            Return[]];
-
-          If[MatrixQ[M],
-            Do[
-              Do[
-           temp=StringForm["``````````````",text,"[",i,",",j,"] = ",M[[i,j]]];
-                 PutAppend[OutputForm[temp],file];
-                 PutAppend[OutputForm[""],file],
-                 {i,ro}],
-              {j,co}],
-
-            Do[
-           temp=StringForm["``````````",text,"[",i,"] = ",M[[i]]];
-               PutAppend[OutputForm[temp],file];
-               PutAppend[OutputForm[""],file],
-               {i,ro}]];
-
-           PutAppend[OutputForm[""],file];
-          ]
-     ]
+      Do[
+      	Print[text,"[",i,"] = ",M[[i]]];
+        Print[""],
+      	{i,ro}
+			]
+		];
+		Print[" "]];
+ 	]
 
 
 
