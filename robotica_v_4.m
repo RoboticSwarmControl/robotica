@@ -38,7 +38,6 @@ l::usage = ""
 v::usage = ""
 A::usage = ""
 T::usage = ""
-J::usage = ""
 Jvw::usage = ""
 z::usage = ""
 o::usage = ""
@@ -1000,8 +999,8 @@ FKin[]:=
 
 	  FormAllAs[];
 	  FormAllTs[];
-	  FormTheJacobianJ[];
-      $FKINRUN$ = "YES";
+    (*FormTheJacobianJ[];*)
+    $FKINRUN$ = "YES";
   ]
 
 (*
@@ -1084,7 +1083,6 @@ FormTheJacobianJ[]:=
       ]
     ];
     J = Transpose[ Table[Jvw[j], {j, 1, dof} ] ];
-	  (*Print["Jacobian Formed:  J","(6","x",dof,")"];*)
 	]
 
 (*
@@ -1095,44 +1093,6 @@ Cross3[x_,y_]:=
            x[[3]]y[[1]]-x[[1]]y[[3]],
            x[[1]]y[[2]]-x[[2]]y[[1]] }]
 
-
-(*
-  Form the nxnxn table of ChristoffelSymbols
-*)
-FormChristoffelSymbols[x_]:=
-	Block[{i,j,k},
-		c=Table[0,{dof},{dof},{dof}];
-		Do[c[[i,j,k]]=TrigFactor[1/2 ( D[x[[k,j]],q[i]]+
-				    D[x[[k,i]],q[j]]-
-				    D[x[[i,j]],q[k]])]
-		,{i,1,dof},{j,1,dof},{k,1,dof}];
-	Print[" "];
-	]
-
-
-
-
-
-
-
-(*
-  The length of a vector
-*)
-Long[{x1_, y1_, z1_:0}] := Sqrt[x1 x1 + y1 y1 + z1 z1];
-
-(*
-  Return either Graphics or Graphics3d
-*)
-Gr[x_, dim_] :=
- Block[{},
-  If[Length[x] >1,
-  If[Head[x[[2]]] === Graphics3D,
-   Return[x[[2]] ]]];
-
-  If[dim==7,
-   Return[Graphics3D[{AbsoluteThickness[1], x}]],
-   Return[Graphics[{AbsoluteThickness[1], x}]]];
-];
 
 
 (*
