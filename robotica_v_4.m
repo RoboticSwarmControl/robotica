@@ -1,25 +1,10 @@
 (* ::Package:: *)
 
-(*
-         Robotica
-
-A Mathematica package for the analysis and design of robots.
-Author: John Nethery, nethery@robot1.ge.uiuc.edu  (email no longer works)
-Copyright 1993 Board of Trustees, University of Illinois
-All rights reserved.
-
-Updated by Aaron T. Becker (atbecker@uh.edu) & Mohammad Sultan in 2017
-
-*)
 
 BeginPackage["robotica`"]
 Off[Replace::rep]
 
-(*
-   Define the help strings for the functions that will be available to
-   the user.  Define also the variables that we are going to export.
-   We should eventually add help strings for the variables as wel...
-*)
+
 DH::usage = ""
 DH1::usage = ""
 \[Mu]v::usage =""
@@ -181,19 +166,6 @@ to squelch warnings which appear on newer versions of Mathematica. *)
 $ROBGUY$ = "atbecker@uh.edu mmsultan@uh.edu";
 
 Print["Robotica version ", $VERSION$, "."];
-(*Print["Copyright 1993 Board of Trustees, University of Illinois"];
-Print["All rights reserved."];
-Print["Email questions, comments, or concerns to ", $ROBGUY$, "."];*)
-
-(*
-  SimplifyTrigNotation replaces Sin[] and Cos[] with S and C, and the
-  parameter with the same parameter with its first character removed.
-  i.e. q1 -> 1, q10 -> 10, d3 ->3, qtest -> test
-  Don't change compound expressions: Cos[4 r] does not change to Cr,
-  Also, preserve one character variables:  Cos[w] = Cos[w]
-
-TODO: fix this to use 3 parameters
-*)
 
 
 SimplifyTrigNotation[]:=
@@ -305,10 +277,9 @@ SimplifyTrigNotation[]:=
     Tan[r_Rational Pi]	:> - Tan[(1 - r) Pi] /; r > 1/2,
     Sin[r_Rational Pi]	:>   Cos[(1/2 - r) Pi] /; r > 1/4,
     Cos[r_Rational Pi]	:>   Sin[(1/2 - r) Pi] /; r > 1/4
- (* Tan[r_Rational Pi]	:> 1/Tan[(1/2 - r) Pi] /; r > 1/4 *)
 
 }
-(*Protect[TrigCanonicalRel] XYZZY *)
+
 
 TrigCanonical[e_] := e //. TrigCanonicalRel
 
@@ -478,48 +449,6 @@ EPrint[M_List, text_String, name_String:""] :=
           ]
      ]
 
-(* CPrint prints the Christoffel symbols to screen or file *)
-CPrint[text_String, name_String:""] :=
-  Block[{i,j,k},
-    If[$DYNRUN$ == "NO", Print["You must run ELDynamics[] first..."];
-                         Return[]];
-    If[$DYNRUN$ == "CANT", Print["You must run ELDynamics[] first..."];
-                         Return[]];
-
-    Print[" "];
-
-    If [name == "",
-      For [i=1, i<=dof, i++,
-        For [j=1, j<=dof, j++,
-          For [k=1, k<=dof, k++,
-            Print[text, "[[", i, ",", j, ",", k, "]] = ", c[[i,j,k]]];
-            Print[""];
-          ];
-        ];
-      ];
-     Print[" "];
-    ];
-
-   If[name != "",
-     file=name;
-     If[file == "$", file = ToString[$FILE$], $FILE$=file];
-     If[file == "NOT_SET",
-       Print["No default filename yet..."];
-       Return[]];
-
-      Do[
-        Do[
-          Do[
-             temp=StringForm["``````````````````",
-                  text,"[[",i,",",j,",",k,"]] = " ,c[[i,j,k]]];
-             PutAppend[OutputForm[temp],file];
-             PutAppend[OutputForm[""],file],
-                 {k,dof}],
-              {j,dof}],
-           {i, dof}];
-     ]
-
-]
 
 (*
   DataFile reads in a table of DH parameters, and checks to see if any
