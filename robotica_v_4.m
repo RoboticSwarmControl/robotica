@@ -1116,58 +1116,6 @@ Cross3[x_,y_]:=
            x[[1]]y[[2]]-x[[2]]y[[1]] }]
 
 
-(*
-  The inertia matrix MU, unsimplified, is created
-*)
-FormInertiaMatrix[]:=
-	Block[{i},
-	FormDynamicsJacobians[];
-	MU=
-	Sum[
-            mass[i] Transpose[Jvc[i]].Jvc[i]+
-            Transpose[Jwc[i]].T[0,i][[ Range[1,3],Range[1,3] ]].
-            inertia[i].Transpose[T[0,i][[ Range[1,3],Range[1,3] ]]]. Jwc[i]
-	,{i,1,dof}];
-
-	Print[" "];
-	Print[" "];
-	Print["Mass Matrix MU(",dof," x ",dof,") Formed."
-               " No Trigonometric Simplification."]
-
-];
-
-(*
-  Form dynamics jacobians sets up the calculation of the Jc matrices.
-  Note that the center of mass vector is first moved into the appropriate
-  coordinate frame.
-*)
-FormDynamicsJacobians[] := Block[{i,j,lp,ap,cmv,col},
-
-        For[j=1, j<=dof, j++,
-         Jc[j] = {};
-
-         cmv = o[j] + T[0,j][[{1,2,3}, {1,2,3}]] . com[j];
-
-         For[i=1, i<=dof, i++,
-          col = {0,0,0,0,0,0};
-          If[i<=j,
-           If[jointtype[i] == "prismatic",
-              col = Join[z[i-1], {0,0,0}]];
-
-           If[jointtype[i] == "revolute",
-              ap=z[i-1] ;
-              lp = Cross3[z[i-1], cmv - o[i-1]];
-              col = Join[lp, ap] ];
-             ];
-           AppendTo[Jc[j], col ]];
-
-         Jc[j] = Transpose[Jc[j]];
-         Jvc[j] = Jc[j][[{1,2,3}, Range[1,dof]]];
-         Jwc[j] = Jc[j][[{4,5,6}, Range[1,dof]]];
-         ]
-       ];
-
-
 
 (*
   Simplify is just this
