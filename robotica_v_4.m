@@ -337,6 +337,18 @@ Create DH function: parses input and generates the DH table
 (**)
 readJointTable[]:=
   Do[
+		(*ask the user for
+				joint number
+				joints Type
+				joint connections (a,alpha)
+				(a is called r, because)
+
+				d and theta, will be deduced by load robot
+
+				store everything in a valid joint table
+
+
+		*)
     If[ IntegerQ[dof] && dof>0,
 
       DH= Input[ "Fill out the DH parameters:
@@ -362,62 +374,7 @@ readJointTable[]:=
       Return[]
     ];
 
-    For[ i=1,i<=dof,i++,
-      zz=ToString[DH[[1,i+1,2]] ];
-      If[ !MemberQ[{"Prismatic","prismatic","P","p","Revolute","revolute","R","r"},zz],
-        Print[" Type column, should include only:
-          Revolute, revolute , R, r, Prismatic, prismatic, P or p"];
-        Return[]
-      ]
-    ];
-    For[ i=1,i<=dof,i++,
-      thetac[i]=DH[[1,i+1,6]];
-      zz=ToString[DH[[1,i+1,2]] ];
-      If[MemberQ[{"Prismatic","prismatic","P","p"},zz],
-        DH[[1,i+1,5]] = Subsuperscript["d",i,"*"];
-        DH[[1,i+1,2]]="prismatic",
-
-        If[ NumberQ[DH[[1,i+1,5]]] || NumericQ[DH[[1,i+1,5]]],
-          DH[[1,i+1,5]],
-
-          DH[[1,i+1,5]]=Subscript["d",i]
-        ]
-      ];
-
-
-      If[ MemberQ[{"Revolute","revolute","R","r"},zz],
-        DH[[1,i+1,6]] = Subsuperscript["\[Theta]",i,"*"];
-        DH[[1,i+1,2]]="revolute",
-
-        DH[[1,i+1,6]]
-      ];
-
-      If[ NumberQ[DH[[1,i+1,3]]] || NumericQ[DH[[1,i+1,3]]],
-        DH[[1,i+1,3]],
-
-        DH[[1,i+1,3]]=Subscript["r",i]
-      ];
-
-      a[i]=DH[[1,i+1,3]];
-      alpha[i]=DH[[1,i+1,4]];
-      d[i] =DH[[1,i+1,5]];
-      theta[i]=DH[[1,i+1,6]];
-      jointtype[i] = ToString[DH[[1,1+i,2]]];
-    ];
-
-    $dhInput$ = "YES";
-    DH1=ConstantArray[0,{dof+1,6}];
-    For[ i=1,i<=dof+1,i++,
-      For[j=1,j<=6,j++,
-        DH1[[i,j]]=DH[[1,i,j]];
-      ]
-    ];
-
-    Print[Grid[DH1,Frame->All]]
-
-    For[ i=1,i<=dof,i++,
-      theta[i]=thetac[i];
-    ]
+		(*call loadRobot*)
   ];
 
 
