@@ -104,9 +104,6 @@ $DATAFILE$ = "NO";
 $dhInput$ = "NO";
 $createdh$= "NO";
 $FKINRUN$ = "NO";
-$DYNRUN$ = "NO";
-$LINK$ = Null;
-$ENDEFF$=Null;
 $XRANGE$ = {-10,10};
 $YRANGE$ = {-10,10};
 $ZRANGE$ = {-10,10};
@@ -275,41 +272,6 @@ APrint[name_String:""] :=
 MPrint[M_List, text_String, name_String:""] :=(
   StringForm["````",text, MatrixForm[M]]
   );
-	(*
-MPrint[M_List, text_String, name_String:""] :=
-    Block[{i, ro, co, c1, c2, c3, file},
-         c1=c2=c3={};
-
-(* find out how many rows and columns *)
-
-         If[VectorQ[M], ro=Length[M],
-            If[MatrixQ[M], {ro, co} = Dimensions[M], Return[]]];
-
-(* put the label half way down the matrix *)
-
-         For[i=0, i<(ro-1)/2, i++, c1=Append[c1," "]];
-         c1=Append[c1,text];
-         c1=ColumnForm[c1];
-
-         For[i=0, i<ro, i++, c2=Append[c2, " | "]];
-         c2=ColumnForm[c2];
-
-         If[VectorQ[M], c3=ColumnForm[M], c3="";
-           For[i=1, i<=co, i++, c3=SequenceForm[c3, ColumnForm[Transpose[M][[i]]]];
-           c3=SequenceForm[c3, ColumnForm[{"  "}]]]];
-
-         If[name != "",
-          file=name;
-          If[file == "$", file = ToString[$FILE$], $FILE$=file];
-          If[file == "NOT_SET",
-           Print["No default filename yet..."];
-           Return[]];
-           PutAppend[OutputForm[SequenceForm[c1,c2,c3,c2]], file];
-           PutAppend[OutputForm[""], file],
-
-          SequenceForm[c1,c2,c3,c2]
-          ]
-	]*)
 
 (* EPrint prints all the elements of a matrix one per line *)
 EPrint[M_List, text_String, name_String:""] :=
