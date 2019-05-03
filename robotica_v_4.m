@@ -71,9 +71,6 @@ elements of M one per line, each with label 'text'.  Saved in file 'name' if
 specified."
 
 
-DataFile::usage = "DataFile[name_String:''] reads in a DH input file
-from 'name' if given.  Otherwise prompt for a file and read it."
-
 dhInput::usage = "dhInput[] lets the user enter the DH parameters, in a list of {joint_type,r,alpha,d,theta}."
 
 createdh::usage = "create DH parameter by Given DOF"
@@ -141,7 +138,7 @@ $VERSION$ = "4.01";
 to squelch warnings which appear on newer versions of Mathematica. *)
 (* Version 3.62 is the same as 3.61, with SimplifyTrigNotation[] modified to use subscripts. *)
 (* Version 3.63 is the same as 3.62, with simplifications to formatting and a few extra *)
-(*Version 4.00 by adding dhInput[], drawRobot[] and fixing the output for DataFile[]*)
+
 $ROBGUY$ = "atbecker@uh.edu mmsultan@uh.edu";
 
 Print["Robotica version ", $VERSION$, "."];
@@ -429,278 +426,7 @@ EPrint[M_List, text_String, name_String:""] :=
      ]
 
 
-(*
-  DataFile reads in a table of DH parameters, and checks to see if any
-  Dynamics info is in the file as well.  DataFile sets some internal
-  variables to indicate a successful read, and presence of dynamics
-  info.
 
-*)
-DataFile[name_String:""] :=
-
-  Block[{file, f, skip, temp, i, read, error} ,
-
-    If [name == "",
-      file = InputString["Enter data file name :"],
-      file = name];
-
-(* try to open file *)
-
-    f = OpenRead[file];
-    If [f == Null || f == $Failed, Print["Couldn't open your file."];
-                                   Return[]];
-
-(* clear old variable definitions *)
-    ResetState[];
-
-(* find the DOF line *)
-    skip=True;
-    While[skip,
-      read = Read[f, String];
-      If [read==EndOfFile, Print["Bad data file format."];
-                           Close[f];
-                           Return[]];
-
-      If[StringLength[read] >4,
-        If[StringTake[read,3] == "DOF", skip=False]]];
-
-    temp = Flatten[StringPosition[read, "="]];
-    If [temp == {},
-      Print["Couldn't find the dof equals sign."];
-      Close[f];
-      Return[],
-      dof = ToExpression[StringTake[read, {temp[[1]]+1, StringLength[read]}]]];
-
-    If [Head[dof] =!= Integer,
-      Print["Can't read the number of dof."];
-      ResetState[];
-      Close[f];
-      Return[]];
-
-    Read[f, String];
-    error = False;
-
-(* tq is a list of replacements for calculating time response *)
-    tq = {};
-    Do[
-      read=Read[f, String]; (* The first line in the joint definition *)
-      If [read==EndOfFile, Print["Bad data file format."];
-                      error=True;
-                      Break[]];
-
-      temp = Flatten[StringPosition[read, "="]];
-
-      If [temp == {},
-        Print["Couldn't find the jointtype:", i];
-          error=True;
-          Break[],
-
-(* the jointype string is everything after the equal sign *)
-        jointtype[i] = ToString[ToExpression[
-          StringTake[read, {temp[[1]]+1, StringLength[read]}]]]];
-
-      If [jointtype[i] =!= "revolute" && jointtype[i] =!= "prismatic",
-        Print["Bad joint type for link ", i];
-        error=True;
-        Break[]
-		];
-
-(* repeat a bunch of code to read a, alpha, d, theta *)
-      read = Read[f, String]; (* The second line in the joint definition *)
-
-      If [read==EndOfFile, Print["Bad data file format."];
-                      error=True;
-                      Break[]];
-
-      temp = Flatten[StringPosition[read, "="]];
-
-      If [temp == {},
-        Print["Couldn't find the a parameter:", i];
-          error=True;
-          Break[],
-        a[i] = ToExpression[StringTake[read,
-               {temp[[1]]+1, StringLength[read]}]]];
-
-      read = Read[f, String];
-
-      If [read==EndOfFile, Print["Bad data file format."];
-                      error=True;
-                      Break[]];
-
-      temp = Flatten[StringPosition[read, "="]];
-
-      If [temp == {},
-        Print["Couldn't find the alpha parameter:", i];
-          error=True;
-          Break[],
-        alpha[i] = ToExpression[StringTake[read,
-                   {temp[[1]]+1, StringLength[read]}]]];
-
-      read = Read[f, String];
-
-      If [read==EndOfFile, Print["Bad data file format."];
-                      error=True;
-                      Break[]];
-
-      temp = Flatten[StringPosition[read, "="]];
-
-      If [temp == {},
-        Print["Couldn't find the d parameter:", i];
-          error=True;
-          Break[],
-        d[i] = ToExpression[StringTake[read,
-                {temp[[1]]+1, StringLength[read]}]]];
-
-      read = Read[f, String];
-
-      If [read==EndOfFile, Print["Bad data file format."];
-                      error=True;
-                      Break[]];
-
-      temp = Flatten[StringPosition[read, "="]];
-
-      If [temp == {},
-        Print["Couldn't find the theta parameter:", i];
-          error=True;
-          Break[],
-        theta[i] = ToExpression[StringTake[read,
-                   {temp[[1]]+1, StringLength[read]}]];
-
-        ];
-      If [jointtype[i] == "prismatic", q[i] = d[i];
-                                 AppendTo[tq, d[i]->d[i][Global`t]],
-                                 q[i] = theta[i];
-                                 AppendTo[tq,  theta[i]->theta[i][Global`t]]],
-      {i, 1, dof}];
-
-(*
-   create a list of replacement rules to not change derivatives, but
-   replace qx with qx[t] for NDSolve routines
-*)
-    For[i=1, i<=dof, i++,
-     PrependTo[tq, q[i]'[Global`t] -> q[i]'[Global`t]];
-     PrependTo[tq, q[i][Global`t] -> q[i][Global`t]];
-       ];
-
-    If [error, ResetState[]; Close[f]; Return[]];
-
-(* lets see if we can find the string DYNAMICS to indicate dynamics info *)
-    skip=True;
-    While[skip,
-      read=Read[f, String];
-      If [read==EndOfFile, Print["No dynamics data found."];
-                           $DATAFILE$ = "YES";
-                           $DYNRUN$ = "CANT";
-     ze=ConstantArray[0,{dof,5}];
-
-k={Type,r, \[Alpha],d,\[Theta]};
-b=Join[{k},ze];
-cc=Transpose[b];
-k=Join[{Joint},Array[#&,dof]];
-l = Join[{k},cc];
-DH1=Transpose[l];
-
-
-     For[j=1,j<=dof,j++,DH1[[j+1,1]]= j;];
-     For[j=1,j<=dof,j++,DH1[[j+1,2]]= jointtype[j];];
-     For[j=1,j<=dof,j++,DH1[[j+1,3]]= a[j];];
-     For[j=1,j<=dof,j++,DH1[[j+1,4]]= alpha[j];];
-     For[j=1,j<=dof,j++,DH1[[j+1,5]]= d[j];];
-     For[j=1,j<=dof,j++,DH1[[j+1,6]]= theta[j];];
-
-     Print[Grid[DH1,Frame->All]];
-                           Close[f];
-                           Return[]];
-
-      If[StringLength[read] >7,
-        If[StringTake[read,8] == "DYNAMICS", skip=False]]];
-
-    Read[f, String];
-
-    read = Read[f, String];
-
-    If [read==EndOfFile, Print["Bad data file format."];
-                    error=True;
-                    Break[]];
-
-    temp = Flatten[StringPosition[read, "="]];
-
-    If [temp == {},
-      Print["Couldn't find the gravity vector:"];
-        error=True;
-        Break[],
-      gravity[1] = ToExpression[StringTake[read,
-                   {temp[[1]]+1, StringLength[read]}]]];
-
-    For[i=2, i<=dof, i++, gravity[i] = gravity[1]];
-
-    Do[
-      read=Read[f, String];
-
-      If [read==EndOfFile, Print["Bad data file format."];
-                      error=True;
-                      Break[]];
-
-      temp = Flatten[StringPosition[read, "="]];
-
-      If [temp == {},
-        Print["Couldn't find the mass parameter:", i];
-          error=True;
-          Break[],
-        mass[i] = ToExpression[StringTake[read,
-                  {temp[[1]]+1, StringLength[read]}]]];
-
-      read = Read[f, String];
-
-      If [read==EndOfFile, Print["Bad data file format."];
-                      error=True;
-                      Break[]];
-
-      temp = Flatten[StringPosition[read, "="]];
-
-      If [temp == {},
-        Print["Couldn't find the com vector parameter:", i];
-          error=True;
-          Break[],
-        com[i] = ToExpression[StringTake[read,
-                 {temp[[1]]+1, StringLength[read]}]]];
-
-      read = Read[f, String];
-
-      If [read==EndOfFile, Print["Bad data file format."];
-                      error=True;
-                      Break[]];
-
-      temp = Flatten[StringPosition[read, "="]];
-
-      If [temp == {},
-        Print["Couldn't find the inertia matrix:", i];
-          error=True;
-          Break[],
-        temp = ToExpression[StringTake[read,
-               {temp[[1]]+1, StringLength[read]}]]];
-
-        If[Length[temp] =!= 6,
-          Print["Syntax error in data file at or before inertia tensor ", i];
-          error=True;
-          Break[];
-          ];
-
-        inertia[i] = { {temp[[1]], temp[[2]], temp[[3]]},
-                       {temp[[2]], temp[[4]], temp[[5]]},
-                       {temp[[3]], temp[[5]], temp[[6]]} },
-
-      {i,1,dof}];
-
-      Close[f];
-
-      If[error, ResetState[]; Return[];];
-
-      OKDynamics = True;
-      $DATAFILE$ = "YES";
-
-  PrintInputData[];
-];
 
 (* DH Input Functon *)
 
@@ -989,7 +715,7 @@ FKin[]:=
 	Do[
     If[$dhInput$ == "YES", (*DH Parameter entered from dhInput[]*)
       Print[""],
-      If[$DATAFILE$ == "YES",(*DH Parameter entered from DataFile[]*)
+      If[$DATAFILE$ == "YES",
         Print[""],
 	      If[ $DATAFILE$ == "NO" && $dhInput$ == "NO",
           dhInput[]
@@ -1061,38 +787,6 @@ FormTij[k_,l_]:=
 
     A[k+1].FormTij[k+1, l]
   ];
-
-FormTheJacobianJ[]:=
-  Block[ {i,j,v,w,Jvw},
-    Do[
-      z[j] = {T[0,j][[1,3]], T[0,j][[2,3]], T[0,j][[3,3]]};
-      o[j] = {T[0,j][[1,4]], T[0,j][[2,4]], T[0,j][[3,4]]},
-
-      {j,0,dof}
-    ];
-    For[ j=1, j<=dof, j++,
-      If[ jointtype[j]=="revolute",
-        v= Cross3[z[j-1],o[dof]-o[j-1]];
-        w=z[j-1];
-        Jvw[j]=Join[v,w]
-      ];
-      If[ jointtype[j]=="prismatic",
-        v=z[j-1];
-        w={0,0,0};
-        Jvw[j]=Join[v,w]
-      ]
-    ];
-    J = Transpose[ Table[Jvw[j], {j, 1, dof} ] ];
-	]
-
-(*
-  A simple cross product calculator
-*)
-Cross3[x_,y_]:=
-	Return[{ x[[2]]y[[3]]-x[[3]]y[[2]],
-           x[[3]]y[[1]]-x[[1]]y[[3]],
-           x[[1]]y[[2]]-x[[2]]y[[1]] }]
-
 
 
 (*
