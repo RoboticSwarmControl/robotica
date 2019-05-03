@@ -323,30 +323,13 @@ EPrint[M_List, text_String, name_String:""] :=
 
 (* DH Input Functon *)
 
-dhInput[x2_]:=
+dhInput[jt_List]:=
   Do[
-
-	checkJointTable
-		loadRobot
-
-
-
-    x3 = Dimensions[x2];
-    If[ NumberQ[x2] && x2>0,
-      dof = x2;
-      readJointTable[],
-
-      If[ Length[x2]==5 && Length[x3]==2 ,
-        dof= x3[[2]];
-        DH = x2;
-        loadRobot[x2],
-
-        dof= Input["You entered an incorrect Matrix. How many joints (DOF) does your robot have?"];
-        readJointTable[]
-      ]
-    ];
-  $dhInput$ = "YES";
-  ];
+		If[checkJointTable[jt],
+			loadRobot[jt]
+		];
+		$dhInput$ = "YES";
+	]
 
 (*
 Create DH function: parses input and generates the DH table
@@ -438,7 +421,6 @@ readJointTable[]:=
   ];
 
 
-(*
 checkJointTable(jt_List):=
 	Do[
 	x3 = Dimensions[jt];
@@ -458,7 +440,6 @@ checkJointTable(jt_List):=
 		]
 	];
 
-	*)
 
 (*function isPrismatic
 	isRevolutionary
