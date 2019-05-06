@@ -228,13 +228,19 @@ loadRobot[jt_List]:=
 *)
 FKin[parD_,parTheta_,k_,j_]:=
 	Do[
-		(*Print[parD//ListForm];
-    Print[parTheta//ListForm];*)
+		Print["FKIN.parD=",parD];
+    Print["FKIN.parTheta=",parTheta];
+    Print["FKIN.parTheta[0]=",parTheta[[0]]];
+    Print["FKIN.parTheta[1]=",parTheta[[1]]];
+    Print["FKIN.parD[0]=",parD[[0]]];
+    Print["FKIN.parD[1]=",parD[[1]]];
+    Print["FKIN.k=",k];
+    Print["FKIN.j=",j];
     For[ i=1, i<=dof, i++,
-      d[i]=parD[[i-1]];
-      theta[i]=parTheta[[i-1]];
+      d[i]=parD[[i]];
+      theta[i]=parTheta[[i]];
     ]
-    (*Print[T[k,j]//MatrixForm];*)
+    Print["FKIN.T=",T[k,j]//MatrixForm];
     Return[T[k,j]];
 	];
 
@@ -396,7 +402,7 @@ drawRobot[OptionsPattern[]]:=
   Manipulate[
     Chop[%,10^-10];
     Module[
-      {jr = 1/10,ar = 1/40,Ad,Td,Ts,j,i,ii,jj,Tv},
+      {jr = 1/10,ar = 1/40,Ad,Td,Ts,j,i,ii,jj,Tv,tmpD,tmpTheta},
 
       For[ i=0,i<dof, i++,
         If[ isPrismatic[ jointtype[i] ],
@@ -407,8 +413,8 @@ drawRobot[OptionsPattern[]]:=
             tmpTheta[[i]]=params[[i]];
             tmpD[[i]]=0;
         ];
-        (*Print[tmpD];
-        Print[tmpTheta];*)
+        Print[tmpD];
+        Print[tmpTheta];
       ]
 
       For[ j=1,j<=dof,j++,
