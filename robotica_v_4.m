@@ -79,10 +79,9 @@ Print["Robotica version ", $VERSION$, "."];
 MPrint[M_List, text_String, name_String:""] :=(StringForm["````",text, MatrixForm[M]]);
 
 
-TPrint[name_String:""] :=
+TPrint[] :=
 	Block[
 		{i,j},
-
     For[i=0, i<dof, i++,
     	For[j=1, j<=dof, j++,
         If[j>i,
@@ -231,10 +230,12 @@ FKin[parD_,parTheta_,i_,j_]:=
 	Block[{},
 		(*calculates T[parD,parTheta] somehow*)
     d=parD;
-    theta=parTheta;
-    Print[d];
-    Print[theta];
-    T[i,j];
+    For[ i=1, i<=dof, i++,
+      d[i]=parD[[i]];
+      theta[i]=parTheta[[i]];
+    ]
+    Print[T[i,j]//MatrixForm];
+    Return[T[i,j]];
 	];
 
 FormAllAs[]:=
@@ -395,7 +396,7 @@ drawRobot[OptionsPattern[]]:=
   Manipulate[
     Chop[%,10^-10];
     Module[
-      {jr = 1/10,ar = 1/40,Ad,Td,Ts,j,i,ii,jj,Tv},
+      {jr = 1/10,ar = 1/40,Ad,Td,Ts,j,i,ii,jj,Tv,tmpD,tmpTheta},
       Ad =Table[
         If[ isPrismatic[ jointtype[i] ],
           dhTransform[params[[i]],a[i],theta[i],alpha[i]],
@@ -404,6 +405,17 @@ drawRobot[OptionsPattern[]]:=
         ],
         {i,1,dof}
       ];
+      For[ i=1,i<=dof, i++,
+        If[ isPrismatic[ jointtype[i] ],
+            tmpTheta[[i]]=0;
+            tmpD[[i]]=params[[i]],
+
+
+            tmpTheta[[i]]=params[[i]];
+            tmpD[[i]]=0;
+        ]
+      ]
+
       For[ j=1,j<=dof,j++,
         Tv=dhTransform[0,0,0,0];
         Ts=dhTransform[0,0,0,0];
@@ -415,7 +427,9 @@ drawRobot[OptionsPattern[]]:=
           ];
         ];
 
-        Td[j]=Tv;
+        (*Td[j]=Tv;*)
+        Td[j]=FKin[tmpD,tmpTheta,0,j];
+
       ];
 
       Graphics3D[
