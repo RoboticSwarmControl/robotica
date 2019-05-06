@@ -397,14 +397,7 @@ drawRobot[OptionsPattern[]]:=
     Chop[%,10^-10];
     Module[
       {jr = 1/10,ar = 1/40,Ad,Td,Ts,j,i,ii,jj,Tv,tmpD,tmpTheta},
-      Ad =Table[
-        If[ isPrismatic[ jointtype[i] ],
-          dhTransform[params[[i]],a[i],theta[i],alpha[i]],
 
-          dhTransform[d[i],a[i],params[[i]],alpha[i]]
-        ],
-        {i,1,dof}
-      ];
       For[ i=1,i<=dof, i++,
         If[ isPrismatic[ jointtype[i] ],
             tmpTheta[[i]]=0;
@@ -417,19 +410,7 @@ drawRobot[OptionsPattern[]]:=
       ]
 
       For[ j=1,j<=dof,j++,
-        Tv=dhTransform[0,0,0,0];
-        Ts=dhTransform[0,0,0,0];
-        For[ i=1,i<=j,i++,Ts=Ts.Ad[[i]]];
-
-				For[ ii=1,ii<=4,ii++,
-          For[ jj=1,jj<=4,jj++,
-            Tv[[1,ii,jj]]=Chop[Ts[[1,ii,jj]]];
-          ];
-        ];
-
-        (*Td[j]=Tv;*)
         Td[j]=FKin[tmpD,tmpTheta,0,j];
-
       ];
 
       Graphics3D[
