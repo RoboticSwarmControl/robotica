@@ -54,7 +54,9 @@ specified."
 dhInput::usage = "dhInput[] lets the user enter the DH parameters, in a list of {joint_type,r,alpha,d,theta}."
 
 readJointTable::usage = "create DH parameter by Given DOF"
-loadRobot::usage " Create DH Parameter Table by given DH Matrix"
+loadRobot::usage = " Create DH Parameter Table by given DH Matrix"
+checkJointTable::usage = "do things" 
+
 
 FKin::usage = "FKin[d_List,Theta_List] calculates the end position based on the R_List and Alpha_List preloaded and the d_List and Theta_List given by parameter"
 
@@ -73,22 +75,6 @@ showPlanes displays a controller to show the xy plane at each axis (useful for i
 "
 
 
-SimplifyTrigNotation::usage =
-"SimplifyTrigNotation[] changes the notation of Cosine and Sine functions.
-Cos[q1] --> C1,
-Sin[q1] --> S1,
-Cos[q1+q2] --> C12,
-Sin[q1+q2] --> S12,
-Cos[q1-q2] --> C1-2,
-Sin[q1-q2] --> S1-2,
-Cos[q1+q2+q3] --> C123,
-Sin[q1+q2+q3] --> S123,
-Cos[q1+q2-q3] --> C12-3,
-Sin[q1+q2-q3] --> S12-3,
-Sin[q1+q2+q3+q4] --> C1234,
-Cos[q1+q2+q3+q4] --> C1234."
-
-
 Begin["`Private`"]
 
 $XRANGE$ = {-10,10};
@@ -99,99 +85,6 @@ $VERSION$ = "4.01";
 
 Print["Robotica version ", $VERSION$, "."];
 
-
-SimplifyTrigNotation[]:=
-	Do[
-	Unprotect[Cos];
-
-	Format[Cos[x_]] := Subscript["c",StringJoin[Drop[Characters[ToString[x]],1]]]
-           /; (Head[x] == Symbol) && (StringLength[ToString[x]] > 1);
-
-	Format[Cos[x_ + y_]] :=
-               Subscript["c",StringJoin[Drop[Characters[ToString[x]],1],
-                              Drop[Characters[ToString[y]],1]]]
-           /; (Head[x] == Symbol) && (StringLength[ToString[x]] > 1) &&
-              (Head[y] == Symbol) && (StringLength[ToString[y]] > 1);
-
-	Format[Cos[x_ - y_]] :=
-               Subscript["c",StringJoin[Drop[Characters[ToString[x]],1],"-",
-                              Drop[Characters[ToString[y]],1]]]
-           /; (Head[x] == Symbol) && (StringLength[ToString[x]] > 1) &&
-              (Head[y] == Symbol) && (StringLength[ToString[y]] > 1);
-
-	Format[Cos[x_ + y_ + z_]] :=
-               Subscript["c",StringJoin[Drop[Characters[ToString[x]],1],
-							Drop[Characters[ToString[y]],1],
-                              Drop[Characters[ToString[z]],1]]]
-           /; (Head[x] == Symbol) && (StringLength[ToString[x]] > 1) &&
-              (Head[y] == Symbol) && (StringLength[ToString[y]] > 1) &&
-              (Head[z] == Symbol) && (StringLength[ToString[z]] > 1);
-
-	Format[Cos[x_ + y_ - z_]] :=
-               Subscript["c",StringJoin[Drop[Characters[ToString[x]],1],
-                              Drop[Characters[ToString[y]],1],"-",
-                              Drop[Characters[ToString[z]],1]]]
-           /; (Head[x] == Symbol) && (StringLength[ToString[x]] > 1) &&
-              (Head[y] == Symbol) && (StringLength[ToString[y]] > 1) &&
-              (Head[z] == Symbol) && (StringLength[ToString[z]] > 1);
-
-
-	Format[Cos[w_ + x_ + y_ + z_]] :=
-               Subscript["c",StringJoin[Drop[Characters[ToString[w]],1],
-							Drop[Characters[ToString[x]],1],
-							Drop[Characters[ToString[y]],1],
-							Drop[Characters[ToString[z]],1]]]
-           /; (Head[w] == Symbol) && (StringLength[ToString[w]] > 1) &&
-              (Head[x] == Symbol) && (StringLength[ToString[x]] > 1) &&
-              (Head[y] == Symbol) && (StringLength[ToString[y]] > 1) &&
-              (Head[z] == Symbol) && (StringLength[ToString[z]] > 1);
-
-	Protect[Cos];
-
-	Unprotect[Sin];
-	Format[Sin[x_]] := Subscript["s",StringJoin[Drop[Characters[ToString[x]],1]]]
-           /; (Head[x] == Symbol) && (StringLength[ToString[x]] > 1);
-
-	Format[Sin[x_ + y_]] :=
-               Subscript["s",StringJoin[Drop[Characters[ToString[x]],1],
-                              Drop[Characters[ToString[y]],1]]]
-           /; (Head[x] == Symbol) && (StringLength[ToString[x]] > 1) &&
-              (Head[y] == Symbol) && (StringLength[ToString[y]] > 1);
-
-	Format[Sin[x_ - y_]] :=
-               Subscript["s",StringJoin[Drop[Characters[ToString[x]],1],"-",
-                              Drop[Characters[ToString[y]],1]]]
-           /; (Head[x] == Symbol) && (StringLength[ToString[x]] > 1) &&
-              (Head[y] == Symbol) && (StringLength[ToString[y]] > 1);
-
-	Format[Sin[x_ + y_ + z_]] :=
-               Subscript["s",StringJoin[Drop[Characters[ToString[x]],1],
-                              Drop[Characters[ToString[y]],1],
-                              Drop[Characters[ToString[z]],1]]]
-           /; (Head[x] == Symbol) && (StringLength[ToString[x]] > 1) &&
-              (Head[y] == Symbol) && (StringLength[ToString[y]] > 1) &&
-              (Head[z] == Symbol) && (StringLength[ToString[z]] > 1);
-
-	Format[Sin[x_ + y_ - z_]] :=
-               Subscript["s",StringJoin[Drop[Characters[ToString[x]],1],
-                              Drop[Characters[ToString[y]],1],"-",
-                              Drop[Characters[ToString[z]],1]]]
-           /; (Head[x] == Symbol) && (StringLength[ToString[x]] > 1) &&
-              (Head[y] == Symbol) && (StringLength[ToString[y]] > 1) &&
-              (Head[z] == Symbol) && (StringLength[ToString[z]] > 1);
-
-  Format[Sin[w_ + x_ + y_ + z_]] :=
-               Subscript["s",StringJoin[Drop[Characters[ToString[w]],1],
-              Drop[Characters[ToString[x]],1],
-              Drop[Characters[ToString[y]],1],
-              Drop[Characters[ToString[z]],1]]]
-           /; (Head[w] == Symbol) && (StringLength[ToString[w]] > 1) &&
-              (Head[x] == Symbol) && (StringLength[ToString[x]] > 1) &&
-              (Head[y] == Symbol) && (StringLength[ToString[y]] > 1) &&
-              (Head[z] == Symbol) && (StringLength[ToString[z]] > 1);
-
-	Protect[Sin];
-	]
 
 
 (*
@@ -267,14 +160,7 @@ EPrint[M_List, text_String, name_String:""] :=
 
 
 
-(* DH Input Functon *)
 
-dhInput[jt_List]:=
-  Do[
-		If[checkJointTable[jt],
-			loadRobot[jt]
-		];
-	]
 
 (*
 show to the user a table to fill with the values
@@ -322,24 +208,26 @@ readJointTable[]:=
   ];
 
 
-checkJointTable(jt_List):=
+checkJointTable[jt_List]:=
 	Do[
 		x3 = Dimensions[jt];
 		dof= x3[[2]];
-		If[ !NumberQ[x2] || x2<=0,
-			Return[False]
-		]
-		If[ Length[x2]!=5 || Length[x3]!=2 ,
-			Return[False]
+		If[ Length[jt]!=5 || Length[x3]!=2 ,
+		    Print["jt malformed"];
+			Return[False];
 		]
 
 		For[ i=1,i<=dof,i++,
 			If[ !MemberQ[{"Prismatic","prismatic","P","p","Revolute","revolute","R","r"},ToString[jt[[1,i]] ]],
 				Print[" Type column, should include only: Revolute, revolute, R, r, Prismatic, prismatic, P, or p"];
+				Print["false 3"];
 				Return[False];
+				
 			]
 		];
+		Print["it's oke'"];
 		Return[True];
+		
 	];
 
 
@@ -375,9 +263,9 @@ JTRecapPrint[]:=Print[
 
 
 (*assuming jt to be a valid matrix describing joints*)
-loadRobot[jt]:=
-    Block[{},
-			(*load JTRecap*)
+loadRobot[jt_List]:=
+    Do[	(*load JTRecap*)
+	Print["calling loadRobot, inside"];
     For[ i=1,i<=dof,i++,
       alpha[i]=jt[[3,i]];
 			a[i]=jt[[2,i]];
@@ -391,8 +279,10 @@ loadRobot[jt]:=
       jointtype[i] = ToString[ jt[[1,i]] ];
     ];
 
-		FormAllAs[];
-		FormAllTs[];
+	FormAllAs[];
+	FormAllTs[];
+	APrint[];
+	TPrint[];
 
   ];
 
@@ -401,9 +291,10 @@ loadRobot[jt]:=
   Run the functions that calculates the forward kinematics
 *)
 FKin[parD,parTheta]:=
-	Block[{},
+	Block[{i,j},
 		(*calculates T[parD,parTheta] somehow*)
-	]
+		i=5;
+	];
 
 FormAllAs[]:=
 	Block[
@@ -483,6 +374,17 @@ SetRanges[x_List, y_List, z_List] :=
 	  $YRANGE$ = y;
 	  $ZRANGE$ = z;
   ];
+
+(* DH Input Functon *)
+
+dhInput[jt_List]:=
+  Block[{},
+		If[ checkJointTable[jt],
+		    Print["calling loadRobot"];
+			loadRobot[jt];
+		];
+	];
+
 
 
 (*
