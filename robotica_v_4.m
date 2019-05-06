@@ -218,9 +218,8 @@ checkJointTable[jt_List]:=
 		]
 
 		For[ i=1,i<=dof,i++,
-			If[ !MemberQ[{"Prismatic","prismatic","P","p","Revolute","revolute","R","r"},ToString[jt[[1,i]] ]],
+			If[ !isPrismatic[ jt[[1,i]] ] && !isRevolutionary[ jt[[1,i]] ],
 				Print[" Type column, should include only: Revolute, revolute, R, r, Prismatic, prismatic, P, or p"];
-				Print["false 3"];
 				Return[False];
 				
 			]
@@ -233,9 +232,9 @@ checkJointTable[jt_List]:=
 
 
 
-(*function isPrismatic
-	isRevolutionary
-	*)
+isPrismatic[jtype_String]:=MemberQ[{"Prismatic","prismatic","P","p"},jtype];
+isRevolutionary[jtype_String]:=MemberQ[{"Revolute","revolute","R","r"},jtype];
+
 
 (*print Joint table, recap, for what I understood, as debug *)
 
@@ -270,10 +269,10 @@ loadRobot[jt_List]:=
       alpha[i]=jt[[3,i]];
 			a[i]=jt[[2,i]];
 			If[ MemberQ[{"Prismatic","prismatic","P","p"},ToString[ jt[[1,i]] ]],
-				theta[i] = 0;
-				d[i] = _,
+				theta[i] = 0,
+				(*d[i] = _,
 
-				theta[i] = _;
+				theta[i] = _;*)
 				d[i] = 0;
 			];
       jointtype[i] = ToString[ jt[[1,i]] ];
@@ -281,8 +280,8 @@ loadRobot[jt_List]:=
 
 	FormAllAs[];
 	FormAllTs[];
-	APrint[];
-	TPrint[];
+	(*APrint[];
+	TPrint[];*)
 
   ];
 
@@ -420,7 +419,7 @@ drawJoint[ j_,d_,r_,\[Theta]_,showArrow_:True]:=
       {
         Opacity[0.5],
         Gray,
-        If[ j == "prismatic",
+        If[ isPrismatic[j],
           Cuboid[{-ar,-ar,-1+d-jr-.01},{ar,ar,d+.01}],
 
           Cylinder[{{0,0,Min[-ar,d-jr]-.01},{0,0,Max[ar,d]+.01}},ar]
@@ -429,7 +428,7 @@ drawJoint[ j_,d_,r_,\[Theta]_,showArrow_:True]:=
 
       {
         LightBlue,
-        If[ j == "prismatic",
+        If[ isPrismatic[j],
           {
             Cuboid[{-jr,-jr,-jr},{jr,jr,+jr-.1}],
             Cuboid[{-jr,-jr,+jr},{jr,jr,+jr+.05}]
@@ -481,14 +480,13 @@ drawRobot[OptionsPattern[]]:=
     Module[
       {jr = 1/10,ar = 1/40,Ad,Td,Ts,j,i,ii,jj,Tv},
       Ad =Table[
-        If[ jointtype[i]=="prismatic",
+        If[ isPrismatic[ jointtype[i] ],
           dhTransform[params[[i]],a[i],theta[i],alpha[i]],
 
           dhTransform[d[i],a[i],params[[i]],alpha[i]]
         ],
         {i,1,dof}
       ];
-
       For[ j=1,j<=dof,j++,
         Tv=dhTransform[0,0,0,0];
         Ts=dhTransform[0,0,0,0];
@@ -509,7 +507,7 @@ drawRobot[OptionsPattern[]]:=
             LightBrown,
             Cylinder[{{0,0,-2/5},{0,0,-1/5-1/20}},2.2]
           },
-          If[ jointtype[1]== "revolute",
+          If[ isRevolutionary[ jointtype[1] ],
             drawJoint[jointtype[1],d[1],a[1],params[[1]],OptionValue[showArrows]],
 
             drawJoint[jointtype[1],params[[1]],a[1],theta[1]],
@@ -522,7 +520,7 @@ drawRobot[OptionsPattern[]]:=
 
             If[ showRobot,
               Table[
-                If[ jointtype[i]=="revolute",
+                If[ isRevolutionary[ jointtype[i]],
                   GeometricTransformation[
                     drawJoint[jointtype[i],d[i],a[i],params[[i]],OptionValue[showArrows]],
                     Td[i-1]
@@ -576,7 +574,7 @@ drawRobot[OptionsPattern[]]:=
       Grid[
         Table[
           With[ {i=i},
-            If[ jointtype[i]=="prismatic",
+            If[ isPrismatic[jointtype[i]],
               {Subscript["d",i],Slider[Dynamic[params[[i]]],{0,1,1/20},ImageSize->Small],Dynamic[params[[i]]]},
               {Subscript["\[Theta]",i],Slider[Dynamic[params[[i]]],{-\[Pi],\[Pi],\[Pi]/32},ImageSize->Small],Dynamic[params[[i]]]}
               ]
