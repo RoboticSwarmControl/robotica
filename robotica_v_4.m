@@ -46,11 +46,6 @@ MPrint::usage = "MPrint[M_List, text_String, name_String:''] prints the
 matrix/vector M in standard form with 'text' as a label.  Saved in
 file 'name' if specified."
 
-EPrint::usage = "EPrint[M_List, text_String, name_String:''] prints the
-elements of M one per line, each with label 'text'.  Saved in file 'name' if
-specified."
-
-
 dhInput::usage = "dhInput[] lets the user enter the DH parameters, in a list of {joint_type,r,alpha,d,theta}."
 
 readJointTable::usage = "create DH parameter by Given DOF"
@@ -77,21 +72,10 @@ showPlanes displays a controller to show the xy plane at each axis (useful for i
 
 Begin["`Private`"]
 
-$XRANGE$ = {-10,10};
-$YRANGE$ = {-10,10};
-$ZRANGE$ = {-10,10};
-$RANGES$ = {$XRANGE$, $YRANGE$, $ZRANGE$};
 $VERSION$ = "4.01";
 
 Print["Robotica version ", $VERSION$, "."];
 
-
-
-(*
-   TPrint prints all the T Matrices to a file or to the screen.
-   If the filename is $, the default file name is used
-   TODO: display all the T matrices, not print them
-*)
 TPrint[name_String:""] :=
 	Block[
 		{i,j},
@@ -105,11 +89,6 @@ TPrint[name_String:""] :=
     ]
   ]
 
-(*
-   APrint prints all the A matrices to the screen or to a file.
-  If the filename is $, the default file name is used
-  TODO: display all the A matrices, not print them
-*)
 APrint[name_String:""] :=
 	Block[
 		{j},
@@ -117,48 +96,6 @@ APrint[name_String:""] :=
     	Print[MPrint[A[j], StringJoin["A[", ToString[j], "]= "]]];
     ]
   ]
-
-(*
-   MPrint prints any matrix with a label to the screen or to a file.
-   If the filename is $, the default file name is used
-*)
-MPrint[M_List, text_String, name_String:""] :=(StringForm["````",text, MatrixForm[M]]);
-
-(* EPrint prints all the elements of a matrix one per line *)
-EPrint[M_List, text_String, name_String:""] :=
-	Block[
-	{i,j, temp, file, ro, co},
-  If[ VectorQ[M],
-		ro=Length[M],
-    If[ MatrixQ[M],
-			{ro, co} = Dimensions[M],
-			Return[]
-		]
-	];
-	Print[" "];
-	Print[" "];
-  If[ name == "",
-  	If[ MatrixQ[M],
-    	Do[
-      	Do[
-					Print[text,"[",i,",",j,"] = ",M[[i,j]]];
-          Print[""],
-	        {i,ro}
-				],
-      	{j,co}
-			],
-
-      Do[
-      	Print[text,"[",i,"] = ",M[[i]]];
-        Print[""],
-      	{i,ro}
-			]
-		];
-		Print[" "]];
- 	]
-
-
-
 
 
 
@@ -230,9 +167,9 @@ checkJointTable[jt_List]:=
 	];
 
 
-
-
 isPrismatic[jtype_String]:=MemberQ[{"Prismatic","prismatic","P","p"},jtype];
+
+
 isRevolutionary[jtype_String]:=MemberQ[{"Revolute","revolute","R","r"},jtype];
 
 
@@ -280,8 +217,6 @@ loadRobot[jt_List]:=
 
 	FormAllAs[];
 	FormAllTs[];
-	(*APrint[];
-	TPrint[];*)
 
   ];
 
@@ -348,31 +283,6 @@ FormTij[k_,l_]:=
     A[k+1].FormTij[k+1, l]
   ];
 
-
-(*
-  Set the x, y, and z plot ranges for animations
-*)
-SetRanges[x_List, y_List, z_List] :=
-  Block[{},
-  	If [Length[x] !=2 || Length[y]!= 2 || Length[z]!=2,
-    	Print["Each list should contain a start and end value only."];
-    	Return[]
-		];
-
-   	If[!NumberQ[Plus @@ N[x]], Print["X Ranges must be numbers."];
-    	Return[]
-		];
-   	If[!NumberQ[Plus @@ N[y]], Print["Y Ranges must be numbers."];
-    	Return[]
-		];
-   	If[!NumberQ[Plus @@ N[z]], Print["Z Ranges must be numbers."];
-    	Return[]
-		];
-
-	  $XRANGE$ = x;
-	  $YRANGE$ = y;
-	  $ZRANGE$ = z;
-  ];
 
 (* DH Input Functon *)
 
