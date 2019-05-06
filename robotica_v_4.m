@@ -226,16 +226,16 @@ loadRobot[jt_List]:=
 (*
   Run the functions that calculates the forward kinematics
 *)
-FKin[parD_,parTheta_,i_,j_]:=
-	Block[{},
-		(*calculates T[parD,parTheta] somehow*)
-    d=parD;
+FKin[parD_,parTheta_,k_,j_]:=
+	Do[
+		(*Print[parD//ListForm];
+    Print[parTheta//ListForm];*)
     For[ i=1, i<=dof, i++,
-      d[i]=parD[[i]];
-      theta[i]=parTheta[[i]];
+      d[i]=parD[[i-1]];
+      theta[i]=parTheta[[i-1]];
     ]
-    Print[T[i,j]//MatrixForm];
-    Return[T[i,j]];
+    (*Print[T[k,j]//MatrixForm];*)
+    Return[T[k,j]];
 	];
 
 FormAllAs[]:=
@@ -396,9 +396,9 @@ drawRobot[OptionsPattern[]]:=
   Manipulate[
     Chop[%,10^-10];
     Module[
-      {jr = 1/10,ar = 1/40,Ad,Td,Ts,j,i,ii,jj,Tv,tmpD,tmpTheta},
+      {jr = 1/10,ar = 1/40,Ad,Td,Ts,j,i,ii,jj,Tv},
 
-      For[ i=1,i<=dof, i++,
+      For[ i=0,i<dof, i++,
         If[ isPrismatic[ jointtype[i] ],
             tmpTheta[[i]]=0;
             tmpD[[i]]=params[[i]],
@@ -406,11 +406,14 @@ drawRobot[OptionsPattern[]]:=
 
             tmpTheta[[i]]=params[[i]];
             tmpD[[i]]=0;
-        ]
+        ];
+        (*Print[tmpD];
+        Print[tmpTheta];*)
       ]
 
       For[ j=1,j<=dof,j++,
         Td[j]=FKin[tmpD,tmpTheta,0,j];
+        (*Print[Td//ListForm];*)
       ];
 
       Graphics3D[
