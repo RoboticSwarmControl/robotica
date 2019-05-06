@@ -76,6 +76,9 @@ $VERSION$ = "4.01";
 
 Print["Robotica version ", $VERSION$, "."];
 
+MPrint[M_List, text_String, name_String:""] :=(StringForm["````",text, MatrixForm[M]]);
+
+
 TPrint[name_String:""] :=
 	Block[
 		{i,j},
