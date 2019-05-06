@@ -10,14 +10,16 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      3853,        129]
-NotebookOptionsPosition[      3180,        104]
-NotebookOutlinePosition[      3514,        119]
-CellTagsIndexPosition[      3471,        116]
+NotebookDataLength[      5960,        208]
+NotebookOptionsPosition[      4813,        165]
+NotebookOutlinePosition[      5148,        180]
+CellTagsIndexPosition[      5105,        177]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
+
+Cell[CellGroupData[{
 Cell[BoxData[
  StyleBox[
   RowBox[{"SetDirectory", "[", 
@@ -26,19 +28,34 @@ Cell[BoxData[
   FontWeight->"Bold"]], "Input",
  CellChangeTimes->{{3.764414727977866*^9, 3.764414727978463*^9}}],
 
+Cell[BoxData["\<\"/home/students/marco.negrini6/Documents/github/robotica\"\>\
+"], "Output",
+ CellChangeTimes->{3.766138086264535*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
 Cell[BoxData[
  StyleBox[
   RowBox[{"<<", "robotica_v_4.m"}],
   FontSize->18,
   FontWeight->"Bold"]], "Input",
  CellChangeTimes->{{3.764055502552664*^9, 3.764055502553368*^9}, {
-  3.7640633352961187`*^9, 3.764063335828248*^9}},
- EmphasizeSyntaxErrors->True],
+  3.7640633352961187`*^9, 3.764063335828248*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Robotica version \"\>", "\[InvisibleSpace]", "\<\"4.01\"\>", 
+   "\[InvisibleSpace]", "\<\".\"\>"}],
+  SequenceForm["Robotica version ", "4.01", "."],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.766138089644843*^9}]
+}, Open  ]],
 
 Cell[BoxData[
  RowBox[{
   RowBox[{
-   RowBox[{"ex", "=", 
+   RowBox[{"ex1", "=", 
     RowBox[{"{", 
      RowBox[{
       RowBox[{"{", 
@@ -53,7 +70,35 @@ Cell[BoxData[
        RowBox[{"q1", ",", "0", ",", "0"}], "}"}], ",", 
       RowBox[{"{", 
        RowBox[{"0", ",", "q2", ",", "q3"}], "}"}]}], "}"}]}], ";"}], 
-  " "}]], "Input"],
+  " "}]], "Input",
+ CellChangeTimes->{3.7661379057345133`*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"ex", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "r", "}"}], ",", 
+     RowBox[{"{", "2", "}"}], ",", 
+     RowBox[{"{", "Pi", "}"}], ",", 
+     RowBox[{"{", "0", "}"}], ",", 
+     RowBox[{"{", "q1", "}"}]}], "}"}]}]}]], "Input",
+ CellChangeTimes->{{3.766137900074307*^9, 3.766137926118361*^9}, {
+  3.7661381043579407`*^9, 3.766138109021433*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", "r", "}"}], ",", 
+   RowBox[{"{", "2", "}"}], ",", 
+   RowBox[{"{", "\[Pi]", "}"}], ",", 
+   RowBox[{"{", "q1", "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.7661380936900463`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
 
 Cell[BoxData[
  RowBox[{
@@ -62,6 +107,22 @@ Cell[BoxData[
    3.764415745435588*^9, 3.76441574573851*^9}, 3.764415871726162*^9, {
    3.7658796880923567`*^9, 3.7658796883240767`*^9}, {3.7661212214599333`*^9, 
    3.766121228251944*^9}, {3.766121849089459*^9, 3.7661218561055107`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["\<\"jt malformed\"\>"], "Print",
+ CellChangeTimes->{3.766138097715577*^9}],
+
+Cell[BoxData["\<\"it's oke'\"\>"], "Print",
+ CellChangeTimes->{3.766138097717308*^9}],
+
+Cell[BoxData["\<\"calling loadRobot\"\>"], "Print",
+ CellChangeTimes->{3.766138097719109*^9}],
+
+Cell[BoxData["\<\"calling loadRobot, inside\"\>"], "Print",
+ CellChangeTimes->{3.766138097720415*^9}]
+}, Open  ]]
+}, Open  ]],
 
 Cell[BoxData[
  RowBox[{"checkJointTable", "[", "ex", "]"}]], "Input"],
@@ -102,8 +163,8 @@ Cell[BoxData[
  RowBox[{"Length", "[", "ex", "]"}]], "Input",
  CellChangeTimes->{{3.7661217516671886`*^9, 3.76612176247164*^9}}]
 },
-WindowSize->{640, 960},
-WindowMargins->{{Automatic, -1}, {Automatic, -1}},
+WindowSize->{1280, 927},
+WindowMargins->{{-1, Automatic}, {Automatic, -1}},
 FrontEndVersion->"10.2 for Linux x86 (64-bit) (July 29, 2015)",
 StyleDefinitions->"Default.nb"
 ]
@@ -118,19 +179,37 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 222, 6, 37, "Input"],
-Cell[783, 28, 256, 7, 37, "Input"],
-Cell[1042, 37, 559, 18, 55, "Input"],
-Cell[1604, 57, 372, 6, 32, "Input"],
-Cell[1979, 65, 69, 1, 32, "Input"],
-Cell[2051, 68, 248, 5, 55, "Input"],
-Cell[2302, 75, 105, 3, 32, "Input"],
-Cell[2410, 80, 125, 2, 32, "Input"],
-Cell[2538, 84, 120, 2, 32, "Input"],
-Cell[2661, 88, 120, 2, 32, "Input"],
-Cell[2784, 92, 130, 2, 32, "Input"],
-Cell[2917, 96, 129, 2, 32, "Input"],
-Cell[3049, 100, 127, 2, 32, "Input"]
+Cell[CellGroupData[{
+Cell[580, 22, 222, 6, 37, "Input"],
+Cell[805, 30, 134, 2, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[976, 37, 226, 6, 37, "Input"],
+Cell[1205, 45, 271, 6, 23, "Print"]
+}, Open  ]],
+Cell[1491, 54, 604, 19, 32, "Input"],
+Cell[CellGroupData[{
+Cell[2120, 77, 414, 11, 55, "Input"],
+Cell[2537, 90, 238, 7, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2812, 102, 372, 6, 32, "Input"],
+Cell[CellGroupData[{
+Cell[3209, 112, 88, 1, 23, "Print"],
+Cell[3300, 115, 85, 1, 23, "Print"],
+Cell[3388, 118, 93, 1, 23, "Print"],
+Cell[3484, 121, 101, 1, 23, "Print"]
+}, Open  ]]
+}, Open  ]],
+Cell[3612, 126, 69, 1, 32, "Input"],
+Cell[3684, 129, 248, 5, 55, "Input"],
+Cell[3935, 136, 105, 3, 32, "Input"],
+Cell[4043, 141, 125, 2, 32, "Input"],
+Cell[4171, 145, 120, 2, 32, "Input"],
+Cell[4294, 149, 120, 2, 32, "Input"],
+Cell[4417, 153, 130, 2, 32, "Input"],
+Cell[4550, 157, 129, 2, 32, "Input"],
+Cell[4682, 161, 127, 2, 32, "Input"]
 }
 ]
 *)

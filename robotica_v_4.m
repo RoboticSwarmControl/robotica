@@ -224,10 +224,14 @@ loadRobot[jt_List]:=
 (*
   Run the functions that calculates the forward kinematics
 *)
-FKin[parD,parTheta]:=
-	Block[{i,j},
+FKin[parD_,parTheta_,i_,j_]:=
+	Block[{},
 		(*calculates T[parD,parTheta] somehow*)
-		i=5;
+    d=parD;
+    theta=parTheta;
+    Print[d];
+    Print[theta];
+    T[i,j];
 	];
 
 FormAllAs[]:=
