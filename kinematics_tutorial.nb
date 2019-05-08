@@ -1,0 +1,150 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      4399,        141]
+NotebookOptionsPosition[      4132,        127]
+NotebookOutlinePosition[      4464,        142]
+CellTagsIndexPosition[      4421,        139]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["\<\
+#Welcome!\[LineSeparator]
+This is a robotics tutorial, here will be described how a robotic manipulator \
+works.
+
+//Image of robot, some joints, both types
+
+A robotic arm is made of link connected by joints that can be of two kind:
+    prismatic, traslatory: capable of translating a link
+    revolutionary, rotative: capable of rotate a link
+ // replicate image 81 with robotica
+    
+  links, rigid, structural parts of the manipulator, it can apply an angle
+// replicate image 82 with robotica  
+
+#Degrees of freedom
+
+// Brief explanation 
+
+#Kinematics
+
+joint variables: it is a parameter that describes exactly the state of a \
+joint, it is described by N-dimentionals vectors where N is the number of \
+degrees of freedom of the joint
+
+#Forward kinematics
+Forward Kinematics is the function that given the state of  N joint variable \
+calculates the position of the last joint \[OpenCurlyDoubleQuote]rispetto a\
+\[CloseCurlyDoubleQuote] position of the first one
+
+#Inverse kinematics
+Inverse kinematics is the function that given the position of the end \
+effector calculates the necessary stats of the N joints.
+It is more difficult, since the solution is not guaranteed to be always \
+unique or existent
+
+We will explain the Forward kinematics in a robotic arm
+
+In a robotic arm there is only one joint fixed to the ground so it can be \
+viewed as a join-chain called open kinematic chain 
+
+The Denavit Hartemberg method is used to represent the geometric \
+transformation applied by a open kinematics chains minimizing the number of \
+parameter necessary.
+
+DH analizes one joint at time, knowing the position of the joint J[i] and the \
+joint variables of J[i+1] it calculates the position of J[i+1]
+
+State variables can create two types of geometric transformation:
+-transative
+-rotative
+The geometric transformation can always be described by a matrix.
+
+Fixed translation
+//Image of robot with one immobile link (IF POSSIBLE) and A1 matrix depending \
+only on r1
+//show matrix Hq of page 84
+//maybe make a robot with a prismatic fixed joint (no dynamic)
+
+
+Fixed Rotation
+//add rotation to previous image, show product of the two matrix
+
+Prismatic joint
+//image with a prismatic joint, show H as product of the 3 matrix ( the theta \
+matrix will be the identity)
+
+Revolutionary joint
+//image with a prismatic joint, show H as product of the 3 matrix ( the d \
+matrix will be the identity)
+
+Show two joint
+
+The geometric tranformation created by the state
+
+//notes 
+
+// page 84, copy MORE
+//Hr fixed rotational matrix because it involves alpha[i] (in sin and cos), \
+depends only on the angle imposed by the joint
+//Hq don\[CloseCurlyQuote]t let the slide fool you, it is \
+\[OpenCurlyDoubleQuote]a\[CloseCurlyDoubleQuote] and not \
+\[OpenCurlyDoubleQuote]alpha\[CloseCurlyDoubleQuote] is the fixed \
+translational matrix imposed by the lenght of the joint
+//Hp rotational matrix depending on the theta angle imposed by the actual \
+state of the joint
+//H? translational matrix depending on the d translation imposed by the state \
+of the joint
+
+
+
+
+\
+\>", "Text",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGCQBGIQPc9v6bTF/G8cdSZNmAmim9RN5oPoOQ837AXRe6pD
+joFon9XTX4HoGVM6PoDo5af5mJcAafGn5xVBdPauQA0QLX3tlCGIXvRunTGI
+NnA7bwGiZ7m+dwPRBetj/EA0a9x6fxC9pmlyMFj9yj+JIFo1clEaiK7pPZEF
+ou225uaD6M6cawUg2ieWpQZE3yk4Vgui3zhfbga7o3/bLDCd0rMYRP+pfgam
+zc7/XQ6ijx6ffhVEr9pcewtEC7CE3gXRdV8WvwLLN4R/A9FnTtjzLAXSu65O
+4QXRanuUJUF0zdGzCiBaJmOmEYi2sS2xAtExBRz2IPqTX1wkiD4p9CAJRLt8
+uFUGotky/JtBdMGO1vkgWlf87VIQnTMj/TCIPlIgdgNEa1xRfAuiARmPxV4=
+
+  "]],
+
+Cell["", "Text"]
+},
+WindowSize->{516, 879},
+WindowMargins->{{Automatic, 6}, {Automatic, 0}},
+FrontEndVersion->"10.2 for Linux x86 (64-bit) (July 29, 2015)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 3551, 103, 1909, "Text"],
+Cell[4112, 125, 16, 0, 30, "Text"]
+}
+]
+*)
+
+(* End of internal cache information *)
